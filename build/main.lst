@@ -1,0 +1,2712 @@
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"main.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.print_chr,"ax",%progbits
+  18              		.align	1
+  19              		.syntax unified
+  20              		.thumb
+  21              		.thumb_func
+  22              		.fpu fpv4-sp-d16
+  24              	print_chr:
+  25              	.LFB136:
+  26              		.file 1 "Src/main.c"
+   1:Src/main.c    **** /**
+   2:Src/main.c    ****   ******************************************************************************
+   3:Src/main.c    ****   * File Name          : main.c
+   4:Src/main.c    ****   * Description        : Main program body
+   5:Src/main.c    ****   ******************************************************************************
+   6:Src/main.c    ****   * This notice applies to any and all portions of this file
+   7:Src/main.c    ****   * that are not between comment pairs USER CODE BEGIN and
+   8:Src/main.c    ****   * USER CODE END. Other portions of this file, whether 
+   9:Src/main.c    ****   * inserted by the user or by software development tools
+  10:Src/main.c    ****   * are owned by their respective copyright owners.
+  11:Src/main.c    ****   *
+  12:Src/main.c    ****   * Copyright (c) 2017 STMicroelectronics International N.V. 
+  13:Src/main.c    ****   * All rights reserved.
+  14:Src/main.c    ****   *
+  15:Src/main.c    ****   * Redistribution and use in source and binary forms, with or without 
+  16:Src/main.c    ****   * modification, are permitted, provided that the following conditions are met:
+  17:Src/main.c    ****   *
+  18:Src/main.c    ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  19:Src/main.c    ****   *    this list of conditions and the following disclaimer.
+  20:Src/main.c    ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  21:Src/main.c    ****   *    this list of conditions and the following disclaimer in the documentation
+  22:Src/main.c    ****   *    and/or other materials provided with the distribution.
+  23:Src/main.c    ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  24:Src/main.c    ****   *    contributors to this software may be used to endorse or promote products 
+  25:Src/main.c    ****   *    derived from this software without specific written permission.
+  26:Src/main.c    ****   * 4. This software, including modifications and/or derivative works of this 
+  27:Src/main.c    ****   *    software, must execute solely and exclusively on microcontroller or
+  28:Src/main.c    ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  29:Src/main.c    ****   * 5. Redistribution and use of this software other than as permitted under 
+  30:Src/main.c    ****   *    this license is void and will automatically terminate your rights under 
+  31:Src/main.c    ****   *    this license. 
+  32:Src/main.c    ****   *
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 2
+
+
+  33:Src/main.c    ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  34:Src/main.c    ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  35:Src/main.c    ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  36:Src/main.c    ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  37:Src/main.c    ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  38:Src/main.c    ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  39:Src/main.c    ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  40:Src/main.c    ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  41:Src/main.c    ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  42:Src/main.c    ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  43:Src/main.c    ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  44:Src/main.c    ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  45:Src/main.c    ****   *
+  46:Src/main.c    ****   ******************************************************************************
+  47:Src/main.c    ****   */
+  48:Src/main.c    **** /* Includes ------------------------------------------------------------------*/
+  49:Src/main.c    **** #include "main.h"
+  50:Src/main.c    **** #include "stm32f4xx_hal.h"
+  51:Src/main.c    **** #include "cmsis_os.h"
+  52:Src/main.c    **** #include "fatfs.h"
+  53:Src/main.c    **** #include "usb_host.h"
+  54:Src/main.c    **** #include "waveplayer.c"
+  55:Src/main.c    **** 
+  56:Src/main.c    **** /* USER CODE BEGIN Includes */
+  57:Src/main.c    **** extern ApplicationTypeDef Appli_state;
+  58:Src/main.c    **** /* USER CODE END Includes */
+  59:Src/main.c    **** 
+  60:Src/main.c    **** /* Private variables ---------------------------------------------------------*/
+  61:Src/main.c    **** I2S_HandleTypeDef hi2s2;
+  62:Src/main.c    **** I2S_HandleTypeDef hi2s3;
+  63:Src/main.c    **** 
+  64:Src/main.c    **** UART_HandleTypeDef huart2;
+  65:Src/main.c    **** 
+  66:Src/main.c    **** osThreadId defaultTaskHandle;
+  67:Src/main.c    **** 
+  68:Src/main.c    **** /* USER CODE BEGIN PV */
+  69:Src/main.c    **** /* Private variables ---------------------------------------------------------*/
+  70:Src/main.c    **** 
+  71:Src/main.c    **** /* USER CODE END PV */
+  72:Src/main.c    **** 
+  73:Src/main.c    **** /* Private function prototypes -----------------------------------------------*/
+  74:Src/main.c    **** void SystemClock_Config(void);
+  75:Src/main.c    **** static void MX_GPIO_Init(void);
+  76:Src/main.c    **** static void MX_USART2_UART_Init(void);
+  77:Src/main.c    **** static void MX_I2S2_Init(void);
+  78:Src/main.c    **** static void MX_I2S3_Init(void);
+  79:Src/main.c    **** void StartDefaultTask(void const * argument);
+  80:Src/main.c    **** 
+  81:Src/main.c    **** static void print_chr(char chr);
+  82:Src/main.c    **** ssize_t _write_r(struct _reent *r, int fd, const void *ptr, size_t len);
+  83:Src/main.c    **** 
+  84:Src/main.c    **** static void print_chr(char chr)
+  85:Src/main.c    **** {
+  27              		.loc 1 85 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 8
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 3
+
+
+  31              	.LVL0:
+  32 0000 00B5     		push	{lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 4
+  35              		.cfi_offset 14, -4
+  36 0002 83B0     		sub	sp, sp, #12
+  37              	.LCFI1:
+  38              		.cfi_def_cfa_offset 16
+  39 0004 02A9     		add	r1, sp, #8
+  40 0006 01F8010D 		strb	r0, [r1, #-1]!
+  86:Src/main.c    ****     HAL_UART_Transmit(&huart2,
+  41              		.loc 1 86 0
+  42 000a 4FF47A73 		mov	r3, #1000
+  43 000e 0122     		movs	r2, #1
+  44 0010 0248     		ldr	r0, .L3
+  45              	.LVL1:
+  46 0012 FFF7FEFF 		bl	HAL_UART_Transmit
+  47              	.LVL2:
+  87:Src/main.c    ****     (uint8_t*)&chr, 1, 1000);
+  88:Src/main.c    **** }
+  48              		.loc 1 88 0
+  49 0016 03B0     		add	sp, sp, #12
+  50              	.LCFI2:
+  51              		.cfi_def_cfa_offset 4
+  52              		@ sp needed
+  53 0018 5DF804FB 		ldr	pc, [sp], #4
+  54              	.L4:
+  55              		.align	2
+  56              	.L3:
+  57 001c 00000000 		.word	huart2
+  58              		.cfi_endproc
+  59              	.LFE136:
+  61              		.section	.text.MX_GPIO_Init,"ax",%progbits
+  62              		.align	1
+  63              		.syntax unified
+  64              		.thumb
+  65              		.thumb_func
+  66              		.fpu fpv4-sp-d16
+  68              	MX_GPIO_Init:
+  69              	.LFB143:
+  89:Src/main.c    **** 
+  90:Src/main.c    **** 
+  91:Src/main.c    **** ssize_t _write_r(struct _reent *r, int fd, const void *ptr, size_t len)
+  92:Src/main.c    **** {
+  93:Src/main.c    ****     int cntr = len;
+  94:Src/main.c    ****     char *pTemp = (char*)ptr;
+  95:Src/main.c    ****     while(cntr--)
+  96:Src/main.c    ****         print_chr(*pTemp++);
+  97:Src/main.c    ****     return len;
+  98:Src/main.c    **** } 
+  99:Src/main.c    **** 
+ 100:Src/main.c    **** 
+ 101:Src/main.c    **** /* USER CODE BEGIN PFP */
+ 102:Src/main.c    **** /* Private function prototypes -----------------------------------------------*/
+ 103:Src/main.c    **** 
+ 104:Src/main.c    **** /* USER CODE END PFP */
+ 105:Src/main.c    **** 
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 4
+
+
+ 106:Src/main.c    **** /* USER CODE BEGIN 0 */
+ 107:Src/main.c    **** 
+ 108:Src/main.c    **** /* USER CODE END 0 */
+ 109:Src/main.c    **** 
+ 110:Src/main.c    **** int main(void)
+ 111:Src/main.c    **** {
+ 112:Src/main.c    ****   /* USER CODE BEGIN 1 */
+ 113:Src/main.c    **** 
+ 114:Src/main.c    ****   /* USER CODE END 1 */
+ 115:Src/main.c    **** 
+ 116:Src/main.c    ****   /* MCU Configuration----------------------------------------------------------*/
+ 117:Src/main.c    **** 
+ 118:Src/main.c    ****   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+ 119:Src/main.c    ****   
+ 120:Src/main.c    ****   
+ 121:Src/main.c    ****   HAL_Init();
+ 122:Src/main.c    **** 
+ 123:Src/main.c    ****   /* USER CODE BEGIN Init */
+ 124:Src/main.c    **** 
+ 125:Src/main.c    ****   /* USER CODE END Init */
+ 126:Src/main.c    **** 
+ 127:Src/main.c    ****   /* Configure the system clock */
+ 128:Src/main.c    ****   SystemClock_Config();
+ 129:Src/main.c    **** 
+ 130:Src/main.c    ****   /* USER CODE BEGIN SysInit */
+ 131:Src/main.c    **** 
+ 132:Src/main.c    ****   /* USER CODE END SysInit */
+ 133:Src/main.c    **** 
+ 134:Src/main.c    ****   /* Initialize all configured peripherals */
+ 135:Src/main.c    ****   MX_GPIO_Init();
+ 136:Src/main.c    ****   MX_USART2_UART_Init();
+ 137:Src/main.c    ****   MX_I2S2_Init();
+ 138:Src/main.c    ****   MX_I2S3_Init();
+ 139:Src/main.c    **** 
+ 140:Src/main.c    ****   /* USER CODE BEGIN 2 */
+ 141:Src/main.c    **** 
+ 142:Src/main.c    ****   /* USER CODE END 2 */
+ 143:Src/main.c    **** 
+ 144:Src/main.c    ****   /* USER CODE BEGIN RTOS_MUTEX */
+ 145:Src/main.c    ****   /* add mutexes, ... */
+ 146:Src/main.c    ****   /* USER CODE END RTOS_MUTEX */
+ 147:Src/main.c    **** 
+ 148:Src/main.c    ****   /* USER CODE BEGIN RTOS_SEMAPHORES */
+ 149:Src/main.c    ****   /* add semaphores, ... */
+ 150:Src/main.c    ****   /* USER CODE END RTOS_SEMAPHORES */
+ 151:Src/main.c    **** 
+ 152:Src/main.c    ****   /* USER CODE BEGIN RTOS_TIMERS */
+ 153:Src/main.c    ****   /* start timers, add new ones, ... */
+ 154:Src/main.c    ****   /* USER CODE END RTOS_TIMERS */
+ 155:Src/main.c    **** 
+ 156:Src/main.c    ****   /* Create the thread(s) */
+ 157:Src/main.c    ****   /* definition and creation of defaultTask */
+ 158:Src/main.c    ****   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 1024);
+ 159:Src/main.c    ****   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+ 160:Src/main.c    **** 
+ 161:Src/main.c    ****   /* USER CODE BEGIN RTOS_THREADS */
+ 162:Src/main.c    ****   /* add threads, ... */
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 5
+
+
+ 163:Src/main.c    ****   /* USER CODE END RTOS_THREADS */
+ 164:Src/main.c    **** 
+ 165:Src/main.c    ****   /* USER CODE BEGIN RTOS_QUEUES */
+ 166:Src/main.c    ****   /* add queues, ... */
+ 167:Src/main.c    ****   /* USER CODE END RTOS_QUEUES */
+ 168:Src/main.c    ****  
+ 169:Src/main.c    ****   /* Start scheduler */
+ 170:Src/main.c    ****   osKernelStart();
+ 171:Src/main.c    ****   
+ 172:Src/main.c    ****   /* We should never get here as control is now taken by the scheduler */
+ 173:Src/main.c    **** 
+ 174:Src/main.c    ****   /* Infinite loop */
+ 175:Src/main.c    ****   /* USER CODE BEGIN WHILE */
+ 176:Src/main.c    ****   while (1)
+ 177:Src/main.c    ****   {
+ 178:Src/main.c    ****   /* USER CODE END WHILE */
+ 179:Src/main.c    **** 
+ 180:Src/main.c    ****   /* USER CODE BEGIN 3 */
+ 181:Src/main.c    **** 
+ 182:Src/main.c    ****   }
+ 183:Src/main.c    ****   /* USER CODE END 3 */
+ 184:Src/main.c    **** }
+ 185:Src/main.c    **** 
+ 186:Src/main.c    **** /** System Clock Configuration
+ 187:Src/main.c    **** */
+ 188:Src/main.c    **** void SystemClock_Config(void)
+ 189:Src/main.c    **** {
+ 190:Src/main.c    ****   RCC_OscInitTypeDef RCC_OscInitStruct;
+ 191:Src/main.c    ****   RCC_ClkInitTypeDef RCC_ClkInitStruct;
+ 192:Src/main.c    ****   RCC_PeriphCLKInitTypeDef PeriphClkInitStruct;
+ 193:Src/main.c    **** 
+ 194:Src/main.c    ****     /**Configure the main internal regulator output voltage 
+ 195:Src/main.c    ****     */
+ 196:Src/main.c    ****   __HAL_RCC_PWR_CLK_ENABLE();
+ 197:Src/main.c    **** 
+ 198:Src/main.c    ****   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+ 199:Src/main.c    **** 
+ 200:Src/main.c    ****     /**Initializes the CPU, AHB and APB busses clocks 
+ 201:Src/main.c    ****     */
+ 202:Src/main.c    ****   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+ 203:Src/main.c    ****   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+ 204:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+ 205:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+ 206:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLM = 4;
+ 207:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLN = 168;
+ 208:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+ 209:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLQ = 7;
+ 210:Src/main.c    ****   
+ 211:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+ 212:Src/main.c    ****   {
+ 213:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
+ 214:Src/main.c    ****   }
+ 215:Src/main.c    **** 
+ 216:Src/main.c    ****     /**Initializes the CPU, AHB and APB busses clocks 
+ 217:Src/main.c    ****     */
+ 218:Src/main.c    ****   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+ 219:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 6
+
+
+ 220:Src/main.c    ****   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+ 221:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 222:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+ 223:Src/main.c    ****   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+ 224:Src/main.c    **** 
+ 225:Src/main.c    ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+ 226:Src/main.c    ****   {
+ 227:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
+ 228:Src/main.c    ****   }
+ 229:Src/main.c    **** 
+ 230:Src/main.c    ****   PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_I2S;
+ 231:Src/main.c    ****   PeriphClkInitStruct.PLLI2S.PLLI2SN = 192;
+ 232:Src/main.c    ****   PeriphClkInitStruct.PLLI2S.PLLI2SR = 2;
+ 233:Src/main.c    ****   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+ 234:Src/main.c    ****   {
+ 235:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
+ 236:Src/main.c    ****   }
+ 237:Src/main.c    **** 
+ 238:Src/main.c    ****     /**Configure the Systick interrupt time 
+ 239:Src/main.c    ****     */
+ 240:Src/main.c    ****   HAL_SYSTICK_Config(HAL_RCC_GetHCLKFreq()/1000);
+ 241:Src/main.c    **** 
+ 242:Src/main.c    ****     /**Configure the Systick 
+ 243:Src/main.c    ****     */
+ 244:Src/main.c    ****   HAL_SYSTICK_CLKSourceConfig(SYSTICK_CLKSOURCE_HCLK);
+ 245:Src/main.c    **** 
+ 246:Src/main.c    ****   /* SysTick_IRQn interrupt configuration */
+ 247:Src/main.c    ****   HAL_NVIC_SetPriority(SysTick_IRQn, 15, 0);
+ 248:Src/main.c    **** }
+ 249:Src/main.c    **** 
+ 250:Src/main.c    **** /* I2S2 init function */
+ 251:Src/main.c    **** static void MX_I2S2_Init(void)
+ 252:Src/main.c    **** {
+ 253:Src/main.c    ****   hi2s2.Instance = SPI2;
+ 254:Src/main.c    ****   hi2s2.Init.Mode = I2S_MODE_MASTER_TX;
+ 255:Src/main.c    ****   hi2s2.Init.Standard = I2S_STANDARD_PHILIPS;
+ 256:Src/main.c    ****   hi2s2.Init.DataFormat = I2S_DATAFORMAT_16B;
+ 257:Src/main.c    ****   hi2s2.Init.MCLKOutput = I2S_MCLKOUTPUT_DISABLE;
+ 258:Src/main.c    ****   hi2s2.Init.AudioFreq = I2S_AUDIOFREQ_44K;
+ 259:Src/main.c    ****   hi2s2.Init.CPOL = I2S_CPOL_LOW;
+ 260:Src/main.c    ****   hi2s2.Init.ClockSource = I2S_CLOCK_PLL;
+ 261:Src/main.c    ****   hi2s2.Init.FullDuplexMode = I2S_FULLDUPLEXMODE_DISABLE;
+ 262:Src/main.c    ****   if (HAL_I2S_Init(&hi2s2) != HAL_OK)
+ 263:Src/main.c    ****   {
+ 264:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
+ 265:Src/main.c    ****   }
+ 266:Src/main.c    **** }
+ 267:Src/main.c    **** 
+ 268:Src/main.c    **** /* I2S3 init function */
+ 269:Src/main.c    **** static void MX_I2S3_Init(void)
+ 270:Src/main.c    **** {
+ 271:Src/main.c    ****   hi2s3.Instance = SPI3;
+ 272:Src/main.c    ****   hi2s3.Init.Mode = I2S_MODE_MASTER_TX;
+ 273:Src/main.c    ****   hi2s3.Init.Standard = I2S_STANDARD_PHILIPS;
+ 274:Src/main.c    ****   hi2s3.Init.DataFormat = I2S_DATAFORMAT_16B;
+ 275:Src/main.c    ****   hi2s3.Init.MCLKOutput = I2S_MCLKOUTPUT_ENABLE;
+ 276:Src/main.c    ****   hi2s3.Init.AudioFreq = I2S_AUDIOFREQ_44K;
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 7
+
+
+ 277:Src/main.c    ****   hi2s3.Init.CPOL = I2S_CPOL_LOW;
+ 278:Src/main.c    ****   hi2s3.Init.ClockSource = I2S_CLOCK_PLL;
+ 279:Src/main.c    ****   hi2s3.Init.FullDuplexMode = I2S_FULLDUPLEXMODE_DISABLE;
+ 280:Src/main.c    ****   if (HAL_I2S_Init(&hi2s3) != HAL_OK)
+ 281:Src/main.c    ****   {
+ 282:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
+ 283:Src/main.c    ****   }
+ 284:Src/main.c    **** 
+ 285:Src/main.c    **** }
+ 286:Src/main.c    **** 
+ 287:Src/main.c    **** /* USART2 init function */
+ 288:Src/main.c    **** static void MX_USART2_UART_Init(void)
+ 289:Src/main.c    **** {
+ 290:Src/main.c    ****   huart2.Instance = USART2;
+ 291:Src/main.c    ****   huart2.Init.BaudRate = 115200;
+ 292:Src/main.c    ****   huart2.Init.WordLength = UART_WORDLENGTH_8B;
+ 293:Src/main.c    ****   huart2.Init.StopBits = UART_STOPBITS_1;
+ 294:Src/main.c    ****   huart2.Init.Parity = UART_PARITY_NONE;
+ 295:Src/main.c    ****   huart2.Init.Mode = UART_MODE_TX_RX;
+ 296:Src/main.c    ****   huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+ 297:Src/main.c    ****   huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+ 298:Src/main.c    ****   if (HAL_UART_Init(&huart2) != HAL_OK)
+ 299:Src/main.c    ****   {
+ 300:Src/main.c    ****     _Error_Handler(__FILE__, __LINE__);
+ 301:Src/main.c    ****   }
+ 302:Src/main.c    **** 
+ 303:Src/main.c    **** }
+ 304:Src/main.c    **** 
+ 305:Src/main.c    **** /** Configure pins as 
+ 306:Src/main.c    ****         * Analog 
+ 307:Src/main.c    ****         * Input 
+ 308:Src/main.c    ****         * Output
+ 309:Src/main.c    ****         * EVENT_OUT
+ 310:Src/main.c    ****         * EXTI
+ 311:Src/main.c    ****      PA5   ------> SPI1_SCK
+ 312:Src/main.c    ****      PA6   ------> SPI1_MISO
+ 313:Src/main.c    ****      PA7   ------> SPI1_MOSI
+ 314:Src/main.c    ****      PB6   ------> I2C1_SCL
+ 315:Src/main.c    ****      PB9   ------> I2C1_SDA
+ 316:Src/main.c    **** */
+ 317:Src/main.c    **** static void MX_GPIO_Init(void)
+ 318:Src/main.c    **** {
+  70              		.loc 1 318 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 48
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+  75              	.LCFI3:
+  76              		.cfi_def_cfa_offset 36
+  77              		.cfi_offset 4, -36
+  78              		.cfi_offset 5, -32
+  79              		.cfi_offset 6, -28
+  80              		.cfi_offset 7, -24
+  81              		.cfi_offset 8, -20
+  82              		.cfi_offset 9, -16
+  83              		.cfi_offset 10, -12
+  84              		.cfi_offset 11, -8
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 8
+
+
+  85              		.cfi_offset 14, -4
+  86 0004 8DB0     		sub	sp, sp, #52
+  87              	.LCFI4:
+  88              		.cfi_def_cfa_offset 88
+  89              	.LBB2:
+ 319:Src/main.c    ****   GPIO_InitTypeDef GPIO_InitStruct;
+ 320:Src/main.c    **** 
+ 321:Src/main.c    ****   /* GPIO Ports Clock Enable */
+ 322:Src/main.c    ****   __HAL_RCC_GPIOE_CLK_ENABLE();
+  90              		.loc 1 322 0
+  91 0006 0024     		movs	r4, #0
+  92 0008 0194     		str	r4, [sp, #4]
+  93 000a 594B     		ldr	r3, .L7
+  94 000c 1A6B     		ldr	r2, [r3, #48]
+  95 000e 42F01002 		orr	r2, r2, #16
+  96 0012 1A63     		str	r2, [r3, #48]
+  97 0014 1A6B     		ldr	r2, [r3, #48]
+  98 0016 02F01002 		and	r2, r2, #16
+  99 001a 0192     		str	r2, [sp, #4]
+ 100 001c 019A     		ldr	r2, [sp, #4]
+ 101              	.LBE2:
+ 102              	.LBB3:
+ 323:Src/main.c    ****   __HAL_RCC_GPIOC_CLK_ENABLE();
+ 103              		.loc 1 323 0
+ 104 001e 0294     		str	r4, [sp, #8]
+ 105 0020 1A6B     		ldr	r2, [r3, #48]
+ 106 0022 42F00402 		orr	r2, r2, #4
+ 107 0026 1A63     		str	r2, [r3, #48]
+ 108 0028 1A6B     		ldr	r2, [r3, #48]
+ 109 002a 02F00402 		and	r2, r2, #4
+ 110 002e 0292     		str	r2, [sp, #8]
+ 111 0030 029A     		ldr	r2, [sp, #8]
+ 112              	.LBE3:
+ 113              	.LBB4:
+ 324:Src/main.c    ****   __HAL_RCC_GPIOH_CLK_ENABLE();
+ 114              		.loc 1 324 0
+ 115 0032 0394     		str	r4, [sp, #12]
+ 116 0034 1A6B     		ldr	r2, [r3, #48]
+ 117 0036 42F08002 		orr	r2, r2, #128
+ 118 003a 1A63     		str	r2, [r3, #48]
+ 119 003c 1A6B     		ldr	r2, [r3, #48]
+ 120 003e 02F08002 		and	r2, r2, #128
+ 121 0042 0392     		str	r2, [sp, #12]
+ 122 0044 039A     		ldr	r2, [sp, #12]
+ 123              	.LBE4:
+ 124              	.LBB5:
+ 325:Src/main.c    ****   __HAL_RCC_GPIOA_CLK_ENABLE();
+ 125              		.loc 1 325 0
+ 126 0046 0494     		str	r4, [sp, #16]
+ 127 0048 1A6B     		ldr	r2, [r3, #48]
+ 128 004a 42F00102 		orr	r2, r2, #1
+ 129 004e 1A63     		str	r2, [r3, #48]
+ 130 0050 1A6B     		ldr	r2, [r3, #48]
+ 131 0052 02F00102 		and	r2, r2, #1
+ 132 0056 0492     		str	r2, [sp, #16]
+ 133 0058 049A     		ldr	r2, [sp, #16]
+ 134              	.LBE5:
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 9
+
+
+ 135              	.LBB6:
+ 326:Src/main.c    ****   __HAL_RCC_GPIOB_CLK_ENABLE();
+ 136              		.loc 1 326 0
+ 137 005a 0594     		str	r4, [sp, #20]
+ 138 005c 1A6B     		ldr	r2, [r3, #48]
+ 139 005e 42F00202 		orr	r2, r2, #2
+ 140 0062 1A63     		str	r2, [r3, #48]
+ 141 0064 1A6B     		ldr	r2, [r3, #48]
+ 142 0066 02F00202 		and	r2, r2, #2
+ 143 006a 0592     		str	r2, [sp, #20]
+ 144 006c 059A     		ldr	r2, [sp, #20]
+ 145              	.LBE6:
+ 146              	.LBB7:
+ 327:Src/main.c    ****   __HAL_RCC_GPIOD_CLK_ENABLE();
+ 147              		.loc 1 327 0
+ 148 006e 0694     		str	r4, [sp, #24]
+ 149 0070 1A6B     		ldr	r2, [r3, #48]
+ 150 0072 42F00802 		orr	r2, r2, #8
+ 151 0076 1A63     		str	r2, [r3, #48]
+ 152 0078 1B6B     		ldr	r3, [r3, #48]
+ 153 007a 03F00803 		and	r3, r3, #8
+ 154 007e 0693     		str	r3, [sp, #24]
+ 155 0080 069B     		ldr	r3, [sp, #24]
+ 156              	.LBE7:
+ 328:Src/main.c    **** 
+ 329:Src/main.c    ****   /*Configure GPIO pin Output Level */
+ 330:Src/main.c    ****   HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
+ 157              		.loc 1 330 0
+ 158 0082 3C4E     		ldr	r6, .L7+4
+ 159 0084 2246     		mov	r2, r4
+ 160 0086 0821     		movs	r1, #8
+ 161 0088 3046     		mov	r0, r6
+ 162 008a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 163              	.LVL3:
+ 331:Src/main.c    **** 
+ 332:Src/main.c    ****   /*Configure GPIO pin Output Level */
+ 333:Src/main.c    ****   HAL_GPIO_WritePin(OTG_FS_PowerSwitchOn_GPIO_Port, OTG_FS_PowerSwitchOn_Pin, GPIO_PIN_RESET);
+ 164              		.loc 1 333 0
+ 165 008e DFF8EC80 		ldr	r8, .L7+12
+ 166 0092 2246     		mov	r2, r4
+ 167 0094 0121     		movs	r1, #1
+ 168 0096 4046     		mov	r0, r8
+ 169 0098 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 170              	.LVL4:
+ 334:Src/main.c    **** 
+ 335:Src/main.c    ****   /*Configure GPIO pin Output Level */
+ 336:Src/main.c    ****   HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin 
+ 171              		.loc 1 336 0
+ 172 009c 364F     		ldr	r7, .L7+8
+ 173 009e 2246     		mov	r2, r4
+ 174 00a0 4FF21001 		movw	r1, #61456
+ 175 00a4 3846     		mov	r0, r7
+ 176 00a6 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 177              	.LVL5:
+ 337:Src/main.c    ****                           |Audio_RST_Pin, GPIO_PIN_RESET);
+ 338:Src/main.c    **** 
+ 339:Src/main.c    ****   /*Configure GPIO pin : CS_I2C_SPI_Pin */
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 10
+
+
+ 340:Src/main.c    ****   GPIO_InitStruct.Pin = CS_I2C_SPI_Pin;
+ 178              		.loc 1 340 0
+ 179 00aa 0823     		movs	r3, #8
+ 180 00ac 0793     		str	r3, [sp, #28]
+ 341:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 181              		.loc 1 341 0
+ 182 00ae 0125     		movs	r5, #1
+ 183 00b0 0895     		str	r5, [sp, #32]
+ 342:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 184              		.loc 1 342 0
+ 185 00b2 0994     		str	r4, [sp, #36]
+ 343:Src/main.c    ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 186              		.loc 1 343 0
+ 187 00b4 0A94     		str	r4, [sp, #40]
+ 344:Src/main.c    ****   HAL_GPIO_Init(CS_I2C_SPI_GPIO_Port, &GPIO_InitStruct);
+ 188              		.loc 1 344 0
+ 189 00b6 07A9     		add	r1, sp, #28
+ 190 00b8 3046     		mov	r0, r6
+ 191 00ba FFF7FEFF 		bl	HAL_GPIO_Init
+ 192              	.LVL6:
+ 345:Src/main.c    **** 
+ 346:Src/main.c    ****   /*Configure GPIO pin : OTG_FS_PowerSwitchOn_Pin */
+ 347:Src/main.c    ****   GPIO_InitStruct.Pin = OTG_FS_PowerSwitchOn_Pin;
+ 193              		.loc 1 347 0
+ 194 00be 0795     		str	r5, [sp, #28]
+ 348:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 195              		.loc 1 348 0
+ 196 00c0 0895     		str	r5, [sp, #32]
+ 349:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 197              		.loc 1 349 0
+ 198 00c2 0994     		str	r4, [sp, #36]
+ 350:Src/main.c    ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 199              		.loc 1 350 0
+ 200 00c4 0A94     		str	r4, [sp, #40]
+ 351:Src/main.c    ****   HAL_GPIO_Init(OTG_FS_PowerSwitchOn_GPIO_Port, &GPIO_InitStruct);
+ 201              		.loc 1 351 0
+ 202 00c6 07A9     		add	r1, sp, #28
+ 203 00c8 4046     		mov	r0, r8
+ 204 00ca FFF7FEFF 		bl	HAL_GPIO_Init
+ 205              	.LVL7:
+ 352:Src/main.c    **** 
+ 353:Src/main.c    ****   /*Configure GPIO pin : B1_Pin */
+ 354:Src/main.c    ****   GPIO_InitStruct.Pin = B1_Pin;
+ 206              		.loc 1 354 0
+ 207 00ce 0795     		str	r5, [sp, #28]
+ 355:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_EVT_RISING;
+ 208              		.loc 1 355 0
+ 209 00d0 DFF8AC80 		ldr	r8, .L7+16
+ 210 00d4 CDF82080 		str	r8, [sp, #32]
+ 356:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 211              		.loc 1 356 0
+ 212 00d8 0994     		str	r4, [sp, #36]
+ 357:Src/main.c    ****   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
+ 213              		.loc 1 357 0
+ 214 00da DFF8A8A0 		ldr	r10, .L7+20
+ 215 00de 07A9     		add	r1, sp, #28
+ 216 00e0 5046     		mov	r0, r10
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 11
+
+
+ 217 00e2 FFF7FEFF 		bl	HAL_GPIO_Init
+ 218              	.LVL8:
+ 358:Src/main.c    **** 
+ 359:Src/main.c    ****   /*Configure GPIO pins : SPI1_SCK_Pin SPI1_MISO_Pin SPI1_MOSI_Pin */
+ 360:Src/main.c    ****   GPIO_InitStruct.Pin = SPI1_SCK_Pin|SPI1_MISO_Pin|SPI1_MOSI_Pin;
+ 219              		.loc 1 360 0
+ 220 00e6 E023     		movs	r3, #224
+ 221 00e8 0793     		str	r3, [sp, #28]
+ 361:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+ 222              		.loc 1 361 0
+ 223 00ea 4FF00209 		mov	r9, #2
+ 224 00ee CDF82090 		str	r9, [sp, #32]
+ 362:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 225              		.loc 1 362 0
+ 226 00f2 0994     		str	r4, [sp, #36]
+ 363:Src/main.c    ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 227              		.loc 1 363 0
+ 228 00f4 0A94     		str	r4, [sp, #40]
+ 364:Src/main.c    ****   GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
+ 229              		.loc 1 364 0
+ 230 00f6 0523     		movs	r3, #5
+ 231 00f8 0B93     		str	r3, [sp, #44]
+ 365:Src/main.c    ****   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+ 232              		.loc 1 365 0
+ 233 00fa 07A9     		add	r1, sp, #28
+ 234 00fc 5046     		mov	r0, r10
+ 235 00fe FFF7FEFF 		bl	HAL_GPIO_Init
+ 236              	.LVL9:
+ 366:Src/main.c    **** 
+ 367:Src/main.c    ****   /*Configure GPIO pin : BOOT1_Pin */
+ 368:Src/main.c    ****   GPIO_InitStruct.Pin = BOOT1_Pin;
+ 237              		.loc 1 368 0
+ 238 0102 4FF0040B 		mov	fp, #4
+ 239 0106 CDF81CB0 		str	fp, [sp, #28]
+ 369:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+ 240              		.loc 1 369 0
+ 241 010a 0894     		str	r4, [sp, #32]
+ 370:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 242              		.loc 1 370 0
+ 243 010c 0994     		str	r4, [sp, #36]
+ 371:Src/main.c    ****   HAL_GPIO_Init(BOOT1_GPIO_Port, &GPIO_InitStruct);
+ 244              		.loc 1 371 0
+ 245 010e 0AF5806A 		add	r10, r10, #1024
+ 246 0112 07A9     		add	r1, sp, #28
+ 247 0114 5046     		mov	r0, r10
+ 248 0116 FFF7FEFF 		bl	HAL_GPIO_Init
+ 249              	.LVL10:
+ 372:Src/main.c    **** 
+ 373:Src/main.c    ****   /*Configure GPIO pins : LD4_Pin LD3_Pin LD5_Pin LD6_Pin 
+ 374:Src/main.c    ****                            Audio_RST_Pin */
+ 375:Src/main.c    ****   GPIO_InitStruct.Pin = LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin 
+ 250              		.loc 1 375 0
+ 251 011a 4FF21003 		movw	r3, #61456
+ 252 011e 0793     		str	r3, [sp, #28]
+ 376:Src/main.c    ****                           |Audio_RST_Pin;
+ 377:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 253              		.loc 1 377 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 12
+
+
+ 254 0120 0895     		str	r5, [sp, #32]
+ 378:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 255              		.loc 1 378 0
+ 256 0122 0994     		str	r4, [sp, #36]
+ 379:Src/main.c    ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 257              		.loc 1 379 0
+ 258 0124 0A94     		str	r4, [sp, #40]
+ 380:Src/main.c    ****   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+ 259              		.loc 1 380 0
+ 260 0126 07A9     		add	r1, sp, #28
+ 261 0128 3846     		mov	r0, r7
+ 262 012a FFF7FEFF 		bl	HAL_GPIO_Init
+ 263              	.LVL11:
+ 381:Src/main.c    **** 
+ 382:Src/main.c    ****   /*Configure GPIO pin : OTG_FS_OverCurrent_Pin */
+ 383:Src/main.c    ****   GPIO_InitStruct.Pin = OTG_FS_OverCurrent_Pin;
+ 264              		.loc 1 383 0
+ 265 012e 2023     		movs	r3, #32
+ 266 0130 0793     		str	r3, [sp, #28]
+ 384:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+ 267              		.loc 1 384 0
+ 268 0132 0894     		str	r4, [sp, #32]
+ 385:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 269              		.loc 1 385 0
+ 270 0134 0994     		str	r4, [sp, #36]
+ 386:Src/main.c    ****   HAL_GPIO_Init(OTG_FS_OverCurrent_GPIO_Port, &GPIO_InitStruct);
+ 271              		.loc 1 386 0
+ 272 0136 07A9     		add	r1, sp, #28
+ 273 0138 3846     		mov	r0, r7
+ 274 013a FFF7FEFF 		bl	HAL_GPIO_Init
+ 275              	.LVL12:
+ 387:Src/main.c    **** 
+ 388:Src/main.c    ****   /*Configure GPIO pins : Audio_SCL_Pin Audio_SDA_Pin */
+ 389:Src/main.c    ****   GPIO_InitStruct.Pin = Audio_SCL_Pin|Audio_SDA_Pin;
+ 276              		.loc 1 389 0
+ 277 013e 4FF41073 		mov	r3, #576
+ 278 0142 0793     		str	r3, [sp, #28]
+ 390:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+ 279              		.loc 1 390 0
+ 280 0144 1223     		movs	r3, #18
+ 281 0146 0893     		str	r3, [sp, #32]
+ 391:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_PULLUP;
+ 282              		.loc 1 391 0
+ 283 0148 0995     		str	r5, [sp, #36]
+ 392:Src/main.c    ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 284              		.loc 1 392 0
+ 285 014a 0A94     		str	r4, [sp, #40]
+ 393:Src/main.c    ****   GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+ 286              		.loc 1 393 0
+ 287 014c CDF82CB0 		str	fp, [sp, #44]
+ 394:Src/main.c    ****   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 288              		.loc 1 394 0
+ 289 0150 07A9     		add	r1, sp, #28
+ 290 0152 5046     		mov	r0, r10
+ 291 0154 FFF7FEFF 		bl	HAL_GPIO_Init
+ 292              	.LVL13:
+ 395:Src/main.c    **** 
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 13
+
+
+ 396:Src/main.c    ****   /*Configure GPIO pin : MEMS_INT2_Pin */
+ 397:Src/main.c    ****   GPIO_InitStruct.Pin = MEMS_INT2_Pin;
+ 293              		.loc 1 397 0
+ 294 0158 CDF81C90 		str	r9, [sp, #28]
+ 398:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_EVT_RISING;
+ 295              		.loc 1 398 0
+ 296 015c CDF82080 		str	r8, [sp, #32]
+ 399:Src/main.c    ****   GPIO_InitStruct.Pull = GPIO_NOPULL;
+ 297              		.loc 1 399 0
+ 298 0160 0994     		str	r4, [sp, #36]
+ 400:Src/main.c    ****   HAL_GPIO_Init(MEMS_INT2_GPIO_Port, &GPIO_InitStruct);
+ 299              		.loc 1 400 0
+ 300 0162 07A9     		add	r1, sp, #28
+ 301 0164 3046     		mov	r0, r6
+ 302 0166 FFF7FEFF 		bl	HAL_GPIO_Init
+ 303              	.LVL14:
+ 401:Src/main.c    **** }
+ 304              		.loc 1 401 0
+ 305 016a 0DB0     		add	sp, sp, #52
+ 306              	.LCFI5:
+ 307              		.cfi_def_cfa_offset 36
+ 308              		@ sp needed
+ 309 016c BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 310              	.L8:
+ 311              		.align	2
+ 312              	.L7:
+ 313 0170 00380240 		.word	1073887232
+ 314 0174 00100240 		.word	1073876992
+ 315 0178 000C0240 		.word	1073875968
+ 316 017c 00080240 		.word	1073874944
+ 317 0180 00001210 		.word	269615104
+ 318 0184 00000240 		.word	1073872896
+ 319              		.cfi_endproc
+ 320              	.LFE143:
+ 322              		.section	.text.BSP_AUDIO_OUT_HalfTransfer_CallBack,"ax",%progbits
+ 323              		.align	1
+ 324              		.global	BSP_AUDIO_OUT_HalfTransfer_CallBack
+ 325              		.syntax unified
+ 326              		.thumb
+ 327              		.thumb_func
+ 328              		.fpu fpv4-sp-d16
+ 330              	BSP_AUDIO_OUT_HalfTransfer_CallBack:
+ 331              	.LFB129:
+ 332              		.file 2 "Src/waveplayer.c"
+   1:Src/waveplayer.c **** /**
+   2:Src/waveplayer.c ****   ******************************************************************************
+   3:Src/waveplayer.c ****   * @file    Audio/Audio_playback_and_record/Src/waveplayer.c 
+   4:Src/waveplayer.c ****   * @author  MCD Application Team
+   5:Src/waveplayer.c ****   * @version V1.3.5
+   6:Src/waveplayer.c ****   * @date    17-February-2017
+   7:Src/waveplayer.c ****   * @brief   I2S Audio player program. 
+   8:Src/waveplayer.c ****   ******************************************************************************
+   9:Src/waveplayer.c ****   * @attention
+  10:Src/waveplayer.c ****   *
+  11:Src/waveplayer.c ****   * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics International N.V. 
+  12:Src/waveplayer.c ****   * All rights reserved.</center></h2>
+  13:Src/waveplayer.c ****   *
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 14
+
+
+  14:Src/waveplayer.c ****   * Redistribution and use in source and binary forms, with or without 
+  15:Src/waveplayer.c ****   * modification, are permitted, provided that the following conditions are met:
+  16:Src/waveplayer.c ****   *
+  17:Src/waveplayer.c ****   * 1. Redistribution of source code must retain the above copyright notice, 
+  18:Src/waveplayer.c ****   *    this list of conditions and the following disclaimer.
+  19:Src/waveplayer.c ****   * 2. Redistributions in binary form must reproduce the above copyright notice,
+  20:Src/waveplayer.c ****   *    this list of conditions and the following disclaimer in the documentation
+  21:Src/waveplayer.c ****   *    and/or other materials provided with the distribution.
+  22:Src/waveplayer.c ****   * 3. Neither the name of STMicroelectronics nor the names of other 
+  23:Src/waveplayer.c ****   *    contributors to this software may be used to endorse or promote products 
+  24:Src/waveplayer.c ****   *    derived from this software without specific written permission.
+  25:Src/waveplayer.c ****   * 4. This software, including modifications and/or derivative works of this 
+  26:Src/waveplayer.c ****   *    software, must execute solely and exclusively on microcontroller or
+  27:Src/waveplayer.c ****   *    microprocessor devices manufactured by or for STMicroelectronics.
+  28:Src/waveplayer.c ****   * 5. Redistribution and use of this software other than as permitted under 
+  29:Src/waveplayer.c ****   *    this license is void and will automatically terminate your rights under 
+  30:Src/waveplayer.c ****   *    this license. 
+  31:Src/waveplayer.c ****   *
+  32:Src/waveplayer.c ****   * THIS SOFTWARE IS PROVIDED BY STMICROELECTRONICS AND CONTRIBUTORS "AS IS" 
+  33:Src/waveplayer.c ****   * AND ANY EXPRESS, IMPLIED OR STATUTORY WARRANTIES, INCLUDING, BUT NOT 
+  34:Src/waveplayer.c ****   * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
+  35:Src/waveplayer.c ****   * PARTICULAR PURPOSE AND NON-INFRINGEMENT OF THIRD PARTY INTELLECTUAL PROPERTY
+  36:Src/waveplayer.c ****   * RIGHTS ARE DISCLAIMED TO THE FULLEST EXTENT PERMITTED BY LAW. IN NO EVENT 
+  37:Src/waveplayer.c ****   * SHALL STMICROELECTRONICS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+  38:Src/waveplayer.c ****   * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  39:Src/waveplayer.c ****   * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, 
+  40:Src/waveplayer.c ****   * OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF 
+  41:Src/waveplayer.c ****   * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING 
+  42:Src/waveplayer.c ****   * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+  43:Src/waveplayer.c ****   * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  44:Src/waveplayer.c ****   *
+  45:Src/waveplayer.c ****   ******************************************************************************
+  46:Src/waveplayer.c ****   */ 
+  47:Src/waveplayer.c ****   
+  48:Src/waveplayer.c **** /* Includes ------------------------------------------------------------------*/
+  49:Src/waveplayer.c **** #include "../Drivers/BSP/STM32F4-Discovery/stm32f4_discovery_audio.h"
+  50:Src/waveplayer.c **** #define AUDIO_BUFFER_SIZE             4096
+  51:Src/waveplayer.c **** 
+  52:Src/waveplayer.c **** /** @addtogroup STM32F4-Discovery_Audio_Player_Recorder
+  53:Src/waveplayer.c **** * @{
+  54:Src/waveplayer.c **** */ 
+  55:Src/waveplayer.c **** 
+  56:Src/waveplayer.c **** /* Private macro -------------------------------------------------------------*/
+  57:Src/waveplayer.c **** /* Private variables ---------------------------------------------------------*/
+  58:Src/waveplayer.c **** 
+  59:Src/waveplayer.c **** /**
+  60:Src/waveplayer.c ****   * @brief  Manages the DMA Half Transfer complete interrupt.
+  61:Src/waveplayer.c ****   * @param  None
+  62:Src/waveplayer.c ****   * @retval None
+  63:Src/waveplayer.c ****   */
+  64:Src/waveplayer.c **** 
+  65:Src/waveplayer.c **** 
+  66:Src/waveplayer.c **** extern __IO uint32_t RepeatState, PauseResumeStatus, PressCount;
+  67:Src/waveplayer.c **** 
+  68:Src/waveplayer.c **** /* Audio wave data length to be played */
+  69:Src/waveplayer.c **** static uint32_t WaveDataLength = 0;
+  70:Src/waveplayer.c **** 
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 15
+
+
+  71:Src/waveplayer.c **** /* Audio wave remaining data length to be played */
+  72:Src/waveplayer.c **** static __IO uint32_t AudioRemSize = 0;
+  73:Src/waveplayer.c **** 
+  74:Src/waveplayer.c **** __IO uint32_t AudioPlayStart = 0;
+  75:Src/waveplayer.c **** 
+  76:Src/waveplayer.c **** /* Ping-Pong buffer used for audio play */
+  77:Src/waveplayer.c **** uint8_t Audio_Buffer[AUDIO_BUFFER_SIZE];
+  78:Src/waveplayer.c **** 
+  79:Src/waveplayer.c **** /* Position in the audio play buffer */
+  80:Src/waveplayer.c **** __IO BUFFER_StateTypeDef buffer_offset = BUFFER_OFFSET_NONE;
+  81:Src/waveplayer.c **** 
+  82:Src/waveplayer.c **** /* Initial Volume level (from 0 (Mute) to 100 (Max)) */
+  83:Src/waveplayer.c **** static uint8_t Volume = 70;
+  84:Src/waveplayer.c **** 
+  85:Src/waveplayer.c **** /* Variable used by FatFs*/
+  86:Src/waveplayer.c **** FIL FileRead;
+  87:Src/waveplayer.c **** DIR Directory;
+  88:Src/waveplayer.c **** 
+  89:Src/waveplayer.c **** /* Private function prototypes -----------------------------------------------*/
+  90:Src/waveplayer.c **** 
+  91:Src/waveplayer.c **** /* Private functions ---------------------------------------------------------*/
+  92:Src/waveplayer.c **** 
+  93:Src/waveplayer.c **** // TODO @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ import discovery_audio
+  94:Src/waveplayer.c **** 
+  95:Src/waveplayer.c **** 
+  96:Src/waveplayer.c **** void BSP_AUDIO_OUT_HalfTransfer_CallBack(void)
+  97:Src/waveplayer.c **** { 
+ 333              		.loc 2 97 0
+ 334              		.cfi_startproc
+ 335              		@ args = 0, pretend = 0, frame = 0
+ 336              		@ frame_needed = 0, uses_anonymous_args = 0
+ 337              		@ link register save eliminated.
+  98:Src/waveplayer.c ****   buffer_offset = BUFFER_OFFSET_HALF;
+ 338              		.loc 2 98 0
+ 339 0000 0122     		movs	r2, #1
+ 340 0002 014B     		ldr	r3, .L10
+ 341 0004 1A70     		strb	r2, [r3]
+ 342 0006 7047     		bx	lr
+ 343              	.L11:
+ 344              		.align	2
+ 345              	.L10:
+ 346 0008 00000000 		.word	.LANCHOR0
+ 347              		.cfi_endproc
+ 348              	.LFE129:
+ 350              		.section	.text.BSP_AUDIO_OUT_TransferComplete_CallBack,"ax",%progbits
+ 351              		.align	1
+ 352              		.global	BSP_AUDIO_OUT_TransferComplete_CallBack
+ 353              		.syntax unified
+ 354              		.thumb
+ 355              		.thumb_func
+ 356              		.fpu fpv4-sp-d16
+ 358              	BSP_AUDIO_OUT_TransferComplete_CallBack:
+ 359              	.LFB130:
+  99:Src/waveplayer.c **** }
+ 100:Src/waveplayer.c **** 
+ 101:Src/waveplayer.c **** /**
+ 102:Src/waveplayer.c **** * @brief  Calculates the remaining file size and new position of the pointer.
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 16
+
+
+ 103:Src/waveplayer.c **** * @param  None
+ 104:Src/waveplayer.c **** * @retval None
+ 105:Src/waveplayer.c **** */
+ 106:Src/waveplayer.c **** void BSP_AUDIO_OUT_TransferComplete_CallBack(void)
+ 107:Src/waveplayer.c **** {
+ 360              		.loc 2 107 0
+ 361              		.cfi_startproc
+ 362              		@ args = 0, pretend = 0, frame = 0
+ 363              		@ frame_needed = 0, uses_anonymous_args = 0
+ 364 0000 08B5     		push	{r3, lr}
+ 365              	.LCFI6:
+ 366              		.cfi_def_cfa_offset 8
+ 367              		.cfi_offset 3, -8
+ 368              		.cfi_offset 14, -4
+ 108:Src/waveplayer.c ****   buffer_offset = BUFFER_OFFSET_FULL;
+ 369              		.loc 2 108 0
+ 370 0002 0222     		movs	r2, #2
+ 371 0004 034B     		ldr	r3, .L14
+ 372 0006 1A70     		strb	r2, [r3]
+ 109:Src/waveplayer.c ****   BSP_AUDIO_OUT_ChangeBuffer((uint16_t*)&Audio_Buffer[0], AUDIO_BUFFER_SIZE / 2);
+ 373              		.loc 2 109 0
+ 374 0008 4FF40061 		mov	r1, #2048
+ 375 000c 0248     		ldr	r0, .L14+4
+ 376 000e FFF7FEFF 		bl	BSP_AUDIO_OUT_ChangeBuffer
+ 377              	.LVL15:
+ 378 0012 08BD     		pop	{r3, pc}
+ 379              	.L15:
+ 380              		.align	2
+ 381              	.L14:
+ 382 0014 00000000 		.word	.LANCHOR0
+ 383 0018 00000000 		.word	Audio_Buffer
+ 384              		.cfi_endproc
+ 385              	.LFE130:
+ 387              		.section	.text.BSP_AUDIO_OUT_Error_CallBack,"ax",%progbits
+ 388              		.align	1
+ 389              		.global	BSP_AUDIO_OUT_Error_CallBack
+ 390              		.syntax unified
+ 391              		.thumb
+ 392              		.thumb_func
+ 393              		.fpu fpv4-sp-d16
+ 395              	BSP_AUDIO_OUT_Error_CallBack:
+ 396              	.LFB131:
+ 110:Src/waveplayer.c **** }
+ 111:Src/waveplayer.c **** 
+ 112:Src/waveplayer.c **** void BSP_AUDIO_OUT_Error_CallBack(void)
+ 113:Src/waveplayer.c **** {
+ 397              		.loc 2 113 0
+ 398              		.cfi_startproc
+ 399              		@ Volatile: function does not return.
+ 400              		@ args = 0, pretend = 0, frame = 0
+ 401              		@ frame_needed = 0, uses_anonymous_args = 0
+ 402              		@ link register save eliminated.
+ 403              	.L17:
+ 404 0000 FEE7     		b	.L17
+ 405              		.cfi_endproc
+ 406              	.LFE131:
+ 408              		.section	.text.WavePlayerInit,"ax",%progbits
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 17
+
+
+ 409              		.align	1
+ 410              		.global	WavePlayerInit
+ 411              		.syntax unified
+ 412              		.thumb
+ 413              		.thumb_func
+ 414              		.fpu fpv4-sp-d16
+ 416              	WavePlayerInit:
+ 417              	.LFB132:
+ 114:Src/waveplayer.c ****   /* Stop the program with an infinite loop */
+ 115:Src/waveplayer.c ****   while (1)
+ 116:Src/waveplayer.c ****   {}
+ 117:Src/waveplayer.c ****   
+ 118:Src/waveplayer.c ****   /* Could also generate a system reset to recover from the error */
+ 119:Src/waveplayer.c ****   /* .... */
+ 120:Src/waveplayer.c **** }
+ 121:Src/waveplayer.c **** 
+ 122:Src/waveplayer.c **** int WavePlayerInit(uint32_t AudioFreq)
+ 123:Src/waveplayer.c **** {
+ 418              		.loc 2 123 0
+ 419              		.cfi_startproc
+ 420              		@ args = 0, pretend = 0, frame = 0
+ 421              		@ frame_needed = 0, uses_anonymous_args = 0
+ 422              	.LVL16:
+ 423              		.loc 2 123 0
+ 424 0000 08B5     		push	{r3, lr}
+ 425              	.LCFI7:
+ 426              		.cfi_def_cfa_offset 8
+ 427              		.cfi_offset 3, -8
+ 428              		.cfi_offset 14, -4
+ 124:Src/waveplayer.c ****   /* Initialize the Audio codec and all related peripherals (I2S, I2C, IOExpander, IOs...) */  
+ 125:Src/waveplayer.c ****   return(BSP_AUDIO_OUT_Init(OUTPUT_DEVICE_AUTO, Volume, AudioFreq));  
+ 429              		.loc 2 125 0
+ 430 0002 0246     		mov	r2, r0
+ 431 0004 4621     		movs	r1, #70
+ 432 0006 0420     		movs	r0, #4
+ 433              	.LVL17:
+ 434 0008 FFF7FEFF 		bl	BSP_AUDIO_OUT_Init
+ 435              	.LVL18:
+ 126:Src/waveplayer.c **** }
+ 436              		.loc 2 126 0
+ 437 000c 08BD     		pop	{r3, pc}
+ 438              		.cfi_endproc
+ 439              	.LFE132:
+ 441              		.section	.text.WavePlayerStop,"ax",%progbits
+ 442              		.align	1
+ 443              		.global	WavePlayerStop
+ 444              		.syntax unified
+ 445              		.thumb
+ 446              		.thumb_func
+ 447              		.fpu fpv4-sp-d16
+ 449              	WavePlayerStop:
+ 450              	.LFB134:
+ 127:Src/waveplayer.c **** 
+ 128:Src/waveplayer.c **** /**
+ 129:Src/waveplayer.c ****   * @brief  Plays Wave from a mass storage.
+ 130:Src/waveplayer.c ****   * @param  AudioFreq: Audio Sampling Frequency
+ 131:Src/waveplayer.c ****   * @retval None
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 18
+
+
+ 132:Src/waveplayer.c **** */
+ 133:Src/waveplayer.c **** void WavePlayBack(uint32_t AudioFreq) 
+ 134:Src/waveplayer.c **** {	
+ 135:Src/waveplayer.c ****     UINT bytesread = 0;
+ 136:Src/waveplayer.c **** 	printf("in wave play back\n");
+ 137:Src/waveplayer.c **** 	/* Start playing */
+ 138:Src/waveplayer.c **** 	AudioPlayStart = 1;
+ 139:Src/waveplayer.c **** 
+ 140:Src/waveplayer.c ****     /* Initialize Wave player (Codec, DMA, I2C) */
+ 141:Src/waveplayer.c ****     if(WavePlayerInit(AudioFreq) != 0) 
+ 142:Src/waveplayer.c **** 	{
+ 143:Src/waveplayer.c ****         Error_Handler();
+ 144:Src/waveplayer.c ****     }
+ 145:Src/waveplayer.c **** 
+ 146:Src/waveplayer.c ****     /* Get Data from USB Flash Disk */
+ 147:Src/waveplayer.c ****     f_lseek(&FileRead, 0);
+ 148:Src/waveplayer.c ****     f_read (&FileRead, &Audio_Buffer[0], AUDIO_BUFFER_SIZE, &bytesread);
+ 149:Src/waveplayer.c ****     AudioRemSize = WaveDataLength - bytesread;
+ 150:Src/waveplayer.c **** 
+ 151:Src/waveplayer.c **** 	printf("start playing\n");
+ 152:Src/waveplayer.c ****     /* Start playing Wave */
+ 153:Src/waveplayer.c ****     BSP_AUDIO_OUT_Play((uint16_t*)&Audio_Buffer[0], AUDIO_BUFFER_SIZE);
+ 154:Src/waveplayer.c **** 
+ 155:Src/waveplayer.c ****     /* Check if the device is connected.*/
+ 156:Src/waveplayer.c ****     while(AudioRemSize != 0) 
+ 157:Src/waveplayer.c **** 	{
+ 158:Src/waveplayer.c ****         bytesread = 0;
+ 159:Src/waveplayer.c ****         if(buffer_offset == BUFFER_OFFSET_HALF) 
+ 160:Src/waveplayer.c **** 		{
+ 161:Src/waveplayer.c ****             f_read(&FileRead, &Audio_Buffer[0], AUDIO_BUFFER_SIZE/2, (void *)&bytesread);
+ 162:Src/waveplayer.c ****             buffer_offset = BUFFER_OFFSET_NONE;
+ 163:Src/waveplayer.c ****         }
+ 164:Src/waveplayer.c **** 
+ 165:Src/waveplayer.c ****         if(buffer_offset == BUFFER_OFFSET_FULL) 
+ 166:Src/waveplayer.c **** 		{
+ 167:Src/waveplayer.c ****             f_read(&FileRead, &Audio_Buffer[AUDIO_BUFFER_SIZE/2], AUDIO_BUFFER_SIZE/2, (void *)&byt
+ 168:Src/waveplayer.c ****             buffer_offset = BUFFER_OFFSET_NONE;
+ 169:Src/waveplayer.c ****         }
+ 170:Src/waveplayer.c **** 
+ 171:Src/waveplayer.c ****         if(AudioRemSize > (AUDIO_BUFFER_SIZE / 2)) 
+ 172:Src/waveplayer.c **** 		{
+ 173:Src/waveplayer.c ****             AudioRemSize -= bytesread;
+ 174:Src/waveplayer.c ****         } 
+ 175:Src/waveplayer.c **** 		else 
+ 176:Src/waveplayer.c **** 		{
+ 177:Src/waveplayer.c ****             AudioRemSize = 0;
+ 178:Src/waveplayer.c ****         }
+ 179:Src/waveplayer.c **** 		
+ 180:Src/waveplayer.c **** 		//printf("playing\n");
+ 181:Src/waveplayer.c ****     }
+ 182:Src/waveplayer.c **** 	printf("stop playing\n");
+ 183:Src/waveplayer.c ****     /* Stop playing Wave */
+ 184:Src/waveplayer.c **** 	AudioPlayStart = 0;
+ 185:Src/waveplayer.c ****     WavePlayerStop();
+ 186:Src/waveplayer.c ****     /* Close file */
+ 187:Src/waveplayer.c ****     f_close(&FileRead);
+ 188:Src/waveplayer.c ****     AudioRemSize = 0;
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 19
+
+
+ 189:Src/waveplayer.c **** }
+ 190:Src/waveplayer.c **** 
+ 191:Src/waveplayer.c **** /**
+ 192:Src/waveplayer.c ****   * @brief  Stops playing Wave.
+ 193:Src/waveplayer.c ****   * @param  None
+ 194:Src/waveplayer.c ****   * @retval None
+ 195:Src/waveplayer.c ****   */
+ 196:Src/waveplayer.c **** void WavePlayerStop(void) 
+ 197:Src/waveplayer.c **** {
+ 451              		.loc 2 197 0
+ 452              		.cfi_startproc
+ 453              		@ args = 0, pretend = 0, frame = 0
+ 454              		@ frame_needed = 0, uses_anonymous_args = 0
+ 455 0000 08B5     		push	{r3, lr}
+ 456              	.LCFI8:
+ 457              		.cfi_def_cfa_offset 8
+ 458              		.cfi_offset 3, -8
+ 459              		.cfi_offset 14, -4
+ 198:Src/waveplayer.c ****     BSP_AUDIO_OUT_Stop(CODEC_PDWN_HW);
+ 460              		.loc 2 198 0
+ 461 0002 0120     		movs	r0, #1
+ 462 0004 FFF7FEFF 		bl	BSP_AUDIO_OUT_Stop
+ 463              	.LVL19:
+ 464 0008 08BD     		pop	{r3, pc}
+ 465              		.cfi_endproc
+ 466              	.LFE134:
+ 468              		.section	.text._write_r,"ax",%progbits
+ 469              		.align	1
+ 470              		.global	_write_r
+ 471              		.syntax unified
+ 472              		.thumb
+ 473              		.thumb_func
+ 474              		.fpu fpv4-sp-d16
+ 476              	_write_r:
+ 477              	.LFB137:
+  92:Src/main.c    ****     int cntr = len;
+ 478              		.loc 1 92 0
+ 479              		.cfi_startproc
+ 480              		@ args = 0, pretend = 0, frame = 0
+ 481              		@ frame_needed = 0, uses_anonymous_args = 0
+ 482              	.LVL20:
+ 483 0000 70B5     		push	{r4, r5, r6, lr}
+ 484              	.LCFI9:
+ 485              		.cfi_def_cfa_offset 16
+ 486              		.cfi_offset 4, -16
+ 487              		.cfi_offset 5, -12
+ 488              		.cfi_offset 6, -8
+ 489              		.cfi_offset 14, -4
+ 490 0002 1E46     		mov	r6, r3
+ 491              	.LVL21:
+  95:Src/main.c    ****         print_chr(*pTemp++);
+ 492              		.loc 1 95 0
+ 493 0004 05E0     		b	.L23
+ 494              	.LVL22:
+ 495              	.L24:
+  96:Src/main.c    ****     return len;
+ 496              		.loc 1 96 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 20
+
+
+ 497 0006 551C     		adds	r5, r2, #1
+ 498              	.LVL23:
+ 499 0008 1078     		ldrb	r0, [r2]	@ zero_extendqisi2
+ 500 000a FFF7FEFF 		bl	print_chr
+ 501              	.LVL24:
+ 502 000e 2A46     		mov	r2, r5
+  95:Src/main.c    ****         print_chr(*pTemp++);
+ 503              		.loc 1 95 0
+ 504 0010 2346     		mov	r3, r4
+ 505              	.LVL25:
+ 506              	.L23:
+ 507 0012 5C1E     		subs	r4, r3, #1
+ 508              	.LVL26:
+ 509 0014 002B     		cmp	r3, #0
+ 510 0016 F6D1     		bne	.L24
+  98:Src/main.c    **** 
+ 511              		.loc 1 98 0
+ 512 0018 3046     		mov	r0, r6
+ 513 001a 70BD     		pop	{r4, r5, r6, pc}
+ 514              		.cfi_endproc
+ 515              	.LFE137:
+ 517              		.section	.text.get_filename_ext,"ax",%progbits
+ 518              		.align	1
+ 519              		.global	get_filename_ext
+ 520              		.syntax unified
+ 521              		.thumb
+ 522              		.thumb_func
+ 523              		.fpu fpv4-sp-d16
+ 525              	get_filename_ext:
+ 526              	.LFB144:
+ 402:Src/main.c    **** 
+ 403:Src/main.c    **** const char *get_filename_ext(const char *filename) 
+ 404:Src/main.c    **** {
+ 527              		.loc 1 404 0
+ 528              		.cfi_startproc
+ 529              		@ args = 0, pretend = 0, frame = 0
+ 530              		@ frame_needed = 0, uses_anonymous_args = 0
+ 531              	.LVL27:
+ 532 0000 10B5     		push	{r4, lr}
+ 533              	.LCFI10:
+ 534              		.cfi_def_cfa_offset 8
+ 535              		.cfi_offset 4, -8
+ 536              		.cfi_offset 14, -4
+ 537 0002 0446     		mov	r4, r0
+ 405:Src/main.c    ****     const char *dot = strrchr(filename, '.');
+ 538              		.loc 1 405 0
+ 539 0004 2E21     		movs	r1, #46
+ 540 0006 FFF7FEFF 		bl	strrchr
+ 541              	.LVL28:
+ 406:Src/main.c    ****     if(!dot || dot == filename) return "";
+ 542              		.loc 1 406 0
+ 543 000a 18B1     		cbz	r0, .L28
+ 544              		.loc 1 406 0 is_stmt 0 discriminator 2
+ 545 000c 8442     		cmp	r4, r0
+ 546 000e 03D0     		beq	.L29
+ 407:Src/main.c    ****     return dot + 1;
+ 547              		.loc 1 407 0 is_stmt 1
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 21
+
+
+ 548 0010 0130     		adds	r0, r0, #1
+ 549              	.LVL29:
+ 550 0012 10BD     		pop	{r4, pc}
+ 551              	.LVL30:
+ 552              	.L28:
+ 406:Src/main.c    ****     if(!dot || dot == filename) return "";
+ 553              		.loc 1 406 0
+ 554 0014 0148     		ldr	r0, .L31
+ 555              	.LVL31:
+ 556 0016 10BD     		pop	{r4, pc}
+ 557              	.LVL32:
+ 558              	.L29:
+ 559 0018 0048     		ldr	r0, .L31
+ 560              	.LVL33:
+ 408:Src/main.c    **** }
+ 561              		.loc 1 408 0
+ 562 001a 10BD     		pop	{r4, pc}
+ 563              	.LVL34:
+ 564              	.L32:
+ 565              		.align	2
+ 566              	.L31:
+ 567 001c 00000000 		.word	.LC2
+ 568              		.cfi_endproc
+ 569              	.LFE144:
+ 571              		.section	.text.HAL_TIM_PeriodElapsedCallback,"ax",%progbits
+ 572              		.align	1
+ 573              		.global	HAL_TIM_PeriodElapsedCallback
+ 574              		.syntax unified
+ 575              		.thumb
+ 576              		.thumb_func
+ 577              		.fpu fpv4-sp-d16
+ 579              	HAL_TIM_PeriodElapsedCallback:
+ 580              	.LFB147:
+ 409:Src/main.c    **** 
+ 410:Src/main.c    **** /* USER CODE BEGIN 4 */
+ 411:Src/main.c    **** static FRESULT play_directory (const char* path) 
+ 412:Src/main.c    **** { 
+ 413:Src/main.c    **** 	FRESULT res;
+ 414:Src/main.c    **** 	FILINFO fno;
+ 415:Src/main.c    **** 	DIR dir;
+ 416:Src/main.c    **** 	char *fn; /* This function is assuming non-Unicode cfg. */
+ 417:Src/main.c    **** #if _USE_LFN
+ 418:Src/main.c    **** 	static char lfn[_MAX_LFN + 1];
+ 419:Src/main.c    **** 	fno.lfname = lfn;
+ 420:Src/main.c    **** 	fno.lfsize = sizeof(lfn);
+ 421:Src/main.c    **** #endif
+ 422:Src/main.c    **** 
+ 423:Src/main.c    **** 	res = f_opendir(&dir, path); /* Open the directory */
+ 424:Src/main.c    **** 	if (res == FR_OK) {
+ 425:Src/main.c    **** 		for (;;) {
+ 426:Src/main.c    **** 			res = f_readdir(&dir, &fno); /* Read a directory item */
+ 427:Src/main.c    **** 			if (res != FR_OK || fno.fname[0] == 0) break; /* Break on error or end of dir */
+ 428:Src/main.c    **** 			if (fno.fname[0] == '.') continue; /* Ignore dot entry */
+ 429:Src/main.c    **** #if _USE_LFN
+ 430:Src/main.c    **** 			fn = *fno.lfname ? fno.lfname : fno.fname;
+ 431:Src/main.c    **** #else
+ 432:Src/main.c    **** 			fn = fno.fname;
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 22
+
+
+ 433:Src/main.c    **** #endif
+ 434:Src/main.c    **** 			if (fno.fattrib & AM_DIR) {} /* It is a directory */
+ 435:Src/main.c    **** 			else /* It is a file. */
+ 436:Src/main.c    **** 			{ 
+ 437:Src/main.c    **** 				if(strcmp("WAV", get_filename_ext(fn)) == 0) 
+ 438:Src/main.c    **** 					WavePlayerStart(path, fn);
+ 439:Src/main.c    **** 			}
+ 440:Src/main.c    **** 		}
+ 441:Src/main.c    **** 	}
+ 442:Src/main.c    **** 
+ 443:Src/main.c    **** 	return res;
+ 444:Src/main.c    **** } 
+ 445:Src/main.c    **** /* USER CODE END 4 */
+ 446:Src/main.c    **** 
+ 447:Src/main.c    **** /* StartDefaultTask function */
+ 448:Src/main.c    **** void StartDefaultTask(void const * argument)
+ 449:Src/main.c    **** {
+ 450:Src/main.c    ****   /* init code for USB_HOST */
+ 451:Src/main.c    ****   MX_USB_HOST_Init();
+ 452:Src/main.c    **** 
+ 453:Src/main.c    ****   /* init code for FATFS */
+ 454:Src/main.c    ****   MX_FATFS_Init();
+ 455:Src/main.c    **** 
+ 456:Src/main.c    ****   FATFS fs;
+ 457:Src/main.c    ****   f_mount(&fs, "", 0);
+ 458:Src/main.c    ****  printf("in start default task\n");
+ 459:Src/main.c    ****   while (Appli_state != APPLICATION_READY) {}
+ 460:Src/main.c    ****   osDelay(2000);
+ 461:Src/main.c    ****   
+ 462:Src/main.c    ****   printf("in start default task, see pendrive\n");
+ 463:Src/main.c    ****   play_directory("");
+ 464:Src/main.c    **** 
+ 465:Src/main.c    ****   /* USER CODE BEGIN 5 */
+ 466:Src/main.c    ****   /* Infinite loop */
+ 467:Src/main.c    ****   for(;;)
+ 468:Src/main.c    ****   { 
+ 469:Src/main.c    ****     osDelay(1);
+ 470:Src/main.c    ****   }
+ 471:Src/main.c    ****   /* USER CODE END 5 */ 
+ 472:Src/main.c    **** }
+ 473:Src/main.c    **** 
+ 474:Src/main.c    **** /**
+ 475:Src/main.c    ****   * @brief  Period elapsed callback in non blocking mode
+ 476:Src/main.c    ****   * @note   This function is called  when TIM13 interrupt took place, inside
+ 477:Src/main.c    ****   * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+ 478:Src/main.c    ****   * a global variable "uwTick" used as application time base.
+ 479:Src/main.c    ****   * @param  htim : TIM handle
+ 480:Src/main.c    ****   * @retval None
+ 481:Src/main.c    ****   */
+ 482:Src/main.c    **** void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+ 483:Src/main.c    **** {
+ 581              		.loc 1 483 0
+ 582              		.cfi_startproc
+ 583              		@ args = 0, pretend = 0, frame = 0
+ 584              		@ frame_needed = 0, uses_anonymous_args = 0
+ 585              	.LVL35:
+ 586 0000 08B5     		push	{r3, lr}
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 23
+
+
+ 587              	.LCFI11:
+ 588              		.cfi_def_cfa_offset 8
+ 589              		.cfi_offset 3, -8
+ 590              		.cfi_offset 14, -4
+ 484:Src/main.c    **** /* USER CODE BEGIN Callback 0 */
+ 485:Src/main.c    **** 
+ 486:Src/main.c    **** /* USER CODE END Callback 0 */
+ 487:Src/main.c    ****   if (htim->Instance == TIM13) 
+ 591              		.loc 1 487 0
+ 592 0002 0268     		ldr	r2, [r0]
+ 593 0004 034B     		ldr	r3, .L37
+ 594 0006 9A42     		cmp	r2, r3
+ 595 0008 00D0     		beq	.L36
+ 596              	.LVL36:
+ 597              	.L33:
+ 598 000a 08BD     		pop	{r3, pc}
+ 599              	.LVL37:
+ 600              	.L36:
+ 488:Src/main.c    ****   {
+ 489:Src/main.c    ****     HAL_IncTick();
+ 601              		.loc 1 489 0
+ 602 000c FFF7FEFF 		bl	HAL_IncTick
+ 603              	.LVL38:
+ 490:Src/main.c    ****   }
+ 491:Src/main.c    **** /* USER CODE BEGIN Callback 1 */
+ 492:Src/main.c    **** 
+ 493:Src/main.c    **** /* USER CODE END Callback 1 */
+ 494:Src/main.c    **** }
+ 604              		.loc 1 494 0
+ 605 0010 FBE7     		b	.L33
+ 606              	.L38:
+ 607 0012 00BF     		.align	2
+ 608              	.L37:
+ 609 0014 001C0040 		.word	1073748992
+ 610              		.cfi_endproc
+ 611              	.LFE147:
+ 613              		.section	.text._Error_Handler,"ax",%progbits
+ 614              		.align	1
+ 615              		.global	_Error_Handler
+ 616              		.syntax unified
+ 617              		.thumb
+ 618              		.thumb_func
+ 619              		.fpu fpv4-sp-d16
+ 621              	_Error_Handler:
+ 622              	.LFB148:
+ 495:Src/main.c    **** 
+ 496:Src/main.c    **** /**
+ 497:Src/main.c    ****   * @brief  This function is executed in case of error occurrence.
+ 498:Src/main.c    ****   * @param  None
+ 499:Src/main.c    ****   * @retval None
+ 500:Src/main.c    ****   */
+ 501:Src/main.c    **** void _Error_Handler(char * file, int line)
+ 502:Src/main.c    **** {
+ 623              		.loc 1 502 0
+ 624              		.cfi_startproc
+ 625              		@ Volatile: function does not return.
+ 626              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 24
+
+
+ 627              		@ frame_needed = 0, uses_anonymous_args = 0
+ 628              		@ link register save eliminated.
+ 629              	.LVL39:
+ 630              	.L40:
+ 631 0000 FEE7     		b	.L40
+ 632              		.cfi_endproc
+ 633              	.LFE148:
+ 635              		.section	.text.WavePlayBack,"ax",%progbits
+ 636              		.align	1
+ 637              		.global	WavePlayBack
+ 638              		.syntax unified
+ 639              		.thumb
+ 640              		.thumb_func
+ 641              		.fpu fpv4-sp-d16
+ 643              	WavePlayBack:
+ 644              	.LFB133:
+ 134:Src/waveplayer.c ****     UINT bytesread = 0;
+ 645              		.loc 2 134 0
+ 646              		.cfi_startproc
+ 647              		@ args = 0, pretend = 0, frame = 8
+ 648              		@ frame_needed = 0, uses_anonymous_args = 0
+ 649              	.LVL40:
+ 134:Src/waveplayer.c ****     UINT bytesread = 0;
+ 650              		.loc 2 134 0
+ 651 0000 30B5     		push	{r4, r5, lr}
+ 652              	.LCFI12:
+ 653              		.cfi_def_cfa_offset 12
+ 654              		.cfi_offset 4, -12
+ 655              		.cfi_offset 5, -8
+ 656              		.cfi_offset 14, -4
+ 657 0002 83B0     		sub	sp, sp, #12
+ 658              	.LCFI13:
+ 659              		.cfi_def_cfa_offset 24
+ 660 0004 0446     		mov	r4, r0
+ 135:Src/waveplayer.c **** 	printf("in wave play back\n");
+ 661              		.loc 2 135 0
+ 662 0006 0023     		movs	r3, #0
+ 663 0008 0193     		str	r3, [sp, #4]
+ 136:Src/waveplayer.c **** 	/* Start playing */
+ 664              		.loc 2 136 0
+ 665 000a 3648     		ldr	r0, .L54
+ 666              	.LVL41:
+ 667 000c FFF7FEFF 		bl	puts
+ 668              	.LVL42:
+ 138:Src/waveplayer.c **** 
+ 669              		.loc 2 138 0
+ 670 0010 0122     		movs	r2, #1
+ 671 0012 354B     		ldr	r3, .L54+4
+ 672 0014 1A60     		str	r2, [r3]
+ 141:Src/waveplayer.c **** 	{
+ 673              		.loc 2 141 0
+ 674 0016 2046     		mov	r0, r4
+ 675 0018 FFF7FEFF 		bl	WavePlayerInit
+ 676              	.LVL43:
+ 677 001c D8B9     		cbnz	r0, .L50
+ 147:Src/waveplayer.c ****     f_read (&FileRead, &Audio_Buffer[0], AUDIO_BUFFER_SIZE, &bytesread);
+ 678              		.loc 2 147 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 25
+
+
+ 679 001e 334D     		ldr	r5, .L54+8
+ 680 0020 0021     		movs	r1, #0
+ 681 0022 2846     		mov	r0, r5
+ 682 0024 FFF7FEFF 		bl	f_lseek
+ 683              	.LVL44:
+ 148:Src/waveplayer.c ****     AudioRemSize = WaveDataLength - bytesread;
+ 684              		.loc 2 148 0
+ 685 0028 314C     		ldr	r4, .L54+12
+ 686              	.LVL45:
+ 687 002a 01AB     		add	r3, sp, #4
+ 688 002c 4FF48052 		mov	r2, #4096
+ 689 0030 2146     		mov	r1, r4
+ 690 0032 2846     		mov	r0, r5
+ 691 0034 FFF7FEFF 		bl	f_read
+ 692              	.LVL46:
+ 149:Src/waveplayer.c **** 
+ 693              		.loc 2 149 0
+ 694 0038 2E4B     		ldr	r3, .L54+16
+ 695 003a 1B68     		ldr	r3, [r3]
+ 696 003c 019A     		ldr	r2, [sp, #4]
+ 697 003e 9B1A     		subs	r3, r3, r2
+ 698 0040 2D4A     		ldr	r2, .L54+20
+ 699 0042 1360     		str	r3, [r2]
+ 151:Src/waveplayer.c ****     /* Start playing Wave */
+ 700              		.loc 2 151 0
+ 701 0044 2D48     		ldr	r0, .L54+24
+ 702 0046 FFF7FEFF 		bl	puts
+ 703              	.LVL47:
+ 153:Src/waveplayer.c **** 
+ 704              		.loc 2 153 0
+ 705 004a 4FF48051 		mov	r1, #4096
+ 706 004e 2046     		mov	r0, r4
+ 707 0050 FFF7FEFF 		bl	BSP_AUDIO_OUT_Play
+ 708              	.LVL48:
+ 156:Src/waveplayer.c **** 	{
+ 709              		.loc 2 156 0
+ 710 0054 1CE0     		b	.L43
+ 711              	.LVL49:
+ 712              	.L50:
+ 143:Src/waveplayer.c ****     }
+ 713              		.loc 2 143 0
+ 714 0056 8F21     		movs	r1, #143
+ 715 0058 2948     		ldr	r0, .L54+28
+ 716 005a FFF7FEFF 		bl	_Error_Handler
+ 717              	.LVL50:
+ 718              	.L52:
+ 161:Src/waveplayer.c ****             buffer_offset = BUFFER_OFFSET_NONE;
+ 719              		.loc 2 161 0
+ 720 005e 01AB     		add	r3, sp, #4
+ 721 0060 4FF40062 		mov	r2, #2048
+ 722 0064 2249     		ldr	r1, .L54+12
+ 723 0066 2148     		ldr	r0, .L54+8
+ 724 0068 FFF7FEFF 		bl	f_read
+ 725              	.LVL51:
+ 162:Src/waveplayer.c ****         }
+ 726              		.loc 2 162 0
+ 727 006c 0022     		movs	r2, #0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 26
+
+
+ 728 006e 254B     		ldr	r3, .L54+32
+ 729 0070 1A70     		strb	r2, [r3]
+ 730 0072 17E0     		b	.L44
+ 731              	.L53:
+ 167:Src/waveplayer.c ****             buffer_offset = BUFFER_OFFSET_NONE;
+ 732              		.loc 2 167 0
+ 733 0074 01AB     		add	r3, sp, #4
+ 734 0076 4FF40062 		mov	r2, #2048
+ 735 007a 2349     		ldr	r1, .L54+36
+ 736 007c 1B48     		ldr	r0, .L54+8
+ 737 007e FFF7FEFF 		bl	f_read
+ 738              	.LVL52:
+ 168:Src/waveplayer.c ****         }
+ 739              		.loc 2 168 0
+ 740 0082 0022     		movs	r2, #0
+ 741 0084 1F4B     		ldr	r3, .L54+32
+ 742 0086 1A70     		strb	r2, [r3]
+ 743 0088 11E0     		b	.L45
+ 744              	.L46:
+ 177:Src/waveplayer.c ****         }
+ 745              		.loc 2 177 0
+ 746 008a 0022     		movs	r2, #0
+ 747 008c 1A4B     		ldr	r3, .L54+20
+ 748 008e 1A60     		str	r2, [r3]
+ 749              	.L43:
+ 156:Src/waveplayer.c **** 	{
+ 750              		.loc 2 156 0
+ 751 0090 194B     		ldr	r3, .L54+20
+ 752 0092 1B68     		ldr	r3, [r3]
+ 753 0094 B3B1     		cbz	r3, .L51
+ 158:Src/waveplayer.c ****         if(buffer_offset == BUFFER_OFFSET_HALF) 
+ 754              		.loc 2 158 0
+ 755 0096 0023     		movs	r3, #0
+ 756 0098 0193     		str	r3, [sp, #4]
+ 159:Src/waveplayer.c **** 		{
+ 757              		.loc 2 159 0
+ 758 009a 1A4B     		ldr	r3, .L54+32
+ 759 009c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 760 009e DBB2     		uxtb	r3, r3
+ 761 00a0 012B     		cmp	r3, #1
+ 762 00a2 DCD0     		beq	.L52
+ 763              	.L44:
+ 165:Src/waveplayer.c **** 		{
+ 764              		.loc 2 165 0
+ 765 00a4 174B     		ldr	r3, .L54+32
+ 766 00a6 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 767 00a8 DBB2     		uxtb	r3, r3
+ 768 00aa 022B     		cmp	r3, #2
+ 769 00ac E2D0     		beq	.L53
+ 770              	.L45:
+ 171:Src/waveplayer.c **** 		{
+ 771              		.loc 2 171 0
+ 772 00ae 124B     		ldr	r3, .L54+20
+ 773 00b0 1B68     		ldr	r3, [r3]
+ 774 00b2 B3F5006F 		cmp	r3, #2048
+ 775 00b6 E8D9     		bls	.L46
+ 173:Src/waveplayer.c ****         } 
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 27
+
+
+ 776              		.loc 2 173 0
+ 777 00b8 0F4A     		ldr	r2, .L54+20
+ 778 00ba 1368     		ldr	r3, [r2]
+ 779 00bc 0199     		ldr	r1, [sp, #4]
+ 780 00be 5B1A     		subs	r3, r3, r1
+ 781 00c0 1360     		str	r3, [r2]
+ 782 00c2 E5E7     		b	.L43
+ 783              	.L51:
+ 182:Src/waveplayer.c ****     /* Stop playing Wave */
+ 784              		.loc 2 182 0
+ 785 00c4 1148     		ldr	r0, .L54+40
+ 786 00c6 FFF7FEFF 		bl	puts
+ 787              	.LVL53:
+ 184:Src/waveplayer.c ****     WavePlayerStop();
+ 788              		.loc 2 184 0
+ 789 00ca 0024     		movs	r4, #0
+ 790 00cc 064B     		ldr	r3, .L54+4
+ 791 00ce 1C60     		str	r4, [r3]
+ 185:Src/waveplayer.c ****     /* Close file */
+ 792              		.loc 2 185 0
+ 793 00d0 FFF7FEFF 		bl	WavePlayerStop
+ 794              	.LVL54:
+ 187:Src/waveplayer.c ****     AudioRemSize = 0;
+ 795              		.loc 2 187 0
+ 796 00d4 0548     		ldr	r0, .L54+8
+ 797 00d6 FFF7FEFF 		bl	f_close
+ 798              	.LVL55:
+ 188:Src/waveplayer.c **** }
+ 799              		.loc 2 188 0
+ 800 00da 074B     		ldr	r3, .L54+20
+ 801 00dc 1C60     		str	r4, [r3]
+ 189:Src/waveplayer.c **** 
+ 802              		.loc 2 189 0
+ 803 00de 03B0     		add	sp, sp, #12
+ 804              	.LCFI14:
+ 805              		.cfi_def_cfa_offset 12
+ 806              		@ sp needed
+ 807 00e0 30BD     		pop	{r4, r5, pc}
+ 808              	.L55:
+ 809 00e2 00BF     		.align	2
+ 810              	.L54:
+ 811 00e4 00000000 		.word	.LC3
+ 812 00e8 00000000 		.word	.LANCHOR1
+ 813 00ec 00000000 		.word	FileRead
+ 814 00f0 00000000 		.word	Audio_Buffer
+ 815 00f4 00000000 		.word	.LANCHOR2
+ 816 00f8 00000000 		.word	.LANCHOR3
+ 817 00fc 28000000 		.word	.LC5
+ 818 0100 14000000 		.word	.LC4
+ 819 0104 00000000 		.word	.LANCHOR0
+ 820 0108 00080000 		.word	Audio_Buffer+2048
+ 821 010c 38000000 		.word	.LC6
+ 822              		.cfi_endproc
+ 823              	.LFE133:
+ 825              		.section	.text.WavePlayerStart,"ax",%progbits
+ 826              		.align	1
+ 827              		.global	WavePlayerStart
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 28
+
+
+ 828              		.syntax unified
+ 829              		.thumb
+ 830              		.thumb_func
+ 831              		.fpu fpv4-sp-d16
+ 833              	WavePlayerStart:
+ 834              	.LFB135:
+ 199:Src/waveplayer.c **** }
+ 200:Src/waveplayer.c **** 
+ 201:Src/waveplayer.c **** void WavePlayerStart(const char* path, char* wavefilename)
+ 202:Src/waveplayer.c **** {
+ 835              		.loc 2 202 0
+ 836              		.cfi_startproc
+ 837              		@ args = 0, pretend = 0, frame = 48
+ 838              		@ frame_needed = 0, uses_anonymous_args = 0
+ 839              	.LVL56:
+ 840 0000 10B5     		push	{r4, lr}
+ 841              	.LCFI15:
+ 842              		.cfi_def_cfa_offset 8
+ 843              		.cfi_offset 4, -8
+ 844              		.cfi_offset 14, -4
+ 845 0002 8CB0     		sub	sp, sp, #48
+ 846              	.LCFI16:
+ 847              		.cfi_def_cfa_offset 56
+ 848 0004 0C46     		mov	r4, r1
+ 203:Src/waveplayer.c ****   UINT bytesread = 0;
+ 849              		.loc 2 203 0
+ 850 0006 0023     		movs	r3, #0
+ 851 0008 0B93     		str	r3, [sp, #44]
+ 204:Src/waveplayer.c ****   WAVE_FormatTypeDef waveformat;
+ 205:Src/waveplayer.c ****   
+ 206:Src/waveplayer.c ****   /* Get the read out protection status */
+ 207:Src/waveplayer.c ****   if(f_opendir(&Directory, path) == FR_OK)
+ 852              		.loc 2 207 0
+ 853 000a 0146     		mov	r1, r0
+ 854              	.LVL57:
+ 855 000c 0E48     		ldr	r0, .L60
+ 856              	.LVL58:
+ 857 000e FFF7FEFF 		bl	f_opendir
+ 858              	.LVL59:
+ 859 0012 08B1     		cbz	r0, .L59
+ 860              	.L56:
+ 208:Src/waveplayer.c ****   {
+ 209:Src/waveplayer.c ****     /* Open the Wave file to be played */
+ 210:Src/waveplayer.c ****     if(f_open(&FileRead, wavefilename , FA_READ) == FR_OK)
+ 211:Src/waveplayer.c ****     {    
+ 212:Src/waveplayer.c **** 		printf("opened pendrive\n");
+ 213:Src/waveplayer.c ****       /* Read sizeof(WaveFormat) from the selected file */
+ 214:Src/waveplayer.c ****       f_read (&FileRead, &waveformat, sizeof(waveformat), &bytesread);
+ 215:Src/waveplayer.c ****       
+ 216:Src/waveplayer.c ****       /* Set WaveDataLenght to the Speech Wave length */
+ 217:Src/waveplayer.c ****       WaveDataLength = waveformat.FileSize;
+ 218:Src/waveplayer.c ****     
+ 219:Src/waveplayer.c ****       /* Play the Wave */
+ 220:Src/waveplayer.c ****       WavePlayBack(waveformat.SampleRate);
+ 221:Src/waveplayer.c ****     }    
+ 222:Src/waveplayer.c ****   }
+ 223:Src/waveplayer.c **** }
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 29
+
+
+ 861              		.loc 2 223 0
+ 862 0014 0CB0     		add	sp, sp, #48
+ 863              	.LCFI17:
+ 864              		.cfi_remember_state
+ 865              		.cfi_def_cfa_offset 8
+ 866              		@ sp needed
+ 867 0016 10BD     		pop	{r4, pc}
+ 868              	.LVL60:
+ 869              	.L59:
+ 870              	.LCFI18:
+ 871              		.cfi_restore_state
+ 210:Src/waveplayer.c ****     {    
+ 872              		.loc 2 210 0
+ 873 0018 0122     		movs	r2, #1
+ 874 001a 2146     		mov	r1, r4
+ 875 001c 0B48     		ldr	r0, .L60+4
+ 876 001e FFF7FEFF 		bl	f_open
+ 877              	.LVL61:
+ 878 0022 0028     		cmp	r0, #0
+ 879 0024 F6D1     		bne	.L56
+ 212:Src/waveplayer.c ****       /* Read sizeof(WaveFormat) from the selected file */
+ 880              		.loc 2 212 0
+ 881 0026 0A48     		ldr	r0, .L60+8
+ 882 0028 FFF7FEFF 		bl	puts
+ 883              	.LVL62:
+ 214:Src/waveplayer.c ****       
+ 884              		.loc 2 214 0
+ 885 002c 0BAB     		add	r3, sp, #44
+ 886 002e 2C22     		movs	r2, #44
+ 887 0030 6946     		mov	r1, sp
+ 888 0032 0648     		ldr	r0, .L60+4
+ 889 0034 FFF7FEFF 		bl	f_read
+ 890              	.LVL63:
+ 217:Src/waveplayer.c ****     
+ 891              		.loc 2 217 0
+ 892 0038 064B     		ldr	r3, .L60+12
+ 893 003a 019A     		ldr	r2, [sp, #4]
+ 894 003c 1A60     		str	r2, [r3]
+ 220:Src/waveplayer.c ****     }    
+ 895              		.loc 2 220 0
+ 896 003e 0698     		ldr	r0, [sp, #24]
+ 897 0040 FFF7FEFF 		bl	WavePlayBack
+ 898              	.LVL64:
+ 899              		.loc 2 223 0
+ 900 0044 E6E7     		b	.L56
+ 901              	.L61:
+ 902 0046 00BF     		.align	2
+ 903              	.L60:
+ 904 0048 00000000 		.word	Directory
+ 905 004c 00000000 		.word	FileRead
+ 906 0050 00000000 		.word	.LC7
+ 907 0054 00000000 		.word	.LANCHOR2
+ 908              		.cfi_endproc
+ 909              	.LFE135:
+ 911              		.section	.text.play_directory,"ax",%progbits
+ 912              		.align	1
+ 913              		.syntax unified
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 30
+
+
+ 914              		.thumb
+ 915              		.thumb_func
+ 916              		.fpu fpv4-sp-d16
+ 918              	play_directory:
+ 919              	.LFB145:
+ 412:Src/main.c    **** 	FRESULT res;
+ 920              		.loc 1 412 0
+ 921              		.cfi_startproc
+ 922              		@ args = 0, pretend = 0, frame = 568
+ 923              		@ frame_needed = 0, uses_anonymous_args = 0
+ 924              	.LVL65:
+ 925 0000 10B5     		push	{r4, lr}
+ 926              	.LCFI19:
+ 927              		.cfi_def_cfa_offset 8
+ 928              		.cfi_offset 4, -8
+ 929              		.cfi_offset 14, -4
+ 930 0002 ADF50E7D 		sub	sp, sp, #568
+ 931              	.LCFI20:
+ 932              		.cfi_def_cfa_offset 576
+ 933 0006 0446     		mov	r4, r0
+ 423:Src/main.c    **** 	if (res == FR_OK) {
+ 934              		.loc 1 423 0
+ 935 0008 0146     		mov	r1, r0
+ 936 000a 6846     		mov	r0, sp
+ 937              	.LVL66:
+ 938 000c FFF7FEFF 		bl	f_opendir
+ 939              	.LVL67:
+ 424:Src/main.c    **** 		for (;;) {
+ 940              		.loc 1 424 0
+ 941 0010 0246     		mov	r2, r0
+ 942 0012 F8B9     		cbnz	r0, .L64
+ 943              	.LVL68:
+ 944              	.L63:
+ 426:Src/main.c    **** 			if (res != FR_OK || fno.fname[0] == 0) break; /* Break on error or end of dir */
+ 945              		.loc 1 426 0
+ 946 0014 88A9     		add	r1, sp, #544
+ 947 0016 6846     		mov	r0, sp
+ 948 0018 FFF7FEFF 		bl	f_readdir
+ 949              	.LVL69:
+ 427:Src/main.c    **** 			if (fno.fname[0] == '.') continue; /* Ignore dot entry */
+ 950              		.loc 1 427 0
+ 951 001c 0246     		mov	r2, r0
+ 952 001e C8B9     		cbnz	r0, .L64
+ 427:Src/main.c    **** 			if (fno.fname[0] == '.') continue; /* Ignore dot entry */
+ 953              		.loc 1 427 0 is_stmt 0 discriminator 1
+ 954 0020 9DF82932 		ldrb	r3, [sp, #553]	@ zero_extendqisi2
+ 955 0024 B3B1     		cbz	r3, .L64
+ 428:Src/main.c    **** #if _USE_LFN
+ 956              		.loc 1 428 0 is_stmt 1
+ 957 0026 2E2B     		cmp	r3, #46
+ 958 0028 F4D0     		beq	.L63
+ 959              	.LVL70:
+ 434:Src/main.c    **** 			else /* It is a file. */
+ 960              		.loc 1 434 0
+ 961 002a 9DF82832 		ldrb	r3, [sp, #552]	@ zero_extendqisi2
+ 962 002e 13F0100F 		tst	r3, #16
+ 963 0032 EFD1     		bne	.L63
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 31
+
+
+ 437:Src/main.c    **** 					WavePlayerStart(path, fn);
+ 964              		.loc 1 437 0
+ 965 0034 0DF22920 		addw	r0, sp, #553
+ 966              	.LVL71:
+ 967 0038 FFF7FEFF 		bl	get_filename_ext
+ 968              	.LVL72:
+ 969 003c 0146     		mov	r1, r0
+ 970 003e 0748     		ldr	r0, .L67
+ 971 0040 FFF7FEFF 		bl	strcmp
+ 972              	.LVL73:
+ 973 0044 0028     		cmp	r0, #0
+ 974 0046 E5D1     		bne	.L63
+ 438:Src/main.c    **** 			}
+ 975              		.loc 1 438 0
+ 976 0048 0DF22921 		addw	r1, sp, #553
+ 977              	.LVL74:
+ 978 004c 2046     		mov	r0, r4
+ 979 004e FFF7FEFF 		bl	WavePlayerStart
+ 980              	.LVL75:
+ 981 0052 DFE7     		b	.L63
+ 982              	.LVL76:
+ 983              	.L64:
+ 444:Src/main.c    **** /* USER CODE END 4 */
+ 984              		.loc 1 444 0
+ 985 0054 1046     		mov	r0, r2
+ 986 0056 0DF50E7D 		add	sp, sp, #568
+ 987              	.LCFI21:
+ 988              		.cfi_def_cfa_offset 8
+ 989              		@ sp needed
+ 990 005a 10BD     		pop	{r4, pc}
+ 991              	.LVL77:
+ 992              	.L68:
+ 993              		.align	2
+ 994              	.L67:
+ 995 005c 00000000 		.word	.LC8
+ 996              		.cfi_endproc
+ 997              	.LFE145:
+ 999              		.section	.text.StartDefaultTask,"ax",%progbits
+ 1000              		.align	1
+ 1001              		.global	StartDefaultTask
+ 1002              		.syntax unified
+ 1003              		.thumb
+ 1004              		.thumb_func
+ 1005              		.fpu fpv4-sp-d16
+ 1007              	StartDefaultTask:
+ 1008              	.LFB146:
+ 449:Src/main.c    ****   /* init code for USB_HOST */
+ 1009              		.loc 1 449 0
+ 1010              		.cfi_startproc
+ 1011              		@ Volatile: function does not return.
+ 1012              		@ args = 0, pretend = 0, frame = 568
+ 1013              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1014              	.LVL78:
+ 1015 0000 00B5     		push	{lr}
+ 1016              	.LCFI22:
+ 1017              		.cfi_def_cfa_offset 4
+ 1018              		.cfi_offset 14, -4
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 32
+
+
+ 1019 0002 ADF50F7D 		sub	sp, sp, #572
+ 1020              	.LCFI23:
+ 1021              		.cfi_def_cfa_offset 576
+ 451:Src/main.c    **** 
+ 1022              		.loc 1 451 0
+ 1023 0006 FFF7FEFF 		bl	MX_USB_HOST_Init
+ 1024              	.LVL79:
+ 454:Src/main.c    **** 
+ 1025              		.loc 1 454 0
+ 1026 000a FFF7FEFF 		bl	MX_FATFS_Init
+ 1027              	.LVL80:
+ 457:Src/main.c    ****  printf("in start default task\n");
+ 1028              		.loc 1 457 0
+ 1029 000e 0022     		movs	r2, #0
+ 1030 0010 0C49     		ldr	r1, .L73
+ 1031 0012 01A8     		add	r0, sp, #4
+ 1032 0014 FFF7FEFF 		bl	f_mount
+ 1033              	.LVL81:
+ 458:Src/main.c    ****   while (Appli_state != APPLICATION_READY) {}
+ 1034              		.loc 1 458 0
+ 1035 0018 0B48     		ldr	r0, .L73+4
+ 1036 001a FFF7FEFF 		bl	puts
+ 1037              	.LVL82:
+ 1038              	.L70:
+ 459:Src/main.c    ****   osDelay(2000);
+ 1039              		.loc 1 459 0 discriminator 1
+ 1040 001e 0B4B     		ldr	r3, .L73+8
+ 1041 0020 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1042 0022 022B     		cmp	r3, #2
+ 1043 0024 FBD1     		bne	.L70
+ 460:Src/main.c    ****   
+ 1044              		.loc 1 460 0
+ 1045 0026 4FF4FA60 		mov	r0, #2000
+ 1046 002a FFF7FEFF 		bl	osDelay
+ 1047              	.LVL83:
+ 462:Src/main.c    ****   play_directory("");
+ 1048              		.loc 1 462 0
+ 1049 002e 0848     		ldr	r0, .L73+12
+ 1050 0030 FFF7FEFF 		bl	puts
+ 1051              	.LVL84:
+ 463:Src/main.c    **** 
+ 1052              		.loc 1 463 0
+ 1053 0034 0348     		ldr	r0, .L73
+ 1054 0036 FFF7FEFF 		bl	play_directory
+ 1055              	.LVL85:
+ 1056              	.L71:
+ 469:Src/main.c    ****   }
+ 1057              		.loc 1 469 0 discriminator 1
+ 1058 003a 0120     		movs	r0, #1
+ 1059 003c FFF7FEFF 		bl	osDelay
+ 1060              	.LVL86:
+ 1061 0040 FBE7     		b	.L71
+ 1062              	.L74:
+ 1063 0042 00BF     		.align	2
+ 1064              	.L73:
+ 1065 0044 00000000 		.word	.LC2
+ 1066 0048 00000000 		.word	.LC9
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 33
+
+
+ 1067 004c 00000000 		.word	Appli_state
+ 1068 0050 18000000 		.word	.LC10
+ 1069              		.cfi_endproc
+ 1070              	.LFE146:
+ 1072              		.section	.text.MX_USART2_UART_Init,"ax",%progbits
+ 1073              		.align	1
+ 1074              		.syntax unified
+ 1075              		.thumb
+ 1076              		.thumb_func
+ 1077              		.fpu fpv4-sp-d16
+ 1079              	MX_USART2_UART_Init:
+ 1080              	.LFB142:
+ 289:Src/main.c    ****   huart2.Instance = USART2;
+ 1081              		.loc 1 289 0
+ 1082              		.cfi_startproc
+ 1083              		@ args = 0, pretend = 0, frame = 0
+ 1084              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1085 0000 08B5     		push	{r3, lr}
+ 1086              	.LCFI24:
+ 1087              		.cfi_def_cfa_offset 8
+ 1088              		.cfi_offset 3, -8
+ 1089              		.cfi_offset 14, -4
+ 290:Src/main.c    ****   huart2.Init.BaudRate = 115200;
+ 1090              		.loc 1 290 0
+ 1091 0002 0B48     		ldr	r0, .L79
+ 1092 0004 0B4B     		ldr	r3, .L79+4
+ 1093 0006 0360     		str	r3, [r0]
+ 291:Src/main.c    ****   huart2.Init.WordLength = UART_WORDLENGTH_8B;
+ 1094              		.loc 1 291 0
+ 1095 0008 4FF4E133 		mov	r3, #115200
+ 1096 000c 4360     		str	r3, [r0, #4]
+ 292:Src/main.c    ****   huart2.Init.StopBits = UART_STOPBITS_1;
+ 1097              		.loc 1 292 0
+ 1098 000e 0023     		movs	r3, #0
+ 1099 0010 8360     		str	r3, [r0, #8]
+ 293:Src/main.c    ****   huart2.Init.Parity = UART_PARITY_NONE;
+ 1100              		.loc 1 293 0
+ 1101 0012 C360     		str	r3, [r0, #12]
+ 294:Src/main.c    ****   huart2.Init.Mode = UART_MODE_TX_RX;
+ 1102              		.loc 1 294 0
+ 1103 0014 0361     		str	r3, [r0, #16]
+ 295:Src/main.c    ****   huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+ 1104              		.loc 1 295 0
+ 1105 0016 0C22     		movs	r2, #12
+ 1106 0018 4261     		str	r2, [r0, #20]
+ 296:Src/main.c    ****   huart2.Init.OverSampling = UART_OVERSAMPLING_16;
+ 1107              		.loc 1 296 0
+ 1108 001a 8361     		str	r3, [r0, #24]
+ 297:Src/main.c    ****   if (HAL_UART_Init(&huart2) != HAL_OK)
+ 1109              		.loc 1 297 0
+ 1110 001c C361     		str	r3, [r0, #28]
+ 298:Src/main.c    ****   {
+ 1111              		.loc 1 298 0
+ 1112 001e FFF7FEFF 		bl	HAL_UART_Init
+ 1113              	.LVL87:
+ 1114 0022 00B9     		cbnz	r0, .L78
+ 1115 0024 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 34
+
+
+ 1116              	.L78:
+ 300:Src/main.c    ****   }
+ 1117              		.loc 1 300 0
+ 1118 0026 4FF49671 		mov	r1, #300
+ 1119 002a 0348     		ldr	r0, .L79+8
+ 1120 002c FFF7FEFF 		bl	_Error_Handler
+ 1121              	.LVL88:
+ 1122              	.L80:
+ 1123              		.align	2
+ 1124              	.L79:
+ 1125 0030 00000000 		.word	huart2
+ 1126 0034 00440040 		.word	1073759232
+ 1127 0038 00000000 		.word	.LC11
+ 1128              		.cfi_endproc
+ 1129              	.LFE142:
+ 1131              		.section	.text.MX_I2S2_Init,"ax",%progbits
+ 1132              		.align	1
+ 1133              		.syntax unified
+ 1134              		.thumb
+ 1135              		.thumb_func
+ 1136              		.fpu fpv4-sp-d16
+ 1138              	MX_I2S2_Init:
+ 1139              	.LFB140:
+ 252:Src/main.c    ****   hi2s2.Instance = SPI2;
+ 1140              		.loc 1 252 0
+ 1141              		.cfi_startproc
+ 1142              		@ args = 0, pretend = 0, frame = 0
+ 1143              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1144 0000 08B5     		push	{r3, lr}
+ 1145              	.LCFI25:
+ 1146              		.cfi_def_cfa_offset 8
+ 1147              		.cfi_offset 3, -8
+ 1148              		.cfi_offset 14, -4
+ 253:Src/main.c    ****   hi2s2.Init.Mode = I2S_MODE_MASTER_TX;
+ 1149              		.loc 1 253 0
+ 1150 0002 0C48     		ldr	r0, .L85
+ 1151 0004 0C4B     		ldr	r3, .L85+4
+ 1152 0006 0360     		str	r3, [r0]
+ 254:Src/main.c    ****   hi2s2.Init.Standard = I2S_STANDARD_PHILIPS;
+ 1153              		.loc 1 254 0
+ 1154 0008 4FF40073 		mov	r3, #512
+ 1155 000c 4360     		str	r3, [r0, #4]
+ 255:Src/main.c    ****   hi2s2.Init.DataFormat = I2S_DATAFORMAT_16B;
+ 1156              		.loc 1 255 0
+ 1157 000e 0023     		movs	r3, #0
+ 1158 0010 8360     		str	r3, [r0, #8]
+ 256:Src/main.c    ****   hi2s2.Init.MCLKOutput = I2S_MCLKOUTPUT_DISABLE;
+ 1159              		.loc 1 256 0
+ 1160 0012 C360     		str	r3, [r0, #12]
+ 257:Src/main.c    ****   hi2s2.Init.AudioFreq = I2S_AUDIOFREQ_44K;
+ 1161              		.loc 1 257 0
+ 1162 0014 0361     		str	r3, [r0, #16]
+ 258:Src/main.c    ****   hi2s2.Init.CPOL = I2S_CPOL_LOW;
+ 1163              		.loc 1 258 0
+ 1164 0016 4AF64442 		movw	r2, #44100
+ 1165 001a 4261     		str	r2, [r0, #20]
+ 259:Src/main.c    ****   hi2s2.Init.ClockSource = I2S_CLOCK_PLL;
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 35
+
+
+ 1166              		.loc 1 259 0
+ 1167 001c 8361     		str	r3, [r0, #24]
+ 260:Src/main.c    ****   hi2s2.Init.FullDuplexMode = I2S_FULLDUPLEXMODE_DISABLE;
+ 1168              		.loc 1 260 0
+ 1169 001e C361     		str	r3, [r0, #28]
+ 261:Src/main.c    ****   if (HAL_I2S_Init(&hi2s2) != HAL_OK)
+ 1170              		.loc 1 261 0
+ 1171 0020 0362     		str	r3, [r0, #32]
+ 262:Src/main.c    ****   {
+ 1172              		.loc 1 262 0
+ 1173 0022 FFF7FEFF 		bl	HAL_I2S_Init
+ 1174              	.LVL89:
+ 1175 0026 00B9     		cbnz	r0, .L84
+ 1176 0028 08BD     		pop	{r3, pc}
+ 1177              	.L84:
+ 264:Src/main.c    ****   }
+ 1178              		.loc 1 264 0
+ 1179 002a 4FF48471 		mov	r1, #264
+ 1180 002e 0348     		ldr	r0, .L85+8
+ 1181 0030 FFF7FEFF 		bl	_Error_Handler
+ 1182              	.LVL90:
+ 1183              	.L86:
+ 1184              		.align	2
+ 1185              	.L85:
+ 1186 0034 00000000 		.word	hi2s2
+ 1187 0038 00380040 		.word	1073756160
+ 1188 003c 00000000 		.word	.LC11
+ 1189              		.cfi_endproc
+ 1190              	.LFE140:
+ 1192              		.section	.text.MX_I2S3_Init,"ax",%progbits
+ 1193              		.align	1
+ 1194              		.syntax unified
+ 1195              		.thumb
+ 1196              		.thumb_func
+ 1197              		.fpu fpv4-sp-d16
+ 1199              	MX_I2S3_Init:
+ 1200              	.LFB141:
+ 270:Src/main.c    ****   hi2s3.Instance = SPI3;
+ 1201              		.loc 1 270 0
+ 1202              		.cfi_startproc
+ 1203              		@ args = 0, pretend = 0, frame = 0
+ 1204              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1205 0000 08B5     		push	{r3, lr}
+ 1206              	.LCFI26:
+ 1207              		.cfi_def_cfa_offset 8
+ 1208              		.cfi_offset 3, -8
+ 1209              		.cfi_offset 14, -4
+ 271:Src/main.c    ****   hi2s3.Init.Mode = I2S_MODE_MASTER_TX;
+ 1210              		.loc 1 271 0
+ 1211 0002 0C48     		ldr	r0, .L91
+ 1212 0004 0C4B     		ldr	r3, .L91+4
+ 1213 0006 0360     		str	r3, [r0]
+ 272:Src/main.c    ****   hi2s3.Init.Standard = I2S_STANDARD_PHILIPS;
+ 1214              		.loc 1 272 0
+ 1215 0008 4FF40072 		mov	r2, #512
+ 1216 000c 4260     		str	r2, [r0, #4]
+ 273:Src/main.c    ****   hi2s3.Init.DataFormat = I2S_DATAFORMAT_16B;
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 36
+
+
+ 1217              		.loc 1 273 0
+ 1218 000e 0023     		movs	r3, #0
+ 1219 0010 8360     		str	r3, [r0, #8]
+ 274:Src/main.c    ****   hi2s3.Init.MCLKOutput = I2S_MCLKOUTPUT_ENABLE;
+ 1220              		.loc 1 274 0
+ 1221 0012 C360     		str	r3, [r0, #12]
+ 275:Src/main.c    ****   hi2s3.Init.AudioFreq = I2S_AUDIOFREQ_44K;
+ 1222              		.loc 1 275 0
+ 1223 0014 0261     		str	r2, [r0, #16]
+ 276:Src/main.c    ****   hi2s3.Init.CPOL = I2S_CPOL_LOW;
+ 1224              		.loc 1 276 0
+ 1225 0016 4AF64442 		movw	r2, #44100
+ 1226 001a 4261     		str	r2, [r0, #20]
+ 277:Src/main.c    ****   hi2s3.Init.ClockSource = I2S_CLOCK_PLL;
+ 1227              		.loc 1 277 0
+ 1228 001c 8361     		str	r3, [r0, #24]
+ 278:Src/main.c    ****   hi2s3.Init.FullDuplexMode = I2S_FULLDUPLEXMODE_DISABLE;
+ 1229              		.loc 1 278 0
+ 1230 001e C361     		str	r3, [r0, #28]
+ 279:Src/main.c    ****   if (HAL_I2S_Init(&hi2s3) != HAL_OK)
+ 1231              		.loc 1 279 0
+ 1232 0020 0362     		str	r3, [r0, #32]
+ 280:Src/main.c    ****   {
+ 1233              		.loc 1 280 0
+ 1234 0022 FFF7FEFF 		bl	HAL_I2S_Init
+ 1235              	.LVL91:
+ 1236 0026 00B9     		cbnz	r0, .L90
+ 1237 0028 08BD     		pop	{r3, pc}
+ 1238              	.L90:
+ 282:Src/main.c    ****   }
+ 1239              		.loc 1 282 0
+ 1240 002a 4FF48D71 		mov	r1, #282
+ 1241 002e 0348     		ldr	r0, .L91+8
+ 1242 0030 FFF7FEFF 		bl	_Error_Handler
+ 1243              	.LVL92:
+ 1244              	.L92:
+ 1245              		.align	2
+ 1246              	.L91:
+ 1247 0034 00000000 		.word	hi2s3
+ 1248 0038 003C0040 		.word	1073757184
+ 1249 003c 00000000 		.word	.LC11
+ 1250              		.cfi_endproc
+ 1251              	.LFE141:
+ 1253              		.section	.text.SystemClock_Config,"ax",%progbits
+ 1254              		.align	1
+ 1255              		.global	SystemClock_Config
+ 1256              		.syntax unified
+ 1257              		.thumb
+ 1258              		.thumb_func
+ 1259              		.fpu fpv4-sp-d16
+ 1261              	SystemClock_Config:
+ 1262              	.LFB139:
+ 189:Src/main.c    ****   RCC_OscInitTypeDef RCC_OscInitStruct;
+ 1263              		.loc 1 189 0
+ 1264              		.cfi_startproc
+ 1265              		@ args = 0, pretend = 0, frame = 96
+ 1266              		@ frame_needed = 0, uses_anonymous_args = 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 37
+
+
+ 1267 0000 00B5     		push	{lr}
+ 1268              	.LCFI27:
+ 1269              		.cfi_def_cfa_offset 4
+ 1270              		.cfi_offset 14, -4
+ 1271 0002 99B0     		sub	sp, sp, #100
+ 1272              	.LCFI28:
+ 1273              		.cfi_def_cfa_offset 104
+ 1274              	.LBB8:
+ 196:Src/main.c    **** 
+ 1275              		.loc 1 196 0
+ 1276 0004 0021     		movs	r1, #0
+ 1277 0006 0191     		str	r1, [sp, #4]
+ 1278 0008 324B     		ldr	r3, .L101
+ 1279 000a 1A6C     		ldr	r2, [r3, #64]
+ 1280 000c 42F08052 		orr	r2, r2, #268435456
+ 1281 0010 1A64     		str	r2, [r3, #64]
+ 1282 0012 1B6C     		ldr	r3, [r3, #64]
+ 1283 0014 03F08053 		and	r3, r3, #268435456
+ 1284 0018 0193     		str	r3, [sp, #4]
+ 1285 001a 019B     		ldr	r3, [sp, #4]
+ 1286              	.LBE8:
+ 1287              	.LBB9:
+ 198:Src/main.c    **** 
+ 1288              		.loc 1 198 0
+ 1289 001c 0291     		str	r1, [sp, #8]
+ 1290 001e 2E4B     		ldr	r3, .L101+4
+ 1291 0020 1A68     		ldr	r2, [r3]
+ 1292 0022 42F48042 		orr	r2, r2, #16384
+ 1293 0026 1A60     		str	r2, [r3]
+ 1294 0028 1B68     		ldr	r3, [r3]
+ 1295 002a 03F48043 		and	r3, r3, #16384
+ 1296 002e 0293     		str	r3, [sp, #8]
+ 1297 0030 029B     		ldr	r3, [sp, #8]
+ 1298              	.LBE9:
+ 202:Src/main.c    ****   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+ 1299              		.loc 1 202 0
+ 1300 0032 0123     		movs	r3, #1
+ 1301 0034 0C93     		str	r3, [sp, #48]
+ 203:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+ 1302              		.loc 1 203 0
+ 1303 0036 4FF48033 		mov	r3, #65536
+ 1304 003a 0D93     		str	r3, [sp, #52]
+ 204:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+ 1305              		.loc 1 204 0
+ 1306 003c 0223     		movs	r3, #2
+ 1307 003e 1293     		str	r3, [sp, #72]
+ 205:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLM = 4;
+ 1308              		.loc 1 205 0
+ 1309 0040 4FF48002 		mov	r2, #4194304
+ 1310 0044 1392     		str	r2, [sp, #76]
+ 206:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLN = 168;
+ 1311              		.loc 1 206 0
+ 1312 0046 0422     		movs	r2, #4
+ 1313 0048 1492     		str	r2, [sp, #80]
+ 207:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+ 1314              		.loc 1 207 0
+ 1315 004a A822     		movs	r2, #168
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 38
+
+
+ 1316 004c 1592     		str	r2, [sp, #84]
+ 208:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLQ = 7;
+ 1317              		.loc 1 208 0
+ 1318 004e 1693     		str	r3, [sp, #88]
+ 209:Src/main.c    ****   
+ 1319              		.loc 1 209 0
+ 1320 0050 0723     		movs	r3, #7
+ 1321 0052 1793     		str	r3, [sp, #92]
+ 211:Src/main.c    ****   {
+ 1322              		.loc 1 211 0
+ 1323 0054 0CA8     		add	r0, sp, #48
+ 1324 0056 FFF7FEFF 		bl	HAL_RCC_OscConfig
+ 1325              	.LVL93:
+ 1326 005a 70BB     		cbnz	r0, .L98
+ 218:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+ 1327              		.loc 1 218 0
+ 1328 005c 0F23     		movs	r3, #15
+ 1329 005e 0793     		str	r3, [sp, #28]
+ 220:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+ 1330              		.loc 1 220 0
+ 1331 0060 0223     		movs	r3, #2
+ 1332 0062 0893     		str	r3, [sp, #32]
+ 221:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+ 1333              		.loc 1 221 0
+ 1334 0064 0023     		movs	r3, #0
+ 1335 0066 0993     		str	r3, [sp, #36]
+ 222:Src/main.c    ****   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+ 1336              		.loc 1 222 0
+ 1337 0068 4FF4A053 		mov	r3, #5120
+ 1338 006c 0A93     		str	r3, [sp, #40]
+ 223:Src/main.c    **** 
+ 1339              		.loc 1 223 0
+ 1340 006e 4FF48053 		mov	r3, #4096
+ 1341 0072 0B93     		str	r3, [sp, #44]
+ 225:Src/main.c    ****   {
+ 1342              		.loc 1 225 0
+ 1343 0074 0521     		movs	r1, #5
+ 1344 0076 07A8     		add	r0, sp, #28
+ 1345 0078 FFF7FEFF 		bl	HAL_RCC_ClockConfig
+ 1346              	.LVL94:
+ 1347 007c 08BB     		cbnz	r0, .L99
+ 230:Src/main.c    ****   PeriphClkInitStruct.PLLI2S.PLLI2SN = 192;
+ 1348              		.loc 1 230 0
+ 1349 007e 0123     		movs	r3, #1
+ 1350 0080 0393     		str	r3, [sp, #12]
+ 231:Src/main.c    ****   PeriphClkInitStruct.PLLI2S.PLLI2SR = 2;
+ 1351              		.loc 1 231 0
+ 1352 0082 C023     		movs	r3, #192
+ 1353 0084 0493     		str	r3, [sp, #16]
+ 232:Src/main.c    ****   if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct) != HAL_OK)
+ 1354              		.loc 1 232 0
+ 1355 0086 0223     		movs	r3, #2
+ 1356 0088 0593     		str	r3, [sp, #20]
+ 233:Src/main.c    ****   {
+ 1357              		.loc 1 233 0
+ 1358 008a 03A8     		add	r0, sp, #12
+ 1359 008c FFF7FEFF 		bl	HAL_RCCEx_PeriphCLKConfig
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 39
+
+
+ 1360              	.LVL95:
+ 1361 0090 D8B9     		cbnz	r0, .L100
+ 240:Src/main.c    **** 
+ 1362              		.loc 1 240 0
+ 1363 0092 FFF7FEFF 		bl	HAL_RCC_GetHCLKFreq
+ 1364              	.LVL96:
+ 1365 0096 114B     		ldr	r3, .L101+8
+ 1366 0098 A3FB0030 		umull	r3, r0, r3, r0
+ 1367 009c 8009     		lsrs	r0, r0, #6
+ 1368 009e FFF7FEFF 		bl	HAL_SYSTICK_Config
+ 1369              	.LVL97:
+ 244:Src/main.c    **** 
+ 1370              		.loc 1 244 0
+ 1371 00a2 0420     		movs	r0, #4
+ 1372 00a4 FFF7FEFF 		bl	HAL_SYSTICK_CLKSourceConfig
+ 1373              	.LVL98:
+ 247:Src/main.c    **** }
+ 1374              		.loc 1 247 0
+ 1375 00a8 0022     		movs	r2, #0
+ 1376 00aa 0F21     		movs	r1, #15
+ 1377 00ac 4FF0FF30 		mov	r0, #-1
+ 1378 00b0 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 1379              	.LVL99:
+ 248:Src/main.c    **** 
+ 1380              		.loc 1 248 0
+ 1381 00b4 19B0     		add	sp, sp, #100
+ 1382              	.LCFI29:
+ 1383              		.cfi_remember_state
+ 1384              		.cfi_def_cfa_offset 4
+ 1385              		@ sp needed
+ 1386 00b6 5DF804FB 		ldr	pc, [sp], #4
+ 1387              	.L98:
+ 1388              	.LCFI30:
+ 1389              		.cfi_restore_state
+ 213:Src/main.c    ****   }
+ 1390              		.loc 1 213 0
+ 1391 00ba D521     		movs	r1, #213
+ 1392 00bc 0848     		ldr	r0, .L101+12
+ 1393 00be FFF7FEFF 		bl	_Error_Handler
+ 1394              	.LVL100:
+ 1395              	.L99:
+ 227:Src/main.c    ****   }
+ 1396              		.loc 1 227 0
+ 1397 00c2 E321     		movs	r1, #227
+ 1398 00c4 0648     		ldr	r0, .L101+12
+ 1399 00c6 FFF7FEFF 		bl	_Error_Handler
+ 1400              	.LVL101:
+ 1401              	.L100:
+ 235:Src/main.c    ****   }
+ 1402              		.loc 1 235 0
+ 1403 00ca EB21     		movs	r1, #235
+ 1404 00cc 0448     		ldr	r0, .L101+12
+ 1405 00ce FFF7FEFF 		bl	_Error_Handler
+ 1406              	.LVL102:
+ 1407              	.L102:
+ 1408 00d2 00BF     		.align	2
+ 1409              	.L101:
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 40
+
+
+ 1410 00d4 00380240 		.word	1073887232
+ 1411 00d8 00700040 		.word	1073770496
+ 1412 00dc D34D6210 		.word	274877907
+ 1413 00e0 00000000 		.word	.LC11
+ 1414              		.cfi_endproc
+ 1415              	.LFE139:
+ 1417              		.section	.text.main,"ax",%progbits
+ 1418              		.align	1
+ 1419              		.global	main
+ 1420              		.syntax unified
+ 1421              		.thumb
+ 1422              		.thumb_func
+ 1423              		.fpu fpv4-sp-d16
+ 1425              	main:
+ 1426              	.LFB138:
+ 111:Src/main.c    ****   /* USER CODE BEGIN 1 */
+ 1427              		.loc 1 111 0
+ 1428              		.cfi_startproc
+ 1429              		@ Volatile: function does not return.
+ 1430              		@ args = 0, pretend = 0, frame = 24
+ 1431              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1432 0000 00B5     		push	{lr}
+ 1433              	.LCFI31:
+ 1434              		.cfi_def_cfa_offset 4
+ 1435              		.cfi_offset 14, -4
+ 1436 0002 87B0     		sub	sp, sp, #28
+ 1437              	.LCFI32:
+ 1438              		.cfi_def_cfa_offset 32
+ 121:Src/main.c    **** 
+ 1439              		.loc 1 121 0
+ 1440 0004 FFF7FEFF 		bl	HAL_Init
+ 1441              	.LVL103:
+ 128:Src/main.c    **** 
+ 1442              		.loc 1 128 0
+ 1443 0008 FFF7FEFF 		bl	SystemClock_Config
+ 1444              	.LVL104:
+ 135:Src/main.c    ****   MX_USART2_UART_Init();
+ 1445              		.loc 1 135 0
+ 1446 000c FFF7FEFF 		bl	MX_GPIO_Init
+ 1447              	.LVL105:
+ 136:Src/main.c    ****   MX_I2S2_Init();
+ 1448              		.loc 1 136 0
+ 1449 0010 FFF7FEFF 		bl	MX_USART2_UART_Init
+ 1450              	.LVL106:
+ 137:Src/main.c    ****   MX_I2S3_Init();
+ 1451              		.loc 1 137 0
+ 1452 0014 FFF7FEFF 		bl	MX_I2S2_Init
+ 1453              	.LVL107:
+ 138:Src/main.c    **** 
+ 1454              		.loc 1 138 0
+ 1455 0018 FFF7FEFF 		bl	MX_I2S3_Init
+ 1456              	.LVL108:
+ 158:Src/main.c    ****   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+ 1457              		.loc 1 158 0
+ 1458 001c 01AC     		add	r4, sp, #4
+ 1459 001e 074D     		ldr	r5, .L106
+ 1460 0020 0FCD     		ldmia	r5!, {r0, r1, r2, r3}
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 41
+
+
+ 1461 0022 0FC4     		stmia	r4!, {r0, r1, r2, r3}
+ 1462 0024 2B68     		ldr	r3, [r5]
+ 1463 0026 2360     		str	r3, [r4]
+ 159:Src/main.c    **** 
+ 1464              		.loc 1 159 0
+ 1465 0028 0021     		movs	r1, #0
+ 1466 002a 01A8     		add	r0, sp, #4
+ 1467 002c FFF7FEFF 		bl	osThreadCreate
+ 1468              	.LVL109:
+ 1469 0030 034B     		ldr	r3, .L106+4
+ 1470 0032 1860     		str	r0, [r3]
+ 170:Src/main.c    ****   
+ 1471              		.loc 1 170 0
+ 1472 0034 FFF7FEFF 		bl	osKernelStart
+ 1473              	.LVL110:
+ 1474              	.L104:
+ 1475 0038 FEE7     		b	.L104
+ 1476              	.L107:
+ 1477 003a 00BF     		.align	2
+ 1478              	.L106:
+ 1479 003c 00000000 		.word	.LANCHOR4
+ 1480 0040 00000000 		.word	defaultTaskHandle
+ 1481              		.cfi_endproc
+ 1482              	.LFE138:
+ 1484              		.comm	defaultTaskHandle,4,4
+ 1485              		.comm	huart2,64,4
+ 1486              		.comm	hi2s3,72,4
+ 1487              		.comm	hi2s2,72,4
+ 1488              		.comm	Directory,544,4
+ 1489              		.comm	FileRead,556,4
+ 1490              		.global	buffer_offset
+ 1491              		.comm	Audio_Buffer,4096,4
+ 1492              		.global	AudioPlayStart
+ 1493              		.section	.rodata
+ 1494              		.align	2
+ 1495              		.set	.LANCHOR4,. + 0
+ 1496              	.LC12:
+ 1497 0000 00000000 		.word	.LC0
+ 1498 0004 00000000 		.word	StartDefaultTask
+ 1499 0008 0000     		.short	0
+ 1500 000a 0000     		.space	2
+ 1501 000c 00000000 		.word	0
+ 1502 0010 00040000 		.word	1024
+ 1503              		.section	.bss.AudioPlayStart,"aw",%nobits
+ 1504              		.align	2
+ 1505              		.set	.LANCHOR1,. + 0
+ 1508              	AudioPlayStart:
+ 1509 0000 00000000 		.space	4
+ 1510              		.section	.bss.AudioRemSize,"aw",%nobits
+ 1511              		.align	2
+ 1512              		.set	.LANCHOR3,. + 0
+ 1515              	AudioRemSize:
+ 1516 0000 00000000 		.space	4
+ 1517              		.section	.bss.WaveDataLength,"aw",%nobits
+ 1518              		.align	2
+ 1519              		.set	.LANCHOR2,. + 0
+ 1522              	WaveDataLength:
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 42
+
+
+ 1523 0000 00000000 		.space	4
+ 1524              		.section	.bss.buffer_offset,"aw",%nobits
+ 1525              		.set	.LANCHOR0,. + 0
+ 1528              	buffer_offset:
+ 1529 0000 00       		.space	1
+ 1530              		.section	.rodata.MX_USART2_UART_Init.str1.4,"aMS",%progbits,1
+ 1531              		.align	2
+ 1532              	.LC11:
+ 1533 0000 5372632F 		.ascii	"Src/main.c\000"
+ 1533      6D61696E 
+ 1533      2E6300
+ 1534              		.section	.rodata.StartDefaultTask.str1.4,"aMS",%progbits,1
+ 1535              		.align	2
+ 1536              	.LC9:
+ 1537 0000 696E2073 		.ascii	"in start default task\000"
+ 1537      74617274 
+ 1537      20646566 
+ 1537      61756C74 
+ 1537      20746173 
+ 1538 0016 0000     		.space	2
+ 1539              	.LC10:
+ 1540 0018 696E2073 		.ascii	"in start default task, see pendrive\000"
+ 1540      74617274 
+ 1540      20646566 
+ 1540      61756C74 
+ 1540      20746173 
+ 1541              		.section	.rodata.WavePlayBack.str1.4,"aMS",%progbits,1
+ 1542              		.align	2
+ 1543              	.LC3:
+ 1544 0000 696E2077 		.ascii	"in wave play back\000"
+ 1544      61766520 
+ 1544      706C6179 
+ 1544      20626163 
+ 1544      6B00
+ 1545 0012 0000     		.space	2
+ 1546              	.LC4:
+ 1547 0014 5372632F 		.ascii	"Src/waveplayer.c\000"
+ 1547      77617665 
+ 1547      706C6179 
+ 1547      65722E63 
+ 1547      00
+ 1548 0025 000000   		.space	3
+ 1549              	.LC5:
+ 1550 0028 73746172 		.ascii	"start playing\000"
+ 1550      7420706C 
+ 1550      6179696E 
+ 1550      6700
+ 1551 0036 0000     		.space	2
+ 1552              	.LC6:
+ 1553 0038 73746F70 		.ascii	"stop playing\000"
+ 1553      20706C61 
+ 1553      79696E67 
+ 1553      00
+ 1554              		.section	.rodata.WavePlayerStart.str1.4,"aMS",%progbits,1
+ 1555              		.align	2
+ 1556              	.LC7:
+ 1557 0000 6F70656E 		.ascii	"opened pendrive\000"
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 43
+
+
+ 1557      65642070 
+ 1557      656E6472 
+ 1557      69766500 
+ 1558              		.section	.rodata.get_filename_ext.str1.4,"aMS",%progbits,1
+ 1559              		.align	2
+ 1560              	.LC2:
+ 1561 0000 00       		.ascii	"\000"
+ 1562              		.section	.rodata.play_directory.str1.4,"aMS",%progbits,1
+ 1563              		.align	2
+ 1564              	.LC8:
+ 1565 0000 57415600 		.ascii	"WAV\000"
+ 1566              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 1567              		.align	2
+ 1568              	.LC0:
+ 1569 0000 64656661 		.ascii	"defaultTask\000"
+ 1569      756C7454 
+ 1569      61736B00 
+ 1570              		.text
+ 1571              	.Letext0:
+ 1572              		.file 3 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 1573              		.file 4 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 1574              		.file 5 "Inc/waveplayer.h"
+ 1575              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 1576              		.file 7 "Drivers/CMSIS/Include/core_cm4.h"
+ 1577              		.file 8 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 1578              		.file 9 "c:\\gcc_toolchain\\6_2017-q1-update\\lib\\gcc\\arm-none-eabi\\6.3.1\\include\\stddef.h"
+ 1579              		.file 10 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\sys\\lock.h"
+ 1580              		.file 11 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\sys\\_types.h"
+ 1581              		.file 12 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\sys\\reent.h"
+ 1582              		.file 13 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\sys\\types.h"
+ 1583              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1584              		.file 15 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h"
+ 1585              		.file 16 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h"
+ 1586              		.file 17 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 1587              		.file 18 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1588              		.file 19 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h"
+ 1589              		.file 20 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 1590              		.file 21 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 1591              		.file 22 "Middlewares/Third_Party/FreeRTOS/Source/include/task.h"
+ 1592              		.file 23 "Middlewares/Third_Party/FreeRTOS/Source/include/queue.h"
+ 1593              		.file 24 "Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h"
+ 1594              		.file 25 "Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h"
+ 1595              		.file 26 "Middlewares/Third_Party/FatFs/src/integer.h"
+ 1596              		.file 27 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\stdlib.h"
+ 1597              		.file 28 "Middlewares/ST/STM32_USB_Host_Library/Core/Inc/usbh_def.h"
+ 1598              		.file 29 "Middlewares/ST/STM32_USB_Host_Library/Core/Inc/usbh_ctlreq.h"
+ 1599              		.file 30 "Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc/usbh_msc.h"
+ 1600              		.file 31 "Middlewares/Third_Party/FatFs/src/ff.h"
+ 1601              		.file 32 "Middlewares/Third_Party/FatFs/src/diskio.h"
+ 1602              		.file 33 "Middlewares/Third_Party/FatFs/src/ff_gen_drv.h"
+ 1603              		.file 34 "Middlewares/Third_Party/FatFs/src/drivers/usbh_diskio.h"
+ 1604              		.file 35 "Inc/fatfs.h"
+ 1605              		.file 36 "Inc/usb_host.h"
+ 1606              		.file 37 "Src/../Drivers/BSP/STM32F4-Discovery/../Components/cs43l22/../Common/audio.h"
+ 1607              		.file 38 "Src/../Drivers/BSP/STM32F4-Discovery/../Components/cs43l22/cs43l22.h"
+ 1608              		.file 39 "Src/../Drivers/BSP/STM32F4-Discovery/stm32f4_discovery_audio.h"
+ 1609              		.file 40 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 44
+
+
+ 1610              		.file 41 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\string.h"
+ 1611              		.file 42 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+ 1612              		.file 43 "<built-in>"
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 45
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:18     .text.print_chr:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:24     .text.print_chr:00000000 print_chr
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:57     .text.print_chr:0000001c $d
+                            *COM*:00000040 huart2
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:62     .text.MX_GPIO_Init:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:68     .text.MX_GPIO_Init:00000000 MX_GPIO_Init
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:313    .text.MX_GPIO_Init:00000170 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:323    .text.BSP_AUDIO_OUT_HalfTransfer_CallBack:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:330    .text.BSP_AUDIO_OUT_HalfTransfer_CallBack:00000000 BSP_AUDIO_OUT_HalfTransfer_CallBack
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:346    .text.BSP_AUDIO_OUT_HalfTransfer_CallBack:00000008 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:351    .text.BSP_AUDIO_OUT_TransferComplete_CallBack:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:358    .text.BSP_AUDIO_OUT_TransferComplete_CallBack:00000000 BSP_AUDIO_OUT_TransferComplete_CallBack
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:382    .text.BSP_AUDIO_OUT_TransferComplete_CallBack:00000014 $d
+                            *COM*:00001000 Audio_Buffer
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:388    .text.BSP_AUDIO_OUT_Error_CallBack:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:395    .text.BSP_AUDIO_OUT_Error_CallBack:00000000 BSP_AUDIO_OUT_Error_CallBack
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:409    .text.WavePlayerInit:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:416    .text.WavePlayerInit:00000000 WavePlayerInit
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:442    .text.WavePlayerStop:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:449    .text.WavePlayerStop:00000000 WavePlayerStop
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:469    .text._write_r:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:476    .text._write_r:00000000 _write_r
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:518    .text.get_filename_ext:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:525    .text.get_filename_ext:00000000 get_filename_ext
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:567    .text.get_filename_ext:0000001c $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:572    .text.HAL_TIM_PeriodElapsedCallback:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:579    .text.HAL_TIM_PeriodElapsedCallback:00000000 HAL_TIM_PeriodElapsedCallback
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:609    .text.HAL_TIM_PeriodElapsedCallback:00000014 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:614    .text._Error_Handler:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:621    .text._Error_Handler:00000000 _Error_Handler
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:636    .text.WavePlayBack:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:643    .text.WavePlayBack:00000000 WavePlayBack
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:811    .text.WavePlayBack:000000e4 $d
+                            *COM*:0000022c FileRead
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:826    .text.WavePlayerStart:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:833    .text.WavePlayerStart:00000000 WavePlayerStart
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:904    .text.WavePlayerStart:00000048 $d
+                            *COM*:00000220 Directory
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:912    .text.play_directory:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:918    .text.play_directory:00000000 play_directory
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:995    .text.play_directory:0000005c $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1000   .text.StartDefaultTask:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1007   .text.StartDefaultTask:00000000 StartDefaultTask
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1065   .text.StartDefaultTask:00000044 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1073   .text.MX_USART2_UART_Init:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1079   .text.MX_USART2_UART_Init:00000000 MX_USART2_UART_Init
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1125   .text.MX_USART2_UART_Init:00000030 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1132   .text.MX_I2S2_Init:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1138   .text.MX_I2S2_Init:00000000 MX_I2S2_Init
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1186   .text.MX_I2S2_Init:00000034 $d
+                            *COM*:00000048 hi2s2
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1193   .text.MX_I2S3_Init:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1199   .text.MX_I2S3_Init:00000000 MX_I2S3_Init
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1247   .text.MX_I2S3_Init:00000034 $d
+                            *COM*:00000048 hi2s3
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 46
+
+
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1254   .text.SystemClock_Config:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1261   .text.SystemClock_Config:00000000 SystemClock_Config
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1410   .text.SystemClock_Config:000000d4 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1418   .text.main:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1425   .text.main:00000000 main
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1479   .text.main:0000003c $d
+                            *COM*:00000004 defaultTaskHandle
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1528   .bss.buffer_offset:00000000 buffer_offset
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1508   .bss.AudioPlayStart:00000000 AudioPlayStart
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1494   .rodata:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1504   .bss.AudioPlayStart:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1511   .bss.AudioRemSize:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1515   .bss.AudioRemSize:00000000 AudioRemSize
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1518   .bss.WaveDataLength:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1522   .bss.WaveDataLength:00000000 WaveDataLength
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1529   .bss.buffer_offset:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1531   .rodata.MX_USART2_UART_Init.str1.4:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1535   .rodata.StartDefaultTask.str1.4:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1542   .rodata.WavePlayBack.str1.4:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1555   .rodata.WavePlayerStart.str1.4:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1559   .rodata.get_filename_ext.str1.4:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1563   .rodata.play_directory.str1.4:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s:1567   .rodata.str1.4:00000000 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+HAL_UART_Transmit
+HAL_GPIO_WritePin
+HAL_GPIO_Init
+BSP_AUDIO_OUT_ChangeBuffer
+BSP_AUDIO_OUT_Init
+BSP_AUDIO_OUT_Stop
+strrchr
+HAL_IncTick
+puts
+f_lseek
+f_read
+BSP_AUDIO_OUT_Play
+f_close
+f_opendir
+f_open
+f_readdir
+strcmp
+MX_USB_HOST_Init
+MX_FATFS_Init
+f_mount
+osDelay
+Appli_state
+HAL_UART_Init
+HAL_I2S_Init
+HAL_RCC_OscConfig
+HAL_RCC_ClockConfig
+HAL_RCCEx_PeriphCLKConfig
+HAL_RCC_GetHCLKFreq
+HAL_SYSTICK_Config
+HAL_SYSTICK_CLKSourceConfig
+HAL_NVIC_SetPriority
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccY3gw7b.s 			page 47
+
+
+HAL_Init
+osThreadCreate
+osKernelStart

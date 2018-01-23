@@ -1,0 +1,1644 @@
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"cs43l22.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.cs43l22_SetFrequency,"ax",%progbits
+  18              		.align	1
+  19              		.global	cs43l22_SetFrequency
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	cs43l22_SetFrequency:
+  26              	.LFB8:
+  27              		.file 1 "Drivers/BSP/Components/cs43l22/cs43l22.c"
+   1:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+   2:Drivers/BSP/Components/cs43l22/cs43l22.c ****   ******************************************************************************
+   3:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @file    cs43l22.c
+   4:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @author  MCD Application Team
+   5:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @version V2.0.2
+   6:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @date    06-October-2015
+   7:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief   This file provides the CS43L22 Audio Codec driver.   
+   8:Drivers/BSP/Components/cs43l22/cs43l22.c ****   ******************************************************************************
+   9:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @attention
+  10:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *
+  11:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * <h2><center>&copy; COPYRIGHT(c) 2015 STMicroelectronics</center></h2>
+  12:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *
+  13:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * Redistribution and use in source and binary forms, with or without modification,
+  14:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * are permitted provided that the following conditions are met:
+  15:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *   1. Redistributions of source code must retain the above copyright notice,
+  16:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *      this list of conditions and the following disclaimer.
+  17:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
+  18:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *      this list of conditions and the following disclaimer in the documentation
+  19:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *      and/or other materials provided with the distribution.
+  20:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  21:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *      may be used to endorse or promote products derived from this software
+  22:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *      without specific prior written permission.
+  23:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *
+  24:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  25:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  26:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  27:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  28:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+  29:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  30:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  31:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 2
+
+
+  32:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  33:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  34:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *
+  35:Drivers/BSP/Components/cs43l22/cs43l22.c ****   ******************************************************************************
+  36:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+  37:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  38:Drivers/BSP/Components/cs43l22/cs43l22.c **** /* Includes ------------------------------------------------------------------*/
+  39:Drivers/BSP/Components/cs43l22/cs43l22.c **** #include "cs43l22.h"
+  40:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  41:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @addtogroup BSP
+  42:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+  43:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+  44:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+  45:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @addtogroup Components
+  46:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+  47:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */ 
+  48:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  49:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @addtogroup CS43L22
+  50:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief     This file provides a set of functions needed to drive the 
+  51:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *            CS43L22 audio codec.
+  52:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+  53:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+  54:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  55:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @defgroup CS43L22_Private_Types
+  56:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+  57:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+  58:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  59:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+  60:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @}
+  61:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */ 
+  62:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+  63:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @defgroup CS43L22_Private_Defines
+  64:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+  65:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+  66:Drivers/BSP/Components/cs43l22/cs43l22.c **** #define VOLUME_CONVERT(Volume)    (((Volume) > 100)? 100:((uint8_t)(((Volume) * 255) / 100)))  
+  67:Drivers/BSP/Components/cs43l22/cs43l22.c **** /* Uncomment this line to enable verifying data sent to codec after each write 
+  68:Drivers/BSP/Components/cs43l22/cs43l22.c ****    operation (for debug purpose) */
+  69:Drivers/BSP/Components/cs43l22/cs43l22.c **** #if !defined (VERIFY_WRITTENDATA)  
+  70:Drivers/BSP/Components/cs43l22/cs43l22.c **** /* #define VERIFY_WRITTENDATA */
+  71:Drivers/BSP/Components/cs43l22/cs43l22.c **** #endif /* VERIFY_WRITTENDATA */
+  72:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+  73:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @}
+  74:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */ 
+  75:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  76:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @defgroup CS43L22_Private_Macros
+  77:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+  78:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+  79:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  80:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+  81:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @}
+  82:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */ 
+  83:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+  84:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @defgroup CS43L22_Private_Variables
+  85:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+  86:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+  87:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  88:Drivers/BSP/Components/cs43l22/cs43l22.c **** /* Audio codec driver structure initialization */  
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 3
+
+
+  89:Drivers/BSP/Components/cs43l22/cs43l22.c **** AUDIO_DrvTypeDef cs43l22_drv = 
+  90:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+  91:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_Init,
+  92:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_DeInit,
+  93:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_ReadID,
+  94:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+  95:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_Play,
+  96:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_Pause,
+  97:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_Resume,
+  98:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_Stop,  
+  99:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 100:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_SetFrequency,  
+ 101:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_SetVolume,
+ 102:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_SetMute,  
+ 103:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_SetOutputMode,
+ 104:Drivers/BSP/Components/cs43l22/cs43l22.c ****   cs43l22_Reset,
+ 105:Drivers/BSP/Components/cs43l22/cs43l22.c **** };
+ 106:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 107:Drivers/BSP/Components/cs43l22/cs43l22.c **** static uint8_t Is_cs43l22_Stop = 1;
+ 108:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 109:Drivers/BSP/Components/cs43l22/cs43l22.c **** volatile uint8_t OutputDev = 0;
+ 110:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 111:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 112:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @}
+ 113:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */ 
+ 114:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 115:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @defgroup CS43L22_Function_Prototypes
+ 116:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+ 117:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 118:Drivers/BSP/Components/cs43l22/cs43l22.c **** static uint8_t CODEC_IO_Write(uint8_t Addr, uint8_t Reg, uint8_t Value);
+ 119:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 120:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @}
+ 121:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */ 
+ 122:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 123:Drivers/BSP/Components/cs43l22/cs43l22.c **** /** @defgroup CS43L22_Private_Functions
+ 124:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @{
+ 125:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */ 
+ 126:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 127:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 128:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Initializes the audio codec and the control interface.
+ 129:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus.   
+ 130:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param OutputDevice: can be OUTPUT_DEVICE_SPEAKER, OUTPUT_DEVICE_HEADPHONE,
+ 131:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *                       OUTPUT_DEVICE_BOTH or OUTPUT_DEVICE_AUTO .
+ 132:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param Volume: Initial volume level (from 0 (Mute) to 100 (Max))
+ 133:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 134:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 135:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_Init(uint16_t DeviceAddr, uint16_t OutputDevice, uint8_t Volume, uint32_t AudioFre
+ 136:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 137:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 138:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 139:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Initialize the Control interface of the Audio Codec */
+ 140:Drivers/BSP/Components/cs43l22/cs43l22.c ****   AUDIO_IO_Init();     
+ 141:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 142:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Keep Codec powered OFF */
+ 143:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL1, 0x01);  
+ 144:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 145:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /*Save Output device for mute ON/OFF procedure*/
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 4
+
+
+ 146:Drivers/BSP/Components/cs43l22/cs43l22.c ****   switch (OutputDevice)
+ 147:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 148:Drivers/BSP/Components/cs43l22/cs43l22.c ****   case OUTPUT_DEVICE_SPEAKER:
+ 149:Drivers/BSP/Components/cs43l22/cs43l22.c ****     OutputDev = 0xFA;
+ 150:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;
+ 151:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 152:Drivers/BSP/Components/cs43l22/cs43l22.c ****   case OUTPUT_DEVICE_HEADPHONE:
+ 153:Drivers/BSP/Components/cs43l22/cs43l22.c ****     OutputDev = 0xAF;
+ 154:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;
+ 155:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 156:Drivers/BSP/Components/cs43l22/cs43l22.c ****   case OUTPUT_DEVICE_BOTH:
+ 157:Drivers/BSP/Components/cs43l22/cs43l22.c ****     OutputDev = 0xAA;
+ 158:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;
+ 159:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 160:Drivers/BSP/Components/cs43l22/cs43l22.c ****   case OUTPUT_DEVICE_AUTO:
+ 161:Drivers/BSP/Components/cs43l22/cs43l22.c ****     OutputDev = 0x05;
+ 162:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;    
+ 163:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 164:Drivers/BSP/Components/cs43l22/cs43l22.c ****   default:
+ 165:Drivers/BSP/Components/cs43l22/cs43l22.c ****     OutputDev = 0x05;
+ 166:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;    
+ 167:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 168:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 169:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, OutputDev);
+ 170:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 171:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Clock configuration: Auto detection */  
+ 172:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_CLOCKING_CTL, 0x81);
+ 173:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 174:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Set the Slave Mode and the audio Standard */  
+ 175:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_INTERFACE_CTL1, CODEC_STANDARD);
+ 176:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 177:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Set the Master volume */
+ 178:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += cs43l22_SetVolume(DeviceAddr, Volume);
+ 179:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 180:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* If the Speaker is enabled, set the Mono mode and volume attenuation level */
+ 181:Drivers/BSP/Components/cs43l22/cs43l22.c ****   if(OutputDevice != OUTPUT_DEVICE_HEADPHONE)
+ 182:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 183:Drivers/BSP/Components/cs43l22/cs43l22.c ****     /* Set the Speaker Mono mode */  
+ 184:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_PLAYBACK_CTL2, 0x06);
+ 185:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 186:Drivers/BSP/Components/cs43l22/cs43l22.c ****     /* Set the Speaker attenuation level */  
+ 187:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_SPEAKER_A_VOL, 0x00);
+ 188:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_SPEAKER_B_VOL, 0x00);
+ 189:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 190:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 191:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Additional configuration for the CODEC. These configurations are done to reduce
+ 192:Drivers/BSP/Components/cs43l22/cs43l22.c ****   the time needed for the Codec to power off. If these configurations are removed, 
+ 193:Drivers/BSP/Components/cs43l22/cs43l22.c ****   then a long delay should be added between powering off the Codec and switching 
+ 194:Drivers/BSP/Components/cs43l22/cs43l22.c ****   off the I2S peripheral MCLK clock (which is the operating clock for Codec).
+ 195:Drivers/BSP/Components/cs43l22/cs43l22.c ****   If this delay is not inserted, then the codec will not shut down properly and
+ 196:Drivers/BSP/Components/cs43l22/cs43l22.c ****   it results in high noise after shut down. */
+ 197:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 198:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Disable the analog soft ramp */
+ 199:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_ANALOG_ZC_SR_SETT, 0x00);
+ 200:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Disable the digital soft ramp */
+ 201:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MISC_CTL, 0x04);
+ 202:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Disable the limiter attack level */
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 5
+
+
+ 203:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_LIMIT_CTL1, 0x00);
+ 204:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Adjust Bass and Treble levels */
+ 205:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_TONE_CTL, 0x0F);
+ 206:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Adjust PCM volume level */
+ 207:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_PCMA_VOL, 0x0A);
+ 208:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_PCMB_VOL, 0x0A);
+ 209:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 210:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Return communication control value */
+ 211:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;  
+ 212:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 213:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 214:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 215:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief  Deinitializes the audio codec.
+ 216:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param  None
+ 217:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval  None
+ 218:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 219:Drivers/BSP/Components/cs43l22/cs43l22.c **** void cs43l22_DeInit(void)
+ 220:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 221:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Deinitialize Audio Codec interface */
+ 222:Drivers/BSP/Components/cs43l22/cs43l22.c ****   AUDIO_IO_DeInit();
+ 223:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 224:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 225:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 226:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief  Get the CS43L22 ID.
+ 227:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus.   
+ 228:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval The CS43L22 ID 
+ 229:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 230:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_ReadID(uint16_t DeviceAddr)
+ 231:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 232:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint8_t Value;
+ 233:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Initialize the Control interface of the Audio Codec */
+ 234:Drivers/BSP/Components/cs43l22/cs43l22.c ****   AUDIO_IO_Init(); 
+ 235:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 236:Drivers/BSP/Components/cs43l22/cs43l22.c ****   Value = AUDIO_IO_Read(DeviceAddr, CS43L22_CHIPID_ADDR);
+ 237:Drivers/BSP/Components/cs43l22/cs43l22.c ****   Value = (Value & CS43L22_ID_MASK);
+ 238:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 239:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return((uint32_t) Value);
+ 240:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 241:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 242:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 243:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Start the audio Codec play feature.
+ 244:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @note For this codec no Play options are required.
+ 245:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus.   
+ 246:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 247:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 248:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_Play(uint16_t DeviceAddr, uint16_t* pBuffer, uint16_t Size)
+ 249:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 250:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 251:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 252:Drivers/BSP/Components/cs43l22/cs43l22.c ****   if(Is_cs43l22_Stop == 1)
+ 253:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 254:Drivers/BSP/Components/cs43l22/cs43l22.c ****     /* Enable the digital soft ramp */
+ 255:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MISC_CTL, 0x06);
+ 256:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 257:Drivers/BSP/Components/cs43l22/cs43l22.c ****     /* Enable Output device */  
+ 258:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += cs43l22_SetMute(DeviceAddr, AUDIO_MUTE_OFF);
+ 259:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 6
+
+
+ 260:Drivers/BSP/Components/cs43l22/cs43l22.c ****     /* Power on the Codec */
+ 261:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL1, 0x9E);  
+ 262:Drivers/BSP/Components/cs43l22/cs43l22.c ****     Is_cs43l22_Stop = 0;
+ 263:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 264:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 265:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Return communication control value */
+ 266:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;  
+ 267:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 268:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 269:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 270:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Pauses playing on the audio codec.
+ 271:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus. 
+ 272:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 273:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 274:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_Pause(uint16_t DeviceAddr)
+ 275:Drivers/BSP/Components/cs43l22/cs43l22.c **** {  
+ 276:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 277:Drivers/BSP/Components/cs43l22/cs43l22.c ****  
+ 278:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Pause the audio file playing */
+ 279:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Mute the output first */
+ 280:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += cs43l22_SetMute(DeviceAddr, AUDIO_MUTE_ON);
+ 281:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 282:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Put the Codec in Power save mode */    
+ 283:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL1, 0x01);
+ 284:Drivers/BSP/Components/cs43l22/cs43l22.c ****  
+ 285:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;
+ 286:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 287:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 288:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 289:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Resumes playing on the audio codec.
+ 290:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus. 
+ 291:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 292:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 293:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_Resume(uint16_t DeviceAddr)
+ 294:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 295:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 296:Drivers/BSP/Components/cs43l22/cs43l22.c ****   volatile uint32_t index = 0x00;
+ 297:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Resumes the audio file playing */  
+ 298:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Unmute the output first */
+ 299:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += cs43l22_SetMute(DeviceAddr, AUDIO_MUTE_OFF);
+ 300:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 301:Drivers/BSP/Components/cs43l22/cs43l22.c ****   for(index = 0x00; index < 0xFF; index++);
+ 302:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 303:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, OutputDev);
+ 304:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 305:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Exit the Power save mode */
+ 306:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL1, 0x9E); 
+ 307:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 308:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;
+ 309:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 310:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 311:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 312:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Stops audio Codec playing. It powers down the codec.
+ 313:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus. 
+ 314:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param CodecPdwnMode: selects the  power down mode.
+ 315:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *          - CODEC_PDWN_HW: Physically power down the codec. When resuming from this
+ 316:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *                           mode, the codec is set to default configuration 
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 7
+
+
+ 317:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *                           (user should re-Initialize the codec in order to 
+ 318:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *                            play again the audio stream).
+ 319:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 320:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 321:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_Stop(uint16_t DeviceAddr, uint32_t CodecPdwnMode)
+ 322:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 323:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 324:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 325:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Mute the output first */
+ 326:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += cs43l22_SetMute(DeviceAddr, AUDIO_MUTE_ON);
+ 327:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 328:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Disable the digital soft ramp */
+ 329:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MISC_CTL, 0x04);
+ 330:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 331:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Power down the DAC and the speaker (PMDAC and PMSPK bits)*/
+ 332:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL1, 0x9F);
+ 333:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 334:Drivers/BSP/Components/cs43l22/cs43l22.c ****   Is_cs43l22_Stop = 1;
+ 335:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;    
+ 336:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 337:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 338:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 339:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Sets higher or lower the codec volume level.
+ 340:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus.   
+ 341:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param Volume: a byte value from 0 to 255 (refer to codec registers 
+ 342:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *         description for more details).
+ 343:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 344:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 345:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_SetVolume(uint16_t DeviceAddr, uint8_t Volume)
+ 346:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 347:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 348:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint8_t convertedvol = VOLUME_CONVERT(Volume);
+ 349:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 350:Drivers/BSP/Components/cs43l22/cs43l22.c ****   if(Volume > 0xE6)
+ 351:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 352:Drivers/BSP/Components/cs43l22/cs43l22.c ****     /* Set the Master volume */
+ 353:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MASTER_A_VOL, convertedvol - 0xE7); 
+ 354:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MASTER_B_VOL, convertedvol - 0xE7);     
+ 355:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 356:Drivers/BSP/Components/cs43l22/cs43l22.c ****   else
+ 357:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 358:Drivers/BSP/Components/cs43l22/cs43l22.c ****     /* Set the Master volume */
+ 359:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MASTER_A_VOL, convertedvol + 0x19); 
+ 360:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MASTER_B_VOL, convertedvol + 0x19); 
+ 361:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 362:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 363:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;
+ 364:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 365:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 366:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 367:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Sets new frequency.
+ 368:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus.   
+ 369:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param AudioFreq: Audio frequency used to play the audio stream.
+ 370:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 371:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 372:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_SetFrequency(uint16_t DeviceAddr, uint32_t AudioFreq)
+ 373:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 8
+
+
+  28              		.loc 1 373 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+ 374:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return 0;
+ 375:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+  34              		.loc 1 375 0
+  35 0000 0020     		movs	r0, #0
+  36              	.LVL1:
+  37 0002 7047     		bx	lr
+  38              		.cfi_endproc
+  39              	.LFE8:
+  41              		.section	.text.cs43l22_Reset,"ax",%progbits
+  42              		.align	1
+  43              		.global	cs43l22_Reset
+  44              		.syntax unified
+  45              		.thumb
+  46              		.thumb_func
+  47              		.fpu fpv4-sp-d16
+  49              	cs43l22_Reset:
+  50              	.LFB11:
+ 376:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 377:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 378:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Enables or disables the mute feature on the audio codec.
+ 379:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus.   
+ 380:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param Cmd: AUDIO_MUTE_ON to enable the mute or AUDIO_MUTE_OFF to disable the
+ 381:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *             mute mode.
+ 382:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 383:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 384:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_SetMute(uint16_t DeviceAddr, uint32_t Cmd)
+ 385:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 386:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 387:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 388:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Set the Mute mode */
+ 389:Drivers/BSP/Components/cs43l22/cs43l22.c ****   if(Cmd == AUDIO_MUTE_ON)
+ 390:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 391:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, 0xFF);
+ 392:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_HEADPHONE_A_VOL, 0x01);
+ 393:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_HEADPHONE_B_VOL, 0x01);
+ 394:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 395:Drivers/BSP/Components/cs43l22/cs43l22.c ****   else /* AUDIO_MUTE_OFF Disable the Mute */
+ 396:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 397:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_HEADPHONE_A_VOL, 0x00);
+ 398:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_HEADPHONE_B_VOL, 0x00);
+ 399:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, OutputDev);
+ 400:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 401:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;
+ 402:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 403:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 404:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 405:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Switch dynamically (while audio file is played) the output target 
+ 406:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *         (speaker or headphone).
+ 407:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @note This function modifies a global variable of the audio codec driver: OutputDev.
+ 408:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus.
+ 409:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param Output: specifies the audio output target: OUTPUT_DEVICE_SPEAKER,
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 9
+
+
+ 410:Drivers/BSP/Components/cs43l22/cs43l22.c ****   *         OUTPUT_DEVICE_HEADPHONE, OUTPUT_DEVICE_BOTH or OUTPUT_DEVICE_AUTO 
+ 411:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 412:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 413:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_SetOutputMode(uint16_t DeviceAddr, uint8_t Output)
+ 414:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+ 415:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0; 
+ 416:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 417:Drivers/BSP/Components/cs43l22/cs43l22.c ****   switch (Output) 
+ 418:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 419:Drivers/BSP/Components/cs43l22/cs43l22.c ****     case OUTPUT_DEVICE_SPEAKER:
+ 420:Drivers/BSP/Components/cs43l22/cs43l22.c ****       counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, 0xFA); /* SPK always ON & HP al
+ 421:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0xFA;
+ 422:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;
+ 423:Drivers/BSP/Components/cs43l22/cs43l22.c ****       
+ 424:Drivers/BSP/Components/cs43l22/cs43l22.c ****     case OUTPUT_DEVICE_HEADPHONE:
+ 425:Drivers/BSP/Components/cs43l22/cs43l22.c ****       counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, 0xAF); /* SPK always OFF & HP a
+ 426:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0xAF;
+ 427:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;
+ 428:Drivers/BSP/Components/cs43l22/cs43l22.c ****       
+ 429:Drivers/BSP/Components/cs43l22/cs43l22.c ****     case OUTPUT_DEVICE_BOTH:
+ 430:Drivers/BSP/Components/cs43l22/cs43l22.c ****       counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, 0xAA); /* SPK always ON & HP al
+ 431:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0xAA;
+ 432:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;
+ 433:Drivers/BSP/Components/cs43l22/cs43l22.c ****       
+ 434:Drivers/BSP/Components/cs43l22/cs43l22.c ****     case OUTPUT_DEVICE_AUTO:
+ 435:Drivers/BSP/Components/cs43l22/cs43l22.c ****       counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, 0x05); /* Detect the HP or the 
+ 436:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0x05;
+ 437:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;    
+ 438:Drivers/BSP/Components/cs43l22/cs43l22.c ****       
+ 439:Drivers/BSP/Components/cs43l22/cs43l22.c ****     default:
+ 440:Drivers/BSP/Components/cs43l22/cs43l22.c ****       counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, 0x05); /* Detect the HP or the 
+ 441:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0x05;
+ 442:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;
+ 443:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }  
+ 444:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;
+ 445:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 446:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 447:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 448:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief Resets cs43l22 registers.
+ 449:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param DeviceAddr: Device address on communication Bus. 
+ 450:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval 0 if correct communication, else wrong communication
+ 451:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 452:Drivers/BSP/Components/cs43l22/cs43l22.c **** uint32_t cs43l22_Reset(uint16_t DeviceAddr)
+ 453:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+  51              		.loc 1 453 0
+  52              		.cfi_startproc
+  53              		@ args = 0, pretend = 0, frame = 0
+  54              		@ frame_needed = 0, uses_anonymous_args = 0
+  55              		@ link register save eliminated.
+  56              	.LVL2:
+ 454:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return 0;
+ 455:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+  57              		.loc 1 455 0
+  58 0000 0020     		movs	r0, #0
+  59              	.LVL3:
+  60 0002 7047     		bx	lr
+  61              		.cfi_endproc
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 10
+
+
+  62              	.LFE11:
+  64              		.section	.text.CODEC_IO_Write,"ax",%progbits
+  65              		.align	1
+  66              		.syntax unified
+  67              		.thumb
+  68              		.thumb_func
+  69              		.fpu fpv4-sp-d16
+  71              	CODEC_IO_Write:
+  72              	.LFB12:
+ 456:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 457:Drivers/BSP/Components/cs43l22/cs43l22.c **** /**
+ 458:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @brief  Writes/Read a single data.
+ 459:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param  Addr: I2C address
+ 460:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param  Reg: Reg address 
+ 461:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @param  Value: Data to be written
+ 462:Drivers/BSP/Components/cs43l22/cs43l22.c ****   * @retval None
+ 463:Drivers/BSP/Components/cs43l22/cs43l22.c ****   */
+ 464:Drivers/BSP/Components/cs43l22/cs43l22.c **** static uint8_t CODEC_IO_Write(uint8_t Addr, uint8_t Reg, uint8_t Value)
+ 465:Drivers/BSP/Components/cs43l22/cs43l22.c **** {
+  73              		.loc 1 465 0
+  74              		.cfi_startproc
+  75              		@ args = 0, pretend = 0, frame = 0
+  76              		@ frame_needed = 0, uses_anonymous_args = 0
+  77              	.LVL4:
+  78 0000 08B5     		push	{r3, lr}
+  79              	.LCFI0:
+  80              		.cfi_def_cfa_offset 8
+  81              		.cfi_offset 3, -8
+  82              		.cfi_offset 14, -4
+  83              	.LVL5:
+ 466:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t result = 0;
+ 467:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 468:Drivers/BSP/Components/cs43l22/cs43l22.c ****   AUDIO_IO_Write(Addr, Reg, Value);
+  84              		.loc 1 468 0
+  85 0002 FFF7FEFF 		bl	AUDIO_IO_Write
+  86              	.LVL6:
+ 469:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 470:Drivers/BSP/Components/cs43l22/cs43l22.c **** #ifdef VERIFY_WRITTENDATA
+ 471:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Verify that the data has been correctly written */  
+ 472:Drivers/BSP/Components/cs43l22/cs43l22.c ****   result = (AUDIO_IO_Read(Addr, Reg) == Value)? 0:1;
+ 473:Drivers/BSP/Components/cs43l22/cs43l22.c **** #endif /* VERIFY_WRITTENDATA */
+ 474:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 475:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return result;
+ 476:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+  87              		.loc 1 476 0
+  88 0006 0020     		movs	r0, #0
+  89 0008 08BD     		pop	{r3, pc}
+  90              		.cfi_endproc
+  91              	.LFE12:
+  93              		.section	.text.cs43l22_SetVolume,"ax",%progbits
+  94              		.align	1
+  95              		.global	cs43l22_SetVolume
+  96              		.syntax unified
+  97              		.thumb
+  98              		.thumb_func
+  99              		.fpu fpv4-sp-d16
+ 101              	cs43l22_SetVolume:
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 11
+
+
+ 102              	.LFB7:
+ 346:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 103              		.loc 1 346 0
+ 104              		.cfi_startproc
+ 105              		@ args = 0, pretend = 0, frame = 0
+ 106              		@ frame_needed = 0, uses_anonymous_args = 0
+ 107              	.LVL7:
+ 108 0000 70B5     		push	{r4, r5, r6, lr}
+ 109              	.LCFI1:
+ 110              		.cfi_def_cfa_offset 16
+ 111              		.cfi_offset 4, -16
+ 112              		.cfi_offset 5, -12
+ 113              		.cfi_offset 6, -8
+ 114              		.cfi_offset 14, -4
+ 115              	.LVL8:
+ 348:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 116              		.loc 1 348 0
+ 117 0002 6429     		cmp	r1, #100
+ 118 0004 1AD8     		bhi	.L9
+ 348:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 119              		.loc 1 348 0 is_stmt 0 discriminator 1
+ 120 0006 C1EB0123 		rsb	r3, r1, r1, lsl #8
+ 121 000a 154C     		ldr	r4, .L12
+ 122 000c 84FB0324 		smull	r2, r4, r4, r3
+ 123 0010 DA17     		asrs	r2, r3, #31
+ 124 0012 C2EB6412 		rsb	r2, r2, r4, asr #5
+ 125 0016 D2B2     		uxtb	r2, r2
+ 126              	.L6:
+ 127              	.LVL9:
+ 350:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 128              		.loc 1 350 0 is_stmt 1 discriminator 4
+ 129 0018 E629     		cmp	r1, #230
+ 130 001a 11D8     		bhi	.L11
+ 359:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MASTER_B_VOL, convertedvol + 0x19); 
+ 131              		.loc 1 359 0
+ 132 001c C5B2     		uxtb	r5, r0
+ 133 001e 1932     		adds	r2, r2, #25
+ 134              	.LVL10:
+ 135 0020 D4B2     		uxtb	r4, r2
+ 136 0022 2246     		mov	r2, r4
+ 137 0024 2021     		movs	r1, #32
+ 138              	.LVL11:
+ 139 0026 2846     		mov	r0, r5
+ 140              	.LVL12:
+ 141 0028 FFF7FEFF 		bl	CODEC_IO_Write
+ 142              	.LVL13:
+ 143 002c 0646     		mov	r6, r0
+ 144              	.LVL14:
+ 360:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 145              		.loc 1 360 0
+ 146 002e 2246     		mov	r2, r4
+ 147 0030 2121     		movs	r1, #33
+ 148 0032 2846     		mov	r0, r5
+ 149              	.LVL15:
+ 150 0034 FFF7FEFF 		bl	CODEC_IO_Write
+ 151              	.LVL16:
+ 152 0038 3044     		add	r0, r0, r6
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 12
+
+
+ 153              	.LVL17:
+ 364:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 154              		.loc 1 364 0
+ 155 003a 70BD     		pop	{r4, r5, r6, pc}
+ 156              	.LVL18:
+ 157              	.L9:
+ 348:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 158              		.loc 1 348 0
+ 159 003c 6422     		movs	r2, #100
+ 160 003e EBE7     		b	.L6
+ 161              	.LVL19:
+ 162              	.L11:
+ 353:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_MASTER_B_VOL, convertedvol - 0xE7);     
+ 163              		.loc 1 353 0
+ 164 0040 C5B2     		uxtb	r5, r0
+ 165 0042 1932     		adds	r2, r2, #25
+ 166              	.LVL20:
+ 167 0044 D4B2     		uxtb	r4, r2
+ 168 0046 2246     		mov	r2, r4
+ 169 0048 2021     		movs	r1, #32
+ 170              	.LVL21:
+ 171 004a 2846     		mov	r0, r5
+ 172              	.LVL22:
+ 173 004c FFF7FEFF 		bl	CODEC_IO_Write
+ 174              	.LVL23:
+ 175 0050 0646     		mov	r6, r0
+ 176              	.LVL24:
+ 354:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 177              		.loc 1 354 0
+ 178 0052 2246     		mov	r2, r4
+ 179 0054 2121     		movs	r1, #33
+ 180 0056 2846     		mov	r0, r5
+ 181              	.LVL25:
+ 182 0058 FFF7FEFF 		bl	CODEC_IO_Write
+ 183              	.LVL26:
+ 184 005c 3044     		add	r0, r0, r6
+ 185              	.LVL27:
+ 186 005e 70BD     		pop	{r4, r5, r6, pc}
+ 187              	.L13:
+ 188              		.align	2
+ 189              	.L12:
+ 190 0060 1F85EB51 		.word	1374389535
+ 191              		.cfi_endproc
+ 192              	.LFE7:
+ 194              		.section	.text.cs43l22_Init,"ax",%progbits
+ 195              		.align	1
+ 196              		.global	cs43l22_Init
+ 197              		.syntax unified
+ 198              		.thumb
+ 199              		.thumb_func
+ 200              		.fpu fpv4-sp-d16
+ 202              	cs43l22_Init:
+ 203              	.LFB0:
+ 136:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 204              		.loc 1 136 0
+ 205              		.cfi_startproc
+ 206              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 13
+
+
+ 207              		@ frame_needed = 0, uses_anonymous_args = 0
+ 208              	.LVL28:
+ 209 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 210              	.LCFI2:
+ 211              		.cfi_def_cfa_offset 24
+ 212              		.cfi_offset 4, -24
+ 213              		.cfi_offset 5, -20
+ 214              		.cfi_offset 6, -16
+ 215              		.cfi_offset 7, -12
+ 216              		.cfi_offset 8, -8
+ 217              		.cfi_offset 14, -4
+ 218 0004 0746     		mov	r7, r0
+ 219 0006 0E46     		mov	r6, r1
+ 220 0008 9046     		mov	r8, r2
+ 221              	.LVL29:
+ 140:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 222              		.loc 1 140 0
+ 223 000a FFF7FEFF 		bl	AUDIO_IO_Init
+ 224              	.LVL30:
+ 143:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 225              		.loc 1 143 0
+ 226 000e FDB2     		uxtb	r5, r7
+ 227 0010 0122     		movs	r2, #1
+ 228 0012 0221     		movs	r1, #2
+ 229 0014 2846     		mov	r0, r5
+ 230 0016 FFF7FEFF 		bl	CODEC_IO_Write
+ 231              	.LVL31:
+ 232 001a 0446     		mov	r4, r0
+ 233              	.LVL32:
+ 146:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 234              		.loc 1 146 0
+ 235 001c 731E     		subs	r3, r6, #1
+ 236 001e 032B     		cmp	r3, #3
+ 237 0020 64D8     		bhi	.L15
+ 238 0022 DFE803F0 		tbb	[pc, r3]
+ 239              	.L17:
+ 240 0026 02       		.byte	(.L16-.L17)/2
+ 241 0027 57       		.byte	(.L18-.L17)/2
+ 242 0028 5B       		.byte	(.L19-.L17)/2
+ 243 0029 5F       		.byte	(.L20-.L17)/2
+ 244              		.p2align 1
+ 245              	.L16:
+ 149:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;
+ 246              		.loc 1 149 0
+ 247 002a FA22     		movs	r2, #250
+ 248 002c 314B     		ldr	r3, .L24
+ 249 002e 1A70     		strb	r2, [r3]
+ 250              	.L21:
+ 169:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 251              		.loc 1 169 0
+ 252 0030 304B     		ldr	r3, .L24
+ 253 0032 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 254 0034 0421     		movs	r1, #4
+ 255 0036 2846     		mov	r0, r5
+ 256              	.LVL33:
+ 257 0038 FFF7FEFF 		bl	CODEC_IO_Write
+ 258              	.LVL34:
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 14
+
+
+ 259 003c 0444     		add	r4, r4, r0
+ 260              	.LVL35:
+ 172:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 261              		.loc 1 172 0
+ 262 003e 8122     		movs	r2, #129
+ 263 0040 0521     		movs	r1, #5
+ 264 0042 2846     		mov	r0, r5
+ 265 0044 FFF7FEFF 		bl	CODEC_IO_Write
+ 266              	.LVL36:
+ 267 0048 0444     		add	r4, r4, r0
+ 268              	.LVL37:
+ 175:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 269              		.loc 1 175 0
+ 270 004a 0422     		movs	r2, #4
+ 271 004c 0621     		movs	r1, #6
+ 272 004e 2846     		mov	r0, r5
+ 273 0050 FFF7FEFF 		bl	CODEC_IO_Write
+ 274              	.LVL38:
+ 275 0054 0444     		add	r4, r4, r0
+ 276              	.LVL39:
+ 178:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 277              		.loc 1 178 0
+ 278 0056 4146     		mov	r1, r8
+ 279 0058 3846     		mov	r0, r7
+ 280 005a FFF7FEFF 		bl	cs43l22_SetVolume
+ 281              	.LVL40:
+ 282 005e 0444     		add	r4, r4, r0
+ 283              	.LVL41:
+ 181:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 284              		.loc 1 181 0
+ 285 0060 022E     		cmp	r6, #2
+ 286 0062 11D0     		beq	.L22
+ 184:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 287              		.loc 1 184 0
+ 288 0064 0622     		movs	r2, #6
+ 289 0066 0F21     		movs	r1, #15
+ 290 0068 2846     		mov	r0, r5
+ 291 006a FFF7FEFF 		bl	CODEC_IO_Write
+ 292              	.LVL42:
+ 293 006e 0444     		add	r4, r4, r0
+ 294              	.LVL43:
+ 187:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_SPEAKER_B_VOL, 0x00);
+ 295              		.loc 1 187 0
+ 296 0070 0022     		movs	r2, #0
+ 297 0072 2421     		movs	r1, #36
+ 298 0074 2846     		mov	r0, r5
+ 299 0076 FFF7FEFF 		bl	CODEC_IO_Write
+ 300              	.LVL44:
+ 301 007a 0444     		add	r4, r4, r0
+ 302              	.LVL45:
+ 188:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 303              		.loc 1 188 0
+ 304 007c 0022     		movs	r2, #0
+ 305 007e 2521     		movs	r1, #37
+ 306 0080 2846     		mov	r0, r5
+ 307 0082 FFF7FEFF 		bl	CODEC_IO_Write
+ 308              	.LVL46:
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 15
+
+
+ 309 0086 0444     		add	r4, r4, r0
+ 310              	.LVL47:
+ 311              	.L22:
+ 199:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Disable the digital soft ramp */
+ 312              		.loc 1 199 0
+ 313 0088 0022     		movs	r2, #0
+ 314 008a 0A21     		movs	r1, #10
+ 315 008c 2846     		mov	r0, r5
+ 316 008e FFF7FEFF 		bl	CODEC_IO_Write
+ 317              	.LVL48:
+ 318 0092 0444     		add	r4, r4, r0
+ 319              	.LVL49:
+ 201:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Disable the limiter attack level */
+ 320              		.loc 1 201 0
+ 321 0094 0422     		movs	r2, #4
+ 322 0096 0E21     		movs	r1, #14
+ 323 0098 2846     		mov	r0, r5
+ 324 009a FFF7FEFF 		bl	CODEC_IO_Write
+ 325              	.LVL50:
+ 326 009e 0444     		add	r4, r4, r0
+ 327              	.LVL51:
+ 203:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Adjust Bass and Treble levels */
+ 328              		.loc 1 203 0
+ 329 00a0 0022     		movs	r2, #0
+ 330 00a2 2721     		movs	r1, #39
+ 331 00a4 2846     		mov	r0, r5
+ 332 00a6 FFF7FEFF 		bl	CODEC_IO_Write
+ 333              	.LVL52:
+ 334 00aa 0444     		add	r4, r4, r0
+ 335              	.LVL53:
+ 205:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Adjust PCM volume level */
+ 336              		.loc 1 205 0
+ 337 00ac 0F22     		movs	r2, #15
+ 338 00ae 1F21     		movs	r1, #31
+ 339 00b0 2846     		mov	r0, r5
+ 340 00b2 FFF7FEFF 		bl	CODEC_IO_Write
+ 341              	.LVL54:
+ 342 00b6 0444     		add	r4, r4, r0
+ 343              	.LVL55:
+ 207:Drivers/BSP/Components/cs43l22/cs43l22.c ****   counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_PCMB_VOL, 0x0A);
+ 344              		.loc 1 207 0
+ 345 00b8 0A22     		movs	r2, #10
+ 346 00ba 1A21     		movs	r1, #26
+ 347 00bc 2846     		mov	r0, r5
+ 348 00be FFF7FEFF 		bl	CODEC_IO_Write
+ 349              	.LVL56:
+ 350 00c2 0444     		add	r4, r4, r0
+ 351              	.LVL57:
+ 208:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 352              		.loc 1 208 0
+ 353 00c4 0A22     		movs	r2, #10
+ 354 00c6 1B21     		movs	r1, #27
+ 355 00c8 2846     		mov	r0, r5
+ 356 00ca FFF7FEFF 		bl	CODEC_IO_Write
+ 357              	.LVL58:
+ 212:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 358              		.loc 1 212 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 16
+
+
+ 359 00ce 2044     		add	r0, r0, r4
+ 360              	.LVL59:
+ 361 00d0 BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 362              	.L18:
+ 153:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;
+ 363              		.loc 1 153 0
+ 364 00d4 AF22     		movs	r2, #175
+ 365 00d6 074B     		ldr	r3, .L24
+ 366 00d8 1A70     		strb	r2, [r3]
+ 154:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 367              		.loc 1 154 0
+ 368 00da A9E7     		b	.L21
+ 369              	.L19:
+ 157:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;
+ 370              		.loc 1 157 0
+ 371 00dc AA22     		movs	r2, #170
+ 372 00de 054B     		ldr	r3, .L24
+ 373 00e0 1A70     		strb	r2, [r3]
+ 158:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 374              		.loc 1 158 0
+ 375 00e2 A5E7     		b	.L21
+ 376              	.L20:
+ 161:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;    
+ 377              		.loc 1 161 0
+ 378 00e4 0522     		movs	r2, #5
+ 379 00e6 034B     		ldr	r3, .L24
+ 380 00e8 1A70     		strb	r2, [r3]
+ 162:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 381              		.loc 1 162 0
+ 382 00ea A1E7     		b	.L21
+ 383              	.L15:
+ 165:Drivers/BSP/Components/cs43l22/cs43l22.c ****     break;    
+ 384              		.loc 1 165 0
+ 385 00ec 0522     		movs	r2, #5
+ 386 00ee 014B     		ldr	r3, .L24
+ 387 00f0 1A70     		strb	r2, [r3]
+ 166:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 388              		.loc 1 166 0
+ 389 00f2 9DE7     		b	.L21
+ 390              	.L25:
+ 391              		.align	2
+ 392              	.L24:
+ 393 00f4 00000000 		.word	.LANCHOR0
+ 394              		.cfi_endproc
+ 395              	.LFE0:
+ 397              		.section	.text.cs43l22_SetMute,"ax",%progbits
+ 398              		.align	1
+ 399              		.global	cs43l22_SetMute
+ 400              		.syntax unified
+ 401              		.thumb
+ 402              		.thumb_func
+ 403              		.fpu fpv4-sp-d16
+ 405              	cs43l22_SetMute:
+ 406              	.LFB9:
+ 385:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 407              		.loc 1 385 0
+ 408              		.cfi_startproc
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 17
+
+
+ 409              		@ args = 0, pretend = 0, frame = 0
+ 410              		@ frame_needed = 0, uses_anonymous_args = 0
+ 411              	.LVL60:
+ 412 0000 38B5     		push	{r3, r4, r5, lr}
+ 413              	.LCFI3:
+ 414              		.cfi_def_cfa_offset 16
+ 415              		.cfi_offset 3, -16
+ 416              		.cfi_offset 4, -12
+ 417              		.cfi_offset 5, -8
+ 418              		.cfi_offset 14, -4
+ 419              	.LVL61:
+ 389:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 420              		.loc 1 389 0
+ 421 0002 0129     		cmp	r1, #1
+ 422 0004 14D0     		beq	.L30
+ 397:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_HEADPHONE_B_VOL, 0x00);
+ 423              		.loc 1 397 0
+ 424 0006 C5B2     		uxtb	r5, r0
+ 425 0008 0022     		movs	r2, #0
+ 426 000a 2221     		movs	r1, #34
+ 427              	.LVL62:
+ 428 000c 2846     		mov	r0, r5
+ 429              	.LVL63:
+ 430 000e FFF7FEFF 		bl	CODEC_IO_Write
+ 431              	.LVL64:
+ 432 0012 0446     		mov	r4, r0
+ 433              	.LVL65:
+ 398:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_POWER_CTL2, OutputDev);
+ 434              		.loc 1 398 0
+ 435 0014 0022     		movs	r2, #0
+ 436 0016 2321     		movs	r1, #35
+ 437 0018 2846     		mov	r0, r5
+ 438              	.LVL66:
+ 439 001a FFF7FEFF 		bl	CODEC_IO_Write
+ 440              	.LVL67:
+ 441 001e 0444     		add	r4, r4, r0
+ 442              	.LVL68:
+ 399:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 443              		.loc 1 399 0
+ 444 0020 0D4B     		ldr	r3, .L31
+ 445 0022 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 446 0024 0421     		movs	r1, #4
+ 447 0026 2846     		mov	r0, r5
+ 448 0028 FFF7FEFF 		bl	CODEC_IO_Write
+ 449              	.LVL69:
+ 450 002c 2044     		add	r0, r0, r4
+ 451              	.LVL70:
+ 402:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 452              		.loc 1 402 0
+ 453 002e 38BD     		pop	{r3, r4, r5, pc}
+ 454              	.LVL71:
+ 455              	.L30:
+ 391:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_HEADPHONE_A_VOL, 0x01);
+ 456              		.loc 1 391 0
+ 457 0030 C5B2     		uxtb	r5, r0
+ 458 0032 FF22     		movs	r2, #255
+ 459 0034 0421     		movs	r1, #4
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 18
+
+
+ 460              	.LVL72:
+ 461 0036 2846     		mov	r0, r5
+ 462              	.LVL73:
+ 463 0038 FFF7FEFF 		bl	CODEC_IO_Write
+ 464              	.LVL74:
+ 465 003c 0446     		mov	r4, r0
+ 466              	.LVL75:
+ 392:Drivers/BSP/Components/cs43l22/cs43l22.c ****     counter += CODEC_IO_Write(DeviceAddr, CS43L22_REG_HEADPHONE_B_VOL, 0x01);
+ 467              		.loc 1 392 0
+ 468 003e 0122     		movs	r2, #1
+ 469 0040 2221     		movs	r1, #34
+ 470 0042 2846     		mov	r0, r5
+ 471              	.LVL76:
+ 472 0044 FFF7FEFF 		bl	CODEC_IO_Write
+ 473              	.LVL77:
+ 474 0048 0444     		add	r4, r4, r0
+ 475              	.LVL78:
+ 393:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 476              		.loc 1 393 0
+ 477 004a 0122     		movs	r2, #1
+ 478 004c 2321     		movs	r1, #35
+ 479 004e 2846     		mov	r0, r5
+ 480 0050 FFF7FEFF 		bl	CODEC_IO_Write
+ 481              	.LVL79:
+ 482 0054 2044     		add	r0, r0, r4
+ 483              	.LVL80:
+ 484 0056 38BD     		pop	{r3, r4, r5, pc}
+ 485              	.L32:
+ 486              		.align	2
+ 487              	.L31:
+ 488 0058 00000000 		.word	.LANCHOR0
+ 489              		.cfi_endproc
+ 490              	.LFE9:
+ 492              		.section	.text.cs43l22_Play,"ax",%progbits
+ 493              		.align	1
+ 494              		.global	cs43l22_Play
+ 495              		.syntax unified
+ 496              		.thumb
+ 497              		.thumb_func
+ 498              		.fpu fpv4-sp-d16
+ 500              	cs43l22_Play:
+ 501              	.LFB3:
+ 249:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 502              		.loc 1 249 0
+ 503              		.cfi_startproc
+ 504              		@ args = 0, pretend = 0, frame = 0
+ 505              		@ frame_needed = 0, uses_anonymous_args = 0
+ 506              	.LVL81:
+ 252:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 507              		.loc 1 252 0
+ 508 0000 0E4B     		ldr	r3, .L41
+ 509 0002 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 510 0004 012B     		cmp	r3, #1
+ 511 0006 01D0     		beq	.L40
+ 250:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 512              		.loc 1 250 0
+ 513 0008 0020     		movs	r0, #0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 19
+
+
+ 514              	.LVL82:
+ 266:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 515              		.loc 1 266 0
+ 516 000a 7047     		bx	lr
+ 517              	.LVL83:
+ 518              	.L40:
+ 249:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 519              		.loc 1 249 0
+ 520 000c 70B5     		push	{r4, r5, r6, lr}
+ 521              	.LCFI4:
+ 522              		.cfi_def_cfa_offset 16
+ 523              		.cfi_offset 4, -16
+ 524              		.cfi_offset 5, -12
+ 525              		.cfi_offset 6, -8
+ 526              		.cfi_offset 14, -4
+ 527 000e 0546     		mov	r5, r0
+ 255:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 528              		.loc 1 255 0
+ 529 0010 C6B2     		uxtb	r6, r0
+ 530 0012 0622     		movs	r2, #6
+ 531              	.LVL84:
+ 532 0014 0E21     		movs	r1, #14
+ 533              	.LVL85:
+ 534 0016 3046     		mov	r0, r6
+ 535              	.LVL86:
+ 536 0018 FFF7FEFF 		bl	CODEC_IO_Write
+ 537              	.LVL87:
+ 538 001c 0446     		mov	r4, r0
+ 539              	.LVL88:
+ 258:Drivers/BSP/Components/cs43l22/cs43l22.c ****     
+ 540              		.loc 1 258 0
+ 541 001e 0021     		movs	r1, #0
+ 542 0020 2846     		mov	r0, r5
+ 543              	.LVL89:
+ 544 0022 FFF7FEFF 		bl	cs43l22_SetMute
+ 545              	.LVL90:
+ 546 0026 0444     		add	r4, r4, r0
+ 547              	.LVL91:
+ 261:Drivers/BSP/Components/cs43l22/cs43l22.c ****     Is_cs43l22_Stop = 0;
+ 548              		.loc 1 261 0
+ 549 0028 9E22     		movs	r2, #158
+ 550 002a 0221     		movs	r1, #2
+ 551 002c 3046     		mov	r0, r6
+ 552 002e FFF7FEFF 		bl	CODEC_IO_Write
+ 553              	.LVL92:
+ 554 0032 2044     		add	r0, r0, r4
+ 555              	.LVL93:
+ 262:Drivers/BSP/Components/cs43l22/cs43l22.c ****   }
+ 556              		.loc 1 262 0
+ 557 0034 0022     		movs	r2, #0
+ 558 0036 014B     		ldr	r3, .L41
+ 559 0038 1A70     		strb	r2, [r3]
+ 560 003a 70BD     		pop	{r4, r5, r6, pc}
+ 561              	.L42:
+ 562              		.align	2
+ 563              	.L41:
+ 564 003c 00000000 		.word	.LANCHOR1
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 20
+
+
+ 565              		.cfi_endproc
+ 566              	.LFE3:
+ 568              		.section	.text.cs43l22_Pause,"ax",%progbits
+ 569              		.align	1
+ 570              		.global	cs43l22_Pause
+ 571              		.syntax unified
+ 572              		.thumb
+ 573              		.thumb_func
+ 574              		.fpu fpv4-sp-d16
+ 576              	cs43l22_Pause:
+ 577              	.LFB4:
+ 275:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 578              		.loc 1 275 0
+ 579              		.cfi_startproc
+ 580              		@ args = 0, pretend = 0, frame = 0
+ 581              		@ frame_needed = 0, uses_anonymous_args = 0
+ 582              	.LVL94:
+ 583 0000 38B5     		push	{r3, r4, r5, lr}
+ 584              	.LCFI5:
+ 585              		.cfi_def_cfa_offset 16
+ 586              		.cfi_offset 3, -16
+ 587              		.cfi_offset 4, -12
+ 588              		.cfi_offset 5, -8
+ 589              		.cfi_offset 14, -4
+ 590 0002 0546     		mov	r5, r0
+ 591              	.LVL95:
+ 280:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 592              		.loc 1 280 0
+ 593 0004 0121     		movs	r1, #1
+ 594 0006 FFF7FEFF 		bl	cs43l22_SetMute
+ 595              	.LVL96:
+ 596 000a 0446     		mov	r4, r0
+ 597              	.LVL97:
+ 283:Drivers/BSP/Components/cs43l22/cs43l22.c ****  
+ 598              		.loc 1 283 0
+ 599 000c 0122     		movs	r2, #1
+ 600 000e 0221     		movs	r1, #2
+ 601 0010 E8B2     		uxtb	r0, r5
+ 602              	.LVL98:
+ 603 0012 FFF7FEFF 		bl	CODEC_IO_Write
+ 604              	.LVL99:
+ 286:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 605              		.loc 1 286 0
+ 606 0016 2044     		add	r0, r0, r4
+ 607              	.LVL100:
+ 608 0018 38BD     		pop	{r3, r4, r5, pc}
+ 609              		.cfi_endproc
+ 610              	.LFE4:
+ 612              		.section	.text.cs43l22_Resume,"ax",%progbits
+ 613              		.align	1
+ 614              		.global	cs43l22_Resume
+ 615              		.syntax unified
+ 616              		.thumb
+ 617              		.thumb_func
+ 618              		.fpu fpv4-sp-d16
+ 620              	cs43l22_Resume:
+ 621              	.LFB5:
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 21
+
+
+ 294:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 622              		.loc 1 294 0
+ 623              		.cfi_startproc
+ 624              		@ args = 0, pretend = 0, frame = 8
+ 625              		@ frame_needed = 0, uses_anonymous_args = 0
+ 626              	.LVL101:
+ 627 0000 70B5     		push	{r4, r5, r6, lr}
+ 628              	.LCFI6:
+ 629              		.cfi_def_cfa_offset 16
+ 630              		.cfi_offset 4, -16
+ 631              		.cfi_offset 5, -12
+ 632              		.cfi_offset 6, -8
+ 633              		.cfi_offset 14, -4
+ 634 0002 82B0     		sub	sp, sp, #8
+ 635              	.LCFI7:
+ 636              		.cfi_def_cfa_offset 24
+ 637 0004 0446     		mov	r4, r0
+ 638              	.LVL102:
+ 296:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Resumes the audio file playing */  
+ 639              		.loc 1 296 0
+ 640 0006 0026     		movs	r6, #0
+ 641 0008 0196     		str	r6, [sp, #4]
+ 299:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 642              		.loc 1 299 0
+ 643 000a 3146     		mov	r1, r6
+ 644 000c FFF7FEFF 		bl	cs43l22_SetMute
+ 645              	.LVL103:
+ 646 0010 0546     		mov	r5, r0
+ 647              	.LVL104:
+ 301:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 648              		.loc 1 301 0
+ 649 0012 0196     		str	r6, [sp, #4]
+ 650 0014 02E0     		b	.L46
+ 651              	.L47:
+ 301:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 652              		.loc 1 301 0 is_stmt 0 discriminator 3
+ 653 0016 019B     		ldr	r3, [sp, #4]
+ 654 0018 0133     		adds	r3, r3, #1
+ 655 001a 0193     		str	r3, [sp, #4]
+ 656              	.L46:
+ 301:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 657              		.loc 1 301 0 discriminator 1
+ 658 001c 019B     		ldr	r3, [sp, #4]
+ 659 001e FE2B     		cmp	r3, #254
+ 660 0020 F9D9     		bls	.L47
+ 303:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 661              		.loc 1 303 0 is_stmt 1
+ 662 0022 E4B2     		uxtb	r4, r4
+ 663 0024 074B     		ldr	r3, .L49
+ 664 0026 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 665 0028 0421     		movs	r1, #4
+ 666 002a 2046     		mov	r0, r4
+ 667              	.LVL105:
+ 668 002c FFF7FEFF 		bl	CODEC_IO_Write
+ 669              	.LVL106:
+ 670 0030 0544     		add	r5, r5, r0
+ 671              	.LVL107:
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 22
+
+
+ 306:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 672              		.loc 1 306 0
+ 673 0032 9E22     		movs	r2, #158
+ 674 0034 0221     		movs	r1, #2
+ 675 0036 2046     		mov	r0, r4
+ 676 0038 FFF7FEFF 		bl	CODEC_IO_Write
+ 677              	.LVL108:
+ 309:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 678              		.loc 1 309 0
+ 679 003c 2844     		add	r0, r0, r5
+ 680              	.LVL109:
+ 681 003e 02B0     		add	sp, sp, #8
+ 682              	.LCFI8:
+ 683              		.cfi_def_cfa_offset 16
+ 684              		@ sp needed
+ 685 0040 70BD     		pop	{r4, r5, r6, pc}
+ 686              	.L50:
+ 687 0042 00BF     		.align	2
+ 688              	.L49:
+ 689 0044 00000000 		.word	.LANCHOR0
+ 690              		.cfi_endproc
+ 691              	.LFE5:
+ 693              		.section	.text.cs43l22_Stop,"ax",%progbits
+ 694              		.align	1
+ 695              		.global	cs43l22_Stop
+ 696              		.syntax unified
+ 697              		.thumb
+ 698              		.thumb_func
+ 699              		.fpu fpv4-sp-d16
+ 701              	cs43l22_Stop:
+ 702              	.LFB6:
+ 322:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0;
+ 703              		.loc 1 322 0
+ 704              		.cfi_startproc
+ 705              		@ args = 0, pretend = 0, frame = 0
+ 706              		@ frame_needed = 0, uses_anonymous_args = 0
+ 707              	.LVL110:
+ 708 0000 38B5     		push	{r3, r4, r5, lr}
+ 709              	.LCFI9:
+ 710              		.cfi_def_cfa_offset 16
+ 711              		.cfi_offset 3, -16
+ 712              		.cfi_offset 4, -12
+ 713              		.cfi_offset 5, -8
+ 714              		.cfi_offset 14, -4
+ 715 0002 0446     		mov	r4, r0
+ 716              	.LVL111:
+ 326:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 717              		.loc 1 326 0
+ 718 0004 0121     		movs	r1, #1
+ 719              	.LVL112:
+ 720 0006 FFF7FEFF 		bl	cs43l22_SetMute
+ 721              	.LVL113:
+ 722 000a 0546     		mov	r5, r0
+ 723              	.LVL114:
+ 329:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 724              		.loc 1 329 0
+ 725 000c E4B2     		uxtb	r4, r4
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 23
+
+
+ 726 000e 0422     		movs	r2, #4
+ 727 0010 0E21     		movs	r1, #14
+ 728 0012 2046     		mov	r0, r4
+ 729              	.LVL115:
+ 730 0014 FFF7FEFF 		bl	CODEC_IO_Write
+ 731              	.LVL116:
+ 732 0018 0544     		add	r5, r5, r0
+ 733              	.LVL117:
+ 332:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 734              		.loc 1 332 0
+ 735 001a 9F22     		movs	r2, #159
+ 736 001c 0221     		movs	r1, #2
+ 737 001e 2046     		mov	r0, r4
+ 738 0020 FFF7FEFF 		bl	CODEC_IO_Write
+ 739              	.LVL118:
+ 334:Drivers/BSP/Components/cs43l22/cs43l22.c ****   return counter;    
+ 740              		.loc 1 334 0
+ 741 0024 0122     		movs	r2, #1
+ 742 0026 024B     		ldr	r3, .L53
+ 743 0028 1A70     		strb	r2, [r3]
+ 336:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 744              		.loc 1 336 0
+ 745 002a 2844     		add	r0, r0, r5
+ 746              	.LVL119:
+ 747 002c 38BD     		pop	{r3, r4, r5, pc}
+ 748              	.L54:
+ 749 002e 00BF     		.align	2
+ 750              	.L53:
+ 751 0030 00000000 		.word	.LANCHOR1
+ 752              		.cfi_endproc
+ 753              	.LFE6:
+ 755              		.section	.text.cs43l22_SetOutputMode,"ax",%progbits
+ 756              		.align	1
+ 757              		.global	cs43l22_SetOutputMode
+ 758              		.syntax unified
+ 759              		.thumb
+ 760              		.thumb_func
+ 761              		.fpu fpv4-sp-d16
+ 763              	cs43l22_SetOutputMode:
+ 764              	.LFB10:
+ 414:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint32_t counter = 0; 
+ 765              		.loc 1 414 0
+ 766              		.cfi_startproc
+ 767              		@ args = 0, pretend = 0, frame = 0
+ 768              		@ frame_needed = 0, uses_anonymous_args = 0
+ 769              	.LVL120:
+ 770 0000 08B5     		push	{r3, lr}
+ 771              	.LCFI10:
+ 772              		.cfi_def_cfa_offset 8
+ 773              		.cfi_offset 3, -8
+ 774              		.cfi_offset 14, -4
+ 775              	.LVL121:
+ 417:Drivers/BSP/Components/cs43l22/cs43l22.c ****   {
+ 776              		.loc 1 417 0
+ 777 0002 0139     		subs	r1, r1, #1
+ 778              	.LVL122:
+ 779 0004 0329     		cmp	r1, #3
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 24
+
+
+ 780 0006 27D8     		bhi	.L56
+ 781 0008 DFE801F0 		tbb	[pc, r1]
+ 782              	.L58:
+ 783 000c 02       		.byte	(.L57-.L58)/2
+ 784 000d 0B       		.byte	(.L59-.L58)/2
+ 785 000e 14       		.byte	(.L60-.L58)/2
+ 786 000f 1D       		.byte	(.L61-.L58)/2
+ 787              		.p2align 1
+ 788              	.L57:
+ 420:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0xFA;
+ 789              		.loc 1 420 0
+ 790 0010 FA22     		movs	r2, #250
+ 791 0012 0421     		movs	r1, #4
+ 792 0014 C0B2     		uxtb	r0, r0
+ 793              	.LVL123:
+ 794 0016 FFF7FEFF 		bl	CODEC_IO_Write
+ 795              	.LVL124:
+ 421:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;
+ 796              		.loc 1 421 0
+ 797 001a FA22     		movs	r2, #250
+ 798 001c 134B     		ldr	r3, .L64
+ 799 001e 1A70     		strb	r2, [r3]
+ 422:Drivers/BSP/Components/cs43l22/cs43l22.c ****       
+ 800              		.loc 1 422 0
+ 801 0020 08BD     		pop	{r3, pc}
+ 802              	.LVL125:
+ 803              	.L59:
+ 425:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0xAF;
+ 804              		.loc 1 425 0
+ 805 0022 AF22     		movs	r2, #175
+ 806 0024 0421     		movs	r1, #4
+ 807 0026 C0B2     		uxtb	r0, r0
+ 808              	.LVL126:
+ 809 0028 FFF7FEFF 		bl	CODEC_IO_Write
+ 810              	.LVL127:
+ 426:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;
+ 811              		.loc 1 426 0
+ 812 002c AF22     		movs	r2, #175
+ 813 002e 0F4B     		ldr	r3, .L64
+ 814 0030 1A70     		strb	r2, [r3]
+ 427:Drivers/BSP/Components/cs43l22/cs43l22.c ****       
+ 815              		.loc 1 427 0
+ 816 0032 08BD     		pop	{r3, pc}
+ 817              	.LVL128:
+ 818              	.L60:
+ 430:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0xAA;
+ 819              		.loc 1 430 0
+ 820 0034 AA22     		movs	r2, #170
+ 821 0036 0421     		movs	r1, #4
+ 822 0038 C0B2     		uxtb	r0, r0
+ 823              	.LVL129:
+ 824 003a FFF7FEFF 		bl	CODEC_IO_Write
+ 825              	.LVL130:
+ 431:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;
+ 826              		.loc 1 431 0
+ 827 003e AA22     		movs	r2, #170
+ 828 0040 0A4B     		ldr	r3, .L64
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 25
+
+
+ 829 0042 1A70     		strb	r2, [r3]
+ 432:Drivers/BSP/Components/cs43l22/cs43l22.c ****       
+ 830              		.loc 1 432 0
+ 831 0044 08BD     		pop	{r3, pc}
+ 832              	.LVL131:
+ 833              	.L61:
+ 435:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0x05;
+ 834              		.loc 1 435 0
+ 835 0046 0522     		movs	r2, #5
+ 836 0048 0421     		movs	r1, #4
+ 837 004a C0B2     		uxtb	r0, r0
+ 838              	.LVL132:
+ 839 004c FFF7FEFF 		bl	CODEC_IO_Write
+ 840              	.LVL133:
+ 436:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;    
+ 841              		.loc 1 436 0
+ 842 0050 0522     		movs	r2, #5
+ 843 0052 064B     		ldr	r3, .L64
+ 844 0054 1A70     		strb	r2, [r3]
+ 437:Drivers/BSP/Components/cs43l22/cs43l22.c ****       
+ 845              		.loc 1 437 0
+ 846 0056 08BD     		pop	{r3, pc}
+ 847              	.LVL134:
+ 848              	.L56:
+ 440:Drivers/BSP/Components/cs43l22/cs43l22.c ****       OutputDev = 0x05;
+ 849              		.loc 1 440 0
+ 850 0058 0522     		movs	r2, #5
+ 851 005a 0421     		movs	r1, #4
+ 852 005c C0B2     		uxtb	r0, r0
+ 853              	.LVL135:
+ 854 005e FFF7FEFF 		bl	CODEC_IO_Write
+ 855              	.LVL136:
+ 441:Drivers/BSP/Components/cs43l22/cs43l22.c ****       break;
+ 856              		.loc 1 441 0
+ 857 0062 0522     		movs	r2, #5
+ 858 0064 014B     		ldr	r3, .L64
+ 859 0066 1A70     		strb	r2, [r3]
+ 445:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 860              		.loc 1 445 0
+ 861 0068 08BD     		pop	{r3, pc}
+ 862              	.L65:
+ 863 006a 00BF     		.align	2
+ 864              	.L64:
+ 865 006c 00000000 		.word	.LANCHOR0
+ 866              		.cfi_endproc
+ 867              	.LFE10:
+ 869              		.section	.text.cs43l22_DeInit,"ax",%progbits
+ 870              		.align	1
+ 871              		.global	cs43l22_DeInit
+ 872              		.syntax unified
+ 873              		.thumb
+ 874              		.thumb_func
+ 875              		.fpu fpv4-sp-d16
+ 877              	cs43l22_DeInit:
+ 878              	.LFB1:
+ 220:Drivers/BSP/Components/cs43l22/cs43l22.c ****   /* Deinitialize Audio Codec interface */
+ 879              		.loc 1 220 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 26
+
+
+ 880              		.cfi_startproc
+ 881              		@ args = 0, pretend = 0, frame = 0
+ 882              		@ frame_needed = 0, uses_anonymous_args = 0
+ 883 0000 08B5     		push	{r3, lr}
+ 884              	.LCFI11:
+ 885              		.cfi_def_cfa_offset 8
+ 886              		.cfi_offset 3, -8
+ 887              		.cfi_offset 14, -4
+ 222:Drivers/BSP/Components/cs43l22/cs43l22.c **** }
+ 888              		.loc 1 222 0
+ 889 0002 FFF7FEFF 		bl	AUDIO_IO_DeInit
+ 890              	.LVL137:
+ 891 0006 08BD     		pop	{r3, pc}
+ 892              		.cfi_endproc
+ 893              	.LFE1:
+ 895              		.section	.text.cs43l22_ReadID,"ax",%progbits
+ 896              		.align	1
+ 897              		.global	cs43l22_ReadID
+ 898              		.syntax unified
+ 899              		.thumb
+ 900              		.thumb_func
+ 901              		.fpu fpv4-sp-d16
+ 903              	cs43l22_ReadID:
+ 904              	.LFB2:
+ 231:Drivers/BSP/Components/cs43l22/cs43l22.c ****   uint8_t Value;
+ 905              		.loc 1 231 0
+ 906              		.cfi_startproc
+ 907              		@ args = 0, pretend = 0, frame = 0
+ 908              		@ frame_needed = 0, uses_anonymous_args = 0
+ 909              	.LVL138:
+ 910 0000 10B5     		push	{r4, lr}
+ 911              	.LCFI12:
+ 912              		.cfi_def_cfa_offset 8
+ 913              		.cfi_offset 4, -8
+ 914              		.cfi_offset 14, -4
+ 915 0002 0446     		mov	r4, r0
+ 234:Drivers/BSP/Components/cs43l22/cs43l22.c ****   
+ 916              		.loc 1 234 0
+ 917 0004 FFF7FEFF 		bl	AUDIO_IO_Init
+ 918              	.LVL139:
+ 236:Drivers/BSP/Components/cs43l22/cs43l22.c ****   Value = (Value & CS43L22_ID_MASK);
+ 919              		.loc 1 236 0
+ 920 0008 0121     		movs	r1, #1
+ 921 000a E0B2     		uxtb	r0, r4
+ 922 000c FFF7FEFF 		bl	AUDIO_IO_Read
+ 923              	.LVL140:
+ 240:Drivers/BSP/Components/cs43l22/cs43l22.c **** 
+ 924              		.loc 1 240 0
+ 925 0010 00F0F800 		and	r0, r0, #248
+ 926              	.LVL141:
+ 927 0014 10BD     		pop	{r4, pc}
+ 928              		.cfi_endproc
+ 929              	.LFE2:
+ 931              		.global	OutputDev
+ 932              		.global	cs43l22_drv
+ 933              		.section	.bss.OutputDev,"aw",%nobits
+ 934              		.set	.LANCHOR0,. + 0
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 27
+
+
+ 937              	OutputDev:
+ 938 0000 00       		.space	1
+ 939              		.section	.data.Is_cs43l22_Stop,"aw",%progbits
+ 940              		.set	.LANCHOR1,. + 0
+ 943              	Is_cs43l22_Stop:
+ 944 0000 01       		.byte	1
+ 945              		.section	.data.cs43l22_drv,"aw",%progbits
+ 946              		.align	2
+ 949              	cs43l22_drv:
+ 950 0000 00000000 		.word	cs43l22_Init
+ 951 0004 00000000 		.word	cs43l22_DeInit
+ 952 0008 00000000 		.word	cs43l22_ReadID
+ 953 000c 00000000 		.word	cs43l22_Play
+ 954 0010 00000000 		.word	cs43l22_Pause
+ 955 0014 00000000 		.word	cs43l22_Resume
+ 956 0018 00000000 		.word	cs43l22_Stop
+ 957 001c 00000000 		.word	cs43l22_SetFrequency
+ 958 0020 00000000 		.word	cs43l22_SetVolume
+ 959 0024 00000000 		.word	cs43l22_SetMute
+ 960 0028 00000000 		.word	cs43l22_SetOutputMode
+ 961 002c 00000000 		.word	cs43l22_Reset
+ 962              		.text
+ 963              	.Letext0:
+ 964              		.file 2 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\machine\\_default_types.h"
+ 965              		.file 3 "c:\\gcc_toolchain\\6_2017-q1-update\\arm-none-eabi\\include\\sys\\_stdint.h"
+ 966              		.file 4 "Drivers/BSP/Components/cs43l22/../Common/audio.h"
+ 967              		.file 5 "Drivers/BSP/Components/cs43l22/cs43l22.h"
+ARM GAS  C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 cs43l22.c
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:18     .text.cs43l22_SetFrequency:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:25     .text.cs43l22_SetFrequency:00000000 cs43l22_SetFrequency
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:42     .text.cs43l22_Reset:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:49     .text.cs43l22_Reset:00000000 cs43l22_Reset
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:65     .text.CODEC_IO_Write:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:71     .text.CODEC_IO_Write:00000000 CODEC_IO_Write
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:94     .text.cs43l22_SetVolume:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:101    .text.cs43l22_SetVolume:00000000 cs43l22_SetVolume
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:190    .text.cs43l22_SetVolume:00000060 $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:195    .text.cs43l22_Init:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:202    .text.cs43l22_Init:00000000 cs43l22_Init
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:240    .text.cs43l22_Init:00000026 $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:244    .text.cs43l22_Init:0000002a $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:393    .text.cs43l22_Init:000000f4 $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:398    .text.cs43l22_SetMute:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:405    .text.cs43l22_SetMute:00000000 cs43l22_SetMute
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:488    .text.cs43l22_SetMute:00000058 $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:493    .text.cs43l22_Play:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:500    .text.cs43l22_Play:00000000 cs43l22_Play
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:564    .text.cs43l22_Play:0000003c $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:569    .text.cs43l22_Pause:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:576    .text.cs43l22_Pause:00000000 cs43l22_Pause
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:613    .text.cs43l22_Resume:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:620    .text.cs43l22_Resume:00000000 cs43l22_Resume
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:689    .text.cs43l22_Resume:00000044 $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:694    .text.cs43l22_Stop:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:701    .text.cs43l22_Stop:00000000 cs43l22_Stop
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:751    .text.cs43l22_Stop:00000030 $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:756    .text.cs43l22_SetOutputMode:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:763    .text.cs43l22_SetOutputMode:00000000 cs43l22_SetOutputMode
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:783    .text.cs43l22_SetOutputMode:0000000c $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:787    .text.cs43l22_SetOutputMode:00000010 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:865    .text.cs43l22_SetOutputMode:0000006c $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:870    .text.cs43l22_DeInit:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:877    .text.cs43l22_DeInit:00000000 cs43l22_DeInit
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:896    .text.cs43l22_ReadID:00000000 $t
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:903    .text.cs43l22_ReadID:00000000 cs43l22_ReadID
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:937    .bss.OutputDev:00000000 OutputDev
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:949    .data.cs43l22_drv:00000000 cs43l22_drv
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:938    .bss.OutputDev:00000000 $d
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:943    .data.Is_cs43l22_Stop:00000000 Is_cs43l22_Stop
+C:\Users\Student\AppData\Local\Temp\ccIcMmzk.s:946    .data.cs43l22_drv:00000000 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+AUDIO_IO_Write
+AUDIO_IO_Init
+AUDIO_IO_DeInit
+AUDIO_IO_Read
